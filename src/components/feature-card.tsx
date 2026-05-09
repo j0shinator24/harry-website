@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
 
 type FeatureCardProps = {
   title: string
@@ -10,20 +9,21 @@ type FeatureCardProps = {
 
 export function FeatureCard({ title, description, image, imageAlt = "" }: FeatureCardProps) {
   return (
-    <Card className="group h-full transition-all hover:shadow-md hover:-translate-y-0.5">
-      <CardContent className="p-6">
-        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 mb-4 overflow-hidden">
-          <Image
-            src={image}
-            alt={imageAlt}
-            width={56}
-            height={56}
-            className="h-12 w-12 object-contain"
-          />
-        </div>
-        <h3 className="text-lg font-semibold mb-2 tracking-tight">{title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-      </CardContent>
-    </Card>
+    <div
+      className="glass rounded-2xl p-5 sm:p-7 hover:-translate-y-1.5 active:scale-[0.98] focus-within:ring-2 focus-within:ring-gold/50 transition-transform duration-200 fade-up"
+      style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.12)" }}
+    >
+      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl mb-3 sm:mb-4 bg-white/10 p-2 flex items-center justify-center">
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={80}
+          height={80}
+          className="w-full h-full object-contain"
+        />
+      </div>
+      <h3 className="font-heading font-bold text-lg sm:text-xl mb-2 text-white">{title}</h3>
+      <p className="text-white/85 text-[0.95rem] sm:text-base leading-relaxed">{description}</p>
+    </div>
   )
 }

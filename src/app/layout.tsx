@@ -1,24 +1,16 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Caveat } from "next/font/google"
+import { Alegreya } from "next/font/google"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { ThemeProvider } from "@/components/theme-provider"
+import { SunsetBackdrop } from "@/components/sunset-backdrop"
 import { BASE_URL, BUSINESS } from "@/lib/constants"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-sans",
+const alegreya = Alegreya({
+  variable: "--font-alegreya",
   subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-})
-
-const caveat = Caveat({
-  variable: "--font-handwritten",
-  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  style: ["normal", "italic"],
 })
 
 export const metadata: Metadata = {
@@ -92,17 +84,11 @@ const personJsonLd = {
   sameAs: [BUSINESS.instagram],
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-full flex flex-col font-sans">
-        <div className="candlelight-ambient" aria-hidden="true" />
+    <html lang="en" className={`${alegreya.variable} h-full antialiased`}>
+      <body className="relative min-h-full flex flex-col text-white overflow-x-hidden">
+        <SunsetBackdrop />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(movingCompanyJsonLd) }}
@@ -112,16 +98,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:text-sm"
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-gold focus:px-4 focus:py-2 focus:text-[#1C1C1C] focus:text-sm"
         >
           Skip to main content
         </a>
-        <ThemeProvider>
-          <Header />
-          <main id="main-content" className="flex-1">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <Header />
+        <main id="main" className="flex-1 relative z-10">{children}</main>
+        <Footer />
       </body>
     </html>
   )
