@@ -86,8 +86,8 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${alegreya.variable} h-full antialiased`}>
-      <body className="relative min-h-full flex flex-col text-white overflow-x-hidden">
+    <html lang="en" className={`${alegreya.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="relative min-h-full flex flex-col text-white overflow-x-hidden" suppressHydrationWarning>
         <SunsetBackdrop />
         <script
           type="application/ld+json"
