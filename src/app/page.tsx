@@ -5,6 +5,7 @@ import { Phone, MessageSquare, Mail, Star, MapPin } from "lucide-react"
 import { FeatureCard } from "@/components/feature-card"
 import { PartnerCard } from "@/components/partner-card"
 import { ZonesMap } from "@/components/zones-map"
+import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -400,35 +401,5 @@ export default function HomePage() {
 
       <FadeUpReveal />
     </>
-  )
-}
-
-// Pure-client small component to flip the fade-up from default-visible to
-// IntersectionObserver-driven. Same pattern as the original static site:
-// content is visible by default if JS never runs (Telegram/Messenger in-app
-// browsers); the observer only takes over when JS is present.
-function FadeUpReveal() {
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `(function(){try{
-          var fadeUps=document.querySelectorAll('.fade-up');
-          var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          if(typeof IntersectionObserver!=='undefined'&&!rm&&fadeUps.length){
-            document.documentElement.classList.add('can-animate');
-            var io=new IntersectionObserver(function(es){
-              es.forEach(function(e,i){
-                if(e.isIntersecting){
-                  setTimeout(function(){e.target.classList.add('visible');},i*70);
-                  io.unobserve(e.target);
-                }
-              });
-            },{threshold:0.12});
-            fadeUps.forEach(function(el){io.observe(el);});
-            setTimeout(function(){fadeUps.forEach(function(el){el.classList.add('visible');});},1500);
-          }
-        }catch(_){}})();`,
-      }}
-    />
   )
 }
