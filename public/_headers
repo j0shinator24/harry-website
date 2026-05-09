@@ -9,4 +9,4 @@
   X-DNS-Prefetch-Control: on
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' data: fonts.gstatic.com; frame-src www.instagram.com instagram.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://cdn.jsdelivr.net; font-src 'self' data: fonts.gstatic.com; frame-src www.instagram.com instagram.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://*.tile.openstreetmap.org

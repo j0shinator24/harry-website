@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Phone, MessageSquare, Mail, Star, MapPin } from "lucide-react"
 import { FeatureCard } from "@/components/feature-card"
 import { PartnerCard } from "@/components/partner-card"
+import { ZonesMap } from "@/components/zones-map"
 import { BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -201,18 +202,7 @@ export default function HomePage() {
           Where I Move
         </h2>
         <div className="max-w-5xl mx-auto fade-up">
-          <div
-            className="relative rounded-3xl bg-white overflow-hidden"
-            style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.15)", aspectRatio: "16 / 9" }}
-          >
-            <Image
-              src="/zones.png"
-              alt="Map of Melbourne with three concentric service zones: orange Inner Suburbs (within 10km of CBD), pink Outer Suburbs (10 to 30km), purple Outer Melbourne (30 to 60km). Past the purple ring requires a custom quote."
-              fill
-              sizes="(max-width: 1024px) 100vw, 1024px"
-              className="object-cover"
-            />
-          </div>
+          <ZonesMap />
           <div className="flex flex-wrap gap-3 sm:gap-5 justify-center mt-5 sm:mt-6">
             <div className="flex items-center gap-2">
               <span className="inline-block w-4 h-4 rounded-full" style={{ background: "#F5B742", boxShadow: "0 0 0 1px rgba(255,255,255,0.4)" }} />
