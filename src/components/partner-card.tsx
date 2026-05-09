@@ -20,7 +20,7 @@ export function PartnerCard({ p }: { p: Partner }) {
         <a
           href={p.website}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener nofollow noreferrer"
           aria-label={`Visit ${p.name} website`}
           className="absolute inset-0 z-[1] [text-indent:-9999px] overflow-hidden rounded-2xl"
         >
@@ -75,7 +75,7 @@ export function PartnerCard({ p }: { p: Partner }) {
             <a
               href={p.website}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener nofollow noreferrer"
               className="action-link relative z-[3] inline-flex items-center gap-1 text-gold/90 hover:text-gold font-heading font-medium px-2 py-1.5"
             >
               Website <ExternalLink className="h-3 w-3" />

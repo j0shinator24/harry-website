@@ -18,6 +18,44 @@ const buyRent = PARTNERS.filter((p) => p.category === "buy-rent")
 const tuners = PARTNERS.filter((p) => p.category === "tuner")
 const technicians = PARTNERS.filter((p) => p.category === "technician")
 
+// JSON-LD schema for the Friends of the Keys directory.
+// Tells Google "this is a curated list of related local businesses",
+// not 22 separate pages competing with the homepage. Each entry is a
+// LocalBusiness with name, url, telephone, and the AggregateRating we
+// already display visually.
+const partnersItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Friends of the Keys — Melbourne piano partners curated by Harry The Piano Mover",
+  description:
+    "Hand-picked Melbourne piano sales, rental, tuning, and technician businesses that Harry recommends for customers after a move.",
+  numberOfItems: PARTNERS.length,
+  itemListOrder: "https://schema.org/ItemListOrderDescending",
+  itemListElement: PARTNERS.map((p, i) => {
+    const item: Record<string, unknown> = {
+      "@type": "LocalBusiness",
+      name: p.name,
+      areaServed: "Melbourne, Victoria, Australia",
+    }
+    if (p.website) item.url = p.website
+    if (p.phoneIntl) item.telephone = p.phoneIntl
+    if (typeof p.reviews === "number" && p.reviews > 0) {
+      item.aggregateRating = {
+        "@type": "AggregateRating",
+        ratingValue: p.rating,
+        reviewCount: p.reviews,
+        bestRating: 5,
+        worstRating: 1,
+      }
+    }
+    return {
+      "@type": "ListItem",
+      position: i + 1,
+      item,
+    }
+  }),
+}
+
 // Inline Instagram glyph: lucide-react@1.x doesn't export Instagram.
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -30,6 +68,10 @@ function InstagramIcon({ className }: { className?: string }) {
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(partnersItemList) }}
+      />
       {/* HERO with faded piano backdrop. Layered: bg photo + gradient wash + content. */}
       <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
