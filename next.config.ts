@@ -1,49 +1,26 @@
-import type { NextConfig } from "next";
-import path from "node:path";
-
-const securityHeaders = [
-  {
-    key: "X-Frame-Options",
-    value: "DENY",
-  },
-  {
-    key: "X-Content-Type-Options",
-    value: "nosniff",
-  },
-  {
-    key: "Referrer-Policy",
-    value: "strict-origin-when-cross-origin",
-  },
-  {
-    key: "X-DNS-Prefetch-Control",
-    value: "on",
-  },
-  {
-    key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-  },
-  {
-    key: "Strict-Transport-Security",
-    value: "max-age=63072000; includeSubDomains; preload",
-  },
-  {
-    key: "Content-Security-Policy",
-    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
-  },
-];
+import type { NextConfig } from "next"
+import path from "node:path"
 
 const nextConfig: NextConfig = {
+  // Static export so the build output is a plain `out/` folder of HTML +
+  // assets that Cloudflare Pages serves directly. The site has no API
+  // routes, server actions, or runtime data fetching, so we get full
+  // edge-cache wins with zero serverless overhead.
+  output: "export",
+  // Required for static export — Cloudflare Pages serves the unoptimized
+  // <img> tags. CDN handles caching/compression.
+  images: {
+    unoptimized: true,
+  },
+  // Trailing slashes give clean Pages URLs like /about/ instead of /about
+  // and avoid the redirect dance.
+  trailingSlash: true,
   turbopack: {
     root: path.resolve(__dirname),
   },
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: securityHeaders,
-      },
-    ];
-  },
-};
+  // NOTE: security headers are set via public/_headers (Cloudflare Pages
+  // syntax). Next.js config-level headers() doesn't apply to a static
+  // export, so configuring it there would be silently ignored.
+}
 
-export default nextConfig;
+export default nextConfig

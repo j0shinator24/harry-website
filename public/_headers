@@ -1,0 +1,12 @@
+# Cloudflare Pages headers config. Applied to every response served from
+# the Pages site. Mirrors the security posture of the original static
+# build so the deployed site doesn't regress from a hardening point of view.
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-DNS-Prefetch-Control: on
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' data: fonts.gstatic.com; frame-src www.instagram.com instagram.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
