@@ -139,6 +139,10 @@ html.can-animate .fade-up {
 }
 
 html { scroll-behavior: smooth; }
+/* Sticky header is h-16 (64px). Adding a 5rem cushion to every anchored
+   section means the section title clears the header instead of being
+   covered when you click a nav link. */
+section[id] { scroll-margin-top: 5rem; }
 body {
   font-family: var(--font-alegreya), Georgia, serif;
   background: #1C1C1C;

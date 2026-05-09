@@ -12,6 +12,23 @@ const navItems = [
   { href: "#partners", label: "Partners" },
 ] as const
 
+// Hash-anchor click handler. Three things to fix vs the default browser behaviour:
+//   1. If the URL hash already matches (user clicked once, scrolled past, clicked
+//      again), the browser skips the scroll because it considers the navigation
+//      a no-op. Force scrollIntoView regardless.
+//   2. Smooth-scroll explicitly so it works even when the hash matches.
+//   3. Use replaceState to update the address bar without pushing a duplicate
+//      history entry every time you tap a nav item.
+function smoothScrollToHash(e: React.MouseEvent<HTMLAnchorElement>, hash: string) {
+  const target = typeof document !== "undefined" ? document.querySelector(hash) : null
+  if (!target) return
+  e.preventDefault()
+  target.scrollIntoView({ behavior: "smooth", block: "start" })
+  if (typeof window !== "undefined" && window.history?.replaceState) {
+    window.history.replaceState(null, "", hash)
+  }
+}
+
 export function Header() {
   const [open, setOpen] = useState(false)
 
@@ -37,21 +54,23 @@ export function Header() {
         <ul className="hidden md:flex items-center gap-7 list-none">
           {navItems.map((item) => (
             <li key={item.href}>
-              <Link
+              <a
                 href={item.href}
+                onClick={(e) => smoothScrollToHash(e, item.href)}
                 className="font-heading text-sm text-white/80 tracking-wider hover:text-gold transition-colors duration-200 py-2 px-1"
               >
                 {item.label}
-              </Link>
+              </a>
             </li>
           ))}
           <li>
-            <Link
+            <a
               href="#contact"
+              onClick={(e) => smoothScrollToHash(e, "#contact")}
               className="font-heading text-sm font-bold bg-coral text-white px-5 py-2.5 rounded-full hover:bg-tangerine hover:scale-105 active:scale-95 transition-transform duration-200 inline-block focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
             >
               Get a Quote
-            </Link>
+            </a>
           </li>
         </ul>
 
@@ -73,24 +92,30 @@ export function Header() {
           role="menu"
         >
           {navItems.map((item) => (
-            <Link
+            <a
               key={item.href}
               href={item.href}
-              onClick={() => setOpen(false)}
+              onClick={(e) => {
+                setOpen(false)
+                smoothScrollToHash(e, item.href)
+              }}
               className="block py-3.5 font-heading text-base text-white/80 hover:text-gold active:text-gold border-b border-white/10 transition-colors duration-150"
               role="menuitem"
             >
               {item.label}
-            </Link>
+            </a>
           ))}
-          <Link
+          <a
             href="#contact"
-            onClick={() => setOpen(false)}
+            onClick={(e) => {
+              setOpen(false)
+              smoothScrollToHash(e, "#contact")
+            }}
             className="block py-3.5 font-heading font-bold text-base text-gold active:text-tangerine transition-colors duration-150"
             role="menuitem"
           >
             Get a Quote
-          </Link>
+          </a>
         </div>
       )}
     </header>
