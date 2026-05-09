@@ -8,7 +8,7 @@ export const BUSINESS = {
   phoneInternational: "+61420687160",
   founder: "Harry",
   location: "Melbourne, VIC",
-  tagline: "Melbourne's specialist piano mover. Moved with care by someone who actually plays.",
+  tagline: "Melbourne's specialist piano mover. Uprights, grands, and digitals.",
   description:
     "Melbourne piano mover. Uprights, grands, and digitals moved safely across the city. Also piano disposal, furniture moves, Marketplace pickups, and band-equipment deliveries. Five-star reviews.",
   instagram: "https://www.instagram.com/harrythepianomover/",
@@ -40,38 +40,37 @@ export type Service = {
 export const SERVICES: readonly Service[] = [
   {
     title: "Piano Moving",
-    blurb:
-      "Uprights, grands, and digitals moved safely across Melbourne. Blanket-wrapped, strapped, and handled by someone who knows what's inside the case.",
+    blurb: "Rates vary from Melbourne Metro to outer suburbs & beyond, more info below.",
     icon: "piano",
     image: "/icon-piano-move.jpg",
   },
   {
     title: "Piano Disposal",
-    blurb: "Some pianos can't be saved. I'll handle the removal, recycle what I can, and dispose of the rest properly.",
+    blurb: "Pianos beyond repair can be either recycled or eliminated.",
     icon: "disposal",
     image: "/icon-disposal.png",
   },
   {
     title: "Furniture Moving",
-    blurb: "Couch won't fit in the car? Save yourself the truck hire. I'll grab it and get it where it needs to go.",
+    blurb: "Not enough room in the car? We can help move items not worth hiring a truck + team for.",
     icon: "furniture",
     image: "/icon-furniture.png",
   },
   {
     title: "Marketplace Deliveries",
-    blurb: "Found something on Facebook Marketplace? Skip the awkward train ride home. I'll pick it up and bring it to your door.",
+    blurb: "Random purchases on Facebook Marketplace can be delivered to save you the awkward train ride.",
     icon: "marketplace",
     image: "/icon-marketplace.png",
   },
   {
     title: "Band Equipment Deliveries",
-    blurb: "Got a gig? Load-in's a pain. Guitars, amps, drums, PA. I'll grab it, get it to the venue, and bring it back after the show.",
+    blurb: "Guitars, amps, drum kits, PA, etc. We pick up your goods to bring to the event, then bring it back after.",
     icon: "band",
     image: "/icon-band.jpg",
   },
   {
     title: "Piano Busking",
-    blurb: "I wheel a kitsched-out grand piano through Melbourne's streets. If you hear live keys in a laneway, that's probably me.",
+    blurb: "Our very own kitsched-out grand piano playing around the streets of Melbourne.",
     icon: "busking",
     image: "/icon-busking.jpg",
   },

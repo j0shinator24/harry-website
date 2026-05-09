@@ -112,7 +112,7 @@ export default function HomePage() {
             <span className="text-gold">Piano Mover</span>
           </h1>
           <p className="text-lg sm:text-2xl text-white/90 mb-3 italic leading-relaxed">
-            Uprights, grands, and digitals. Moved with care by someone who actually plays.
+            Uprights, Grands &amp; Digitals.
           </p>
           <a
             href={BUSINESS.googleReviews}
@@ -126,7 +126,7 @@ export default function HomePage() {
             <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
             <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
             <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
-            <span className="ml-1">Read the Reviews</span>
+            <span className="ml-1">Reviews!</span>
           </a>
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-3 justify-center items-center px-2 sm:px-0">
             <a
@@ -181,20 +181,19 @@ export default function HomePage() {
                 Hey, I&apos;m Harry
               </h2>
               <p className="text-base sm:text-lg leading-relaxed mb-3">
-                Experienced piano mover. Experienced pianist. Your piano gets handled by someone who
-                actually knows what&apos;s inside the case, treated the way I&apos;d want mine treated.
+                Trust in your piano being moved by an experienced piano mover &amp; player.
               </p>
               <p className="text-base sm:text-lg leading-relaxed mb-3">
-                Rates for inner suburbs, outer suburbs, and disposal are below. Anything further out,
-                call or text and we&apos;ll sort a custom quote.
+                See our rates below for piano relocation around Melbourne.
               </p>
               <p className="text-base sm:text-lg leading-relaxed mb-3">
-                Not just pianos. Furniture moving, marketplace pick-ups, band equipment deliveries,
-                event drops. If it fits in the van, I&apos;ll get it there.
+                Not just pianos! Event deliveries, furniture moving, marketplace pick-ups, gig
+                equipment deliveries, whatever you need to put in a van.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-gray-600">
-                One-van operation. You deal with me directly, every job. Got something to move? Call,
-                text, or email. I&apos;ll get back within a few hours.
+                Please enquire via the contact form, email, or by phone about pianos or other items
+                you may need transported. We have a versatile van to assist in relocating what you
+                need safely.
               </p>
             </div>
           </div>
@@ -298,17 +297,17 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center text-sm sm:text-base text-gray-600 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed">
-            <strong className="text-gray-800">Access note:</strong> Prices above assume 4 or fewer
-            steps, or easy ramp access.
-            <br />
-            Tricky access adds <strong className="text-gray-800">$20 per step</strong>, or{" "}
-            <strong className="text-gray-800">$200+</strong> if extra hands are needed.
-            <br />
-            Outer Melbourne or interstate?{" "}
+            Outer Melbourne &amp; interstate prices vary, please{" "}
             <Link href="#contact" className="text-grape font-bold hover:underline py-1 inline-block">
-              Get in touch
+              contact
             </Link>{" "}
-            for a custom quote.
+            for a chat.
+            <br />
+            Access to property with less than four steps / easy to ramp are prices above.
+            <br />
+            Difficult access may procure a higher fee at{" "}
+            <strong className="text-gray-800">$20 per step</strong> or fees in excess of{" "}
+            <strong className="text-gray-800">$200</strong> if extra staff are needed.
           </div>
         </div>
       </section>
