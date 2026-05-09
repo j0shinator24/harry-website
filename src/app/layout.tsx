@@ -1,0 +1,128 @@
+import type { Metadata } from "next"
+import { Geist, Geist_Mono, Caveat } from "next/font/google"
+import { Header } from "@/components/layout/header"
+import { Footer } from "@/components/layout/footer"
+import { ThemeProvider } from "@/components/theme-provider"
+import { BASE_URL, BUSINESS } from "@/lib/constants"
+import "./globals.css"
+
+const geistSans = Geist({
+  variable: "--font-sans",
+  subsets: ["latin"],
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+})
+
+const caveat = Caveat({
+  variable: "--font-handwritten",
+  subsets: ["latin"],
+})
+
+export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
+  title: {
+    default: "Piano Mover Melbourne | Harry The Piano Mover",
+    template: "%s | Harry The Piano Mover",
+  },
+  description: BUSINESS.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    siteName: BUSINESS.name,
+    title: "Piano Mover Melbourne | Harry The Piano Mover",
+    description: BUSINESS.description,
+    url: BASE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Piano Mover Melbourne | Harry The Piano Mover",
+    description: BUSINESS.description,
+  },
+  robots: { index: true, follow: true },
+}
+
+const movingCompanyJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MovingCompany",
+  "@id": `${BASE_URL}#business`,
+  name: BUSINESS.name,
+  description: BUSINESS.description,
+  url: BASE_URL,
+  logo: `${BASE_URL}/logo.png`,
+  image: `${BASE_URL}/logo.png`,
+  telephone: BUSINESS.phoneInternational,
+  email: BUSINESS.email,
+  priceRange: "$$",
+  currenciesAccepted: "AUD",
+  areaServed: [
+    {
+      "@type": "City",
+      name: "Melbourne",
+      containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" },
+    },
+    {
+      "@type": "GeoCircle",
+      name: "Greater Melbourne service area",
+      geoMidpoint: { "@type": "GeoCoordinates", latitude: -37.8136, longitude: 144.9631 },
+      geoRadius: "60000",
+    },
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Melbourne",
+    addressRegion: "VIC",
+    addressCountry: "AU",
+  },
+  sameAs: [BUSINESS.instagram, BUSINESS.googleReviews],
+}
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${BASE_URL}#harry`,
+  name: "Harry",
+  jobTitle: "Piano Mover",
+  worksFor: { "@id": `${BASE_URL}#business` },
+  description: "Melbourne piano mover and pianist. Sole operator of Harry The Piano Mover.",
+  knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Furniture moving"],
+  sameAs: [BUSINESS.instagram],
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full flex flex-col font-sans">
+        <div className="candlelight-ambient" aria-hidden="true" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(movingCompanyJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:text-sm"
+        >
+          Skip to main content
+        </a>
+        <ThemeProvider>
+          <Header />
+          <main id="main-content" className="flex-1">{children}</main>
+          <Footer />
+        </ThemeProvider>
+      </body>
+    </html>
+  )
+}
