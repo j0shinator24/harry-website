@@ -6,7 +6,7 @@ import { FeatureCard } from "@/components/feature-card"
 import { PartnerCard } from "@/components/partner-card"
 import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
-import { BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
+import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Piano Mover Melbourne | Harry The Piano Mover",
@@ -94,6 +94,7 @@ const partnersItemList = {
 const faqPageSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
+  "@id": `${BASE_URL}/#faq`,
   mainEntity: FAQ_ITEMS.map((item) => ({
     "@type": "Question",
     name: item.q,

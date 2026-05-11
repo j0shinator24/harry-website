@@ -11,7 +11,7 @@ export const BUSINESS = {
   location: "Melbourne, VIC",
   tagline: "Melbourne's specialist piano mover. Uprights, grands, and digitals.",
   description:
-    "Melbourne piano mover. Uprights, grands, and digitals moved safely across the city. Also piano disposal, furniture moves, Marketplace pickups, and band-equipment deliveries. Five-star reviews.",
+    "Melbourne piano mover. Uprights, grands, and digitals moved safely across the city. Piano disposal, furniture moves, Marketplace pickups. Five-star reviews.",
   instagram: "https://www.instagram.com/harrythepianomover/",
   googleReviews: "https://maps.app.goo.gl/nscqKmX1AwyyrLmE7",
 } as const

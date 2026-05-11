@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 const movingCompanyJsonLd = {
   "@context": "https://schema.org",
   "@type": "MovingCompany",
-  "@id": `${BASE_URL}#business`,
+  "@id": `${BASE_URL}/#business`,
   name: BUSINESS.name,
   description: BUSINESS.description,
   url: BASE_URL,
@@ -82,10 +82,10 @@ const movingCompanyJsonLd = {
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": `${BASE_URL}#harry`,
+  "@id": `${BASE_URL}/#harry`,
   name: "Harry",
   jobTitle: "Piano Mover",
-  worksFor: { "@id": `${BASE_URL}#business` },
+  worksFor: { "@id": `${BASE_URL}/#business` },
   description: "Melbourne piano mover and pianist. Sole operator of Harry The Piano Mover.",
   knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Furniture moving"],
   sameAs: [BUSINESS.instagram],
