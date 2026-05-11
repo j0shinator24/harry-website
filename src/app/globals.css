@@ -114,10 +114,7 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
-.float-anim { animation: none; }
-@media (min-width: 640px) {
-  .float-anim { animation: float 4s ease-in-out infinite; }
-}
+.float-anim { animation: float 4s ease-in-out infinite; }
 
 /* Fade-up reveal: opt-IN. Default visible (Telegram/Messenger fallbacks).
    Hydration adds .can-animate to <html>; observer toggles .visible. */
