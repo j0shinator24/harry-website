@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     images: [`${BASE_URL}/harry-piano-1.jpg`],
   },
   robots: { index: true, follow: true },
-  // Bing WMT: verified via GSC import — no msvalidate.01 token needed
+  // Bing WMT: verified via GSC import, no msvalidate.01 token needed
   verification: {
     google: "3GWShraF4OstDOWi08d-0J89relFpHWCuYvfSIrCj1I",
   },
