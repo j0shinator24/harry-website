@@ -28,13 +28,20 @@ export const metadata: Metadata = {
     title: "Piano Mover Melbourne | Harry The Piano Mover",
     description: BUSINESS.description,
     url: BASE_URL,
+    images: [{ url: `${BASE_URL}/harry-piano-1.jpg`, width: 1200, height: 800, alt: "Harry The Piano Mover — specialist piano moving in Melbourne" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Piano Mover Melbourne | Harry The Piano Mover",
     description: BUSINESS.description,
+    images: [`${BASE_URL}/harry-piano-1.jpg`],
   },
   robots: { index: true, follow: true },
+  // GSC + Bing WMT tokens — provision via Chrome MCP (§GSC-VERIFICATION-PROTOCOL)
+  // verification: {
+  //   google: "TODO_GSC_TOKEN",
+  //   other: { "msvalidate.01": "TODO_BING_TOKEN" },
+  // },
 }
 
 const movingCompanyJsonLd = {
