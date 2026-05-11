@@ -27,7 +27,7 @@ export function Footer() {
           Instagram
         </a>
         <Link href="#partners" className="text-white/60 hover:text-gold transition-colors duration-200 py-2 px-2 inline-block">
-          Friends of the Keys
+          Friends of Mine
         </Link>
       </div>
       <p className="leading-relaxed">

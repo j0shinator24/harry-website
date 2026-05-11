@@ -15,23 +15,57 @@ export const metadata: Metadata = {
 }
 
 const buyRent = PARTNERS.filter((p) => p.category === "buy-rent")
-const tuners = PARTNERS.filter((p) => p.category === "tuner")
-const technicians = PARTNERS.filter((p) => p.category === "technician")
+// Mobile tuner + piano technician partners are temporarily hidden from the
+// homepage. They'll live on a dedicated /partners (or similar) page once
+// the broader directory features are ready. Data is still in constants.
 
-// JSON-LD schema for the Friends of the Keys directory.
-// Tells Google "this is a curated list of related local businesses",
-// not 22 separate pages competing with the homepage. Each entry is a
-// LocalBusiness with name, url, telephone, and the AggregateRating we
-// already display visually.
+const FAQ_ITEMS = [
+  {
+    q: "How much does it cost to move a piano in Melbourne?",
+    a: "Inner Suburbs and CBD starts at $260 for an upright and $460 for a grand. Outer Suburbs is $340 / $570. Outer Melbourne (out to Geelong, Ballarat, the Mornington Peninsula) is $420 / $650. Anything past that is a custom quote — call or text and I'll work it out with you.",
+  },
+  {
+    q: "Are you insured?",
+    a: "Yes. Harry The Piano Mover carries public liability insurance (covers damage to your home or property on the day) and goods in transit / carriers insurance (covers the piano or any item while it's in the van). Both are active and current.",
+  },
+  {
+    q: "What types of pianos do you move?",
+    a: "Uprights, grands, baby grands, and digitals. Yamaha, Kawai, Steinway, Schimmel, Bechstein, Beale, the lot. I'm a piano player myself, so I know what's inside the case and treat each one the way I'd want mine treated.",
+  },
+  {
+    q: "Can you move a piano up or down stairs?",
+    a: "Yes. The base prices assume four or fewer steps with easy ramp access. Past that, tricky access adds $20 per step. For really difficult access where I need extra hands, expect $200 or more on top — I'll talk you through it before the move so there are no surprises.",
+  },
+  {
+    q: "What areas of Melbourne do you cover?",
+    a: "Greater Melbourne metro plus out to Geelong, Ballarat, the Mornington Peninsula, Phillip Island, and Kilmore. There's a service-zones map further up the page. Past those rings, ring me for a custom quote — I do interstate too on the right job.",
+  },
+  {
+    q: "Do you dispose of unwanted pianos?",
+    a: "Yes. If your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $320 upright / $420 grand. It's often cheaper than a piano restoration quote that would never break even.",
+  },
+  {
+    q: "Do you do anything other than pianos?",
+    a: "Plenty. Furniture moves where a full removalist is overkill, Facebook Marketplace pickups and deliveries, gig load-in and load-out for bands (guitars, amps, drums, PA), event deliveries. If it fits in the van, it's worth a chat.",
+  },
+  {
+    q: "How do I book?",
+    a: "Call or text 0420 687 160, or email info@harrythepianomover.com.au. I'll get back within a few hours.",
+  },
+] as const
+
+// JSON-LD schema for the Friends of Mine section — just the buy/rent partners
+// for now. The full tuners + technicians directory will get its own page
+// with its own schema once that's built.
 const partnersItemList = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Friends of the Keys — Melbourne piano partners curated by Harry The Piano Mover",
+  name: "Friends of Mine — Melbourne piano sales and rentals recommended by Harry The Piano Mover",
   description:
-    "Hand-picked Melbourne piano sales, rental, tuning, and technician businesses that Harry recommends for customers after a move.",
-  numberOfItems: PARTNERS.length,
+    "Hand-picked Melbourne piano sales and rental businesses that Harry recommends to customers buying or hiring a piano.",
+  numberOfItems: buyRent.length,
   itemListOrder: "https://schema.org/ItemListOrderDescending",
-  itemListElement: PARTNERS.map((p, i) => {
+  itemListElement: buyRent.map((p, i) => {
     const item: Record<string, unknown> = {
       "@type": "LocalBusiness",
       name: p.name,
@@ -56,6 +90,17 @@ const partnersItemList = {
   }),
 }
 
+// FAQPage JSON-LD so Google can render the FAQ as a rich result.
+const faqPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+}
+
 // Inline Instagram glyph: lucide-react@1.x doesn't export Instagram.
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -71,6 +116,10 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(partnersItemList) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
       />
       {/* HERO with faded piano backdrop. Layered: bg photo + gradient wash + content. */}
       <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
@@ -104,12 +153,12 @@ export default function HomePage() {
             className="w-40 sm:w-52 md:w-64 h-auto mx-auto mb-6 sm:mb-8 float-anim drop-shadow-2xl"
           />
           <h1
-            className="font-heading font-black text-[2.5rem] sm:text-6xl lg:text-7xl leading-none mb-4 sm:mb-5 text-white"
+            className="font-heading font-medium text-[2.5rem] sm:text-6xl lg:text-7xl leading-none mb-4 sm:mb-5 text-white"
             style={{ textShadow: "0 4px 30px rgba(0,0,0,0.4)" }}
           >
             Melbourne&apos;s Specialist
             <br />
-            <span className="text-gold">Piano Mover</span>
+            <span className="text-gold font-bold">Piano Mover</span>
           </h1>
           <p className="text-lg sm:text-2xl text-white/90 mb-3 italic leading-relaxed">
             Uprights, Grands &amp; Digitals.
@@ -191,9 +240,8 @@ export default function HomePage() {
                 equipment deliveries, whatever you need to put in a van.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-gray-600">
-                Please enquire via the contact form, email, or by phone about pianos or other items
-                you may need transported. We have a versatile van to assist in relocating what you
-                need safely.
+                Please enquire via email or phone about pianos or other items you may need
+                transported. We have a versatile van to assist in relocating what you need safely.
               </p>
             </div>
           </div>
@@ -206,7 +254,7 @@ export default function HomePage() {
           className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-center mb-8 sm:mb-12 fade-up text-white"
           style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
         >
-          What I Move
+          Specialty Services
         </h2>
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {SERVICES.map((s) => (
@@ -261,7 +309,10 @@ export default function HomePage() {
           </div>
           <p className="text-center text-white/70 text-xs sm:text-sm mt-3 inline-flex items-center gap-1.5 w-full justify-center">
             <MapPin className="h-3.5 w-3.5" />
-            Outside the purple ring? <Link href="#contact" className="text-gold hover:underline">Call or text for a custom quote.</Link>
+            Anything beyond?{" "}
+            <Link href="#contact" className="text-gold hover:underline">
+              Call or text for a quote.
+            </Link>
           </p>
         </div>
       </section>
@@ -343,6 +394,57 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* PROTECTION */}
+      <section id="protection" className="py-14 sm:py-20 px-4 sm:px-5">
+        <div className="max-w-3xl mx-auto">
+          <h2
+            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-center mb-8 sm:mb-12 fade-up text-white"
+            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
+          >
+            Protection
+          </h2>
+          <div
+            className="glass rounded-3xl p-6 sm:p-8 md:p-10 fade-up"
+            style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}
+          >
+            <ul className="space-y-4 sm:space-y-5">
+              <li className="flex items-start gap-3 sm:gap-4">
+                <span
+                  aria-hidden="true"
+                  className="flex-shrink-0 mt-0.5 inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold text-[#1C1C1C] font-bold"
+                >
+                  ✓
+                </span>
+                <div>
+                  <p className="font-heading font-bold text-base sm:text-lg text-white">
+                    Public liability insurance
+                  </p>
+                  <p className="text-white/75 text-sm sm:text-base leading-relaxed">
+                    Covers damage to your home or property during a job.
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3 sm:gap-4">
+                <span
+                  aria-hidden="true"
+                  className="flex-shrink-0 mt-0.5 inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold text-[#1C1C1C] font-bold"
+                >
+                  ✓
+                </span>
+                <div>
+                  <p className="font-heading font-bold text-base sm:text-lg text-white">
+                    Goods in transit (carriers) insurance
+                  </p>
+                  <p className="text-white/75 text-sm sm:text-base leading-relaxed">
+                    Covers your piano, furniture, and equipment while it&apos;s in the van.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* PARTNERS */}
       <section id="partners" className="py-14 sm:py-20 px-4 sm:px-5">
         <div className="max-w-6xl mx-auto">
@@ -351,57 +453,56 @@ export default function HomePage() {
               className="font-heading font-black text-3xl sm:text-4xl md:text-5xl mb-3 text-white"
               style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
             >
-              Friends of the Keys
+              Friends of Mine
             </h2>
             <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Harry moves them. These folks sell, rent, tune, voice, and restore them. Hand-picked
-              from Melbourne&apos;s highest Google ratings, no paid placements.
+              For buying or hiring a piano in Melbourne, these are the folks I recommend.
             </p>
           </div>
 
-          <div className="mb-10 sm:mb-14">
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-center mb-5 sm:mb-6 text-gold/90 fade-up">
-              Buy or Rent
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-              {buyRent.map((p) => (
-                <PartnerCard key={p.name} p={p} />
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-10 sm:mb-14">
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-center mb-2 text-gold/90 fade-up">
-              Mobile Piano Tuners
-            </h3>
-            <p className="text-center text-white/60 text-sm mb-5 sm:mb-6 fade-up">
-              In-home tuning across Melbourne. Sorted by rating, then review count.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-              {tuners.map((p) => (
-                <PartnerCard key={p.name} p={p} />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-center mb-2 text-gold/90 fade-up">
-              Piano Technicians
-            </h3>
-            <p className="text-center text-white/60 text-sm mb-5 sm:mb-6 fade-up">
-              Regulation, voicing, repair, restoration. Workshop-grade work, beyond a tune.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-              {technicians.map((p) => (
-                <PartnerCard key={p.name} p={p} />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            {buyRent.map((p) => (
+              <PartnerCard key={p.name} p={p} />
+            ))}
           </div>
 
           <p className="mt-10 max-w-xl mx-auto text-center text-xs sm:text-sm text-white/55 leading-relaxed border-l-2 border-white/30 pl-3">
-            Listings are independent businesses Harry recommends based on public Google reviews. No
-            paid placements. Ratings as of May 2026 and may have changed.
+            A full directory of Melbourne piano tuners and technicians is coming to a separate page.
+            No paid placements.
           </p>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="py-14 sm:py-20 px-4 sm:px-5">
+        <div className="max-w-3xl mx-auto">
+          <h2
+            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-center mb-8 sm:mb-12 fade-up text-white"
+            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
+          >
+            Frequently Asked
+          </h2>
+          <div className="space-y-3 sm:space-y-4">
+            {FAQ_ITEMS.map((item, i) => (
+              <details
+                key={item.q}
+                className="glass rounded-2xl px-5 sm:px-6 py-4 sm:py-5 fade-up group"
+                style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }}
+                {...(i === 0 ? { open: true } : {})}
+              >
+                <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-heading font-bold text-base sm:text-lg text-white">
+                  {item.q}
+                  <span
+                    aria-hidden="true"
+                    className="flex-shrink-0 text-gold transition-transform duration-200 group-open:rotate-45 text-2xl leading-none"
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 text-white/85 text-sm sm:text-base leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 

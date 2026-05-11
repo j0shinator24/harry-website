@@ -8,17 +8,19 @@ import "leaflet/dist/leaflet.css"
 // Melbourne CBD center. Same anchor the original static site used.
 const MELBOURNE: [number, number] = [-37.8136, 144.9631]
 
-// Three concentric service zones, in metres. Tuned to Harry's actual pricing:
-//   Inner (8 km)     — CBD + closest suburbs only, lowest rate.
-//   Outer (40 km)    — most of Greater Melbourne metro (Frankston, Werribee,
-//                      Eltham, Sunbury, Berwick).
-//   Outer Mel (140 km) — reaches Geelong (~75 km), Ballarat (~115 km),
-//                      Phillip Island / Cowes (~140 km). Beyond the purple
-//                      ring is a custom-quote conversation.
+// Three concentric service zones, in metres. Radii calibrated to Harry's
+// suburb anchors so the rings actually contain the places he charges by:
+//   Inner (8 km)    — Footscray, Brunswick, Hawthorn, Balaclava. Lowest rate.
+//   Outer (32 km)   — Werribee (~30 km W), Dandenong (~30 km SE),
+//                     Mickleham (~30 km N). Mid rate.
+//   Outer Mel (75 km) — Lara (~60 km W, near Geelong), Dromana (~75 km S on
+//                     the Mornington Peninsula), Kilmore (~60 km N).
+//                     Anything outside that radius is "beyond" and gets a
+//                     custom quote.
 const zones = [
   { radius: 8000, color: "#F5B742", label: "Inner Suburbs & CBD" },
-  { radius: 40000, color: "#F06681", label: "Outer Suburbs" },
-  { radius: 140000, color: "#9B4D9E", label: "Outer Melbourne" },
+  { radius: 32000, color: "#F06681", label: "Outer Suburbs" },
+  { radius: 75000, color: "#9B4D9E", label: "Outer Melbourne" },
 ] as const
 
 // Leaflet ships its default marker icon as a CSS background image. Webpack /
@@ -47,7 +49,7 @@ export default function ZonesMapInner() {
     >
       <MapContainer
         center={MELBOURNE}
-        zoom={8}
+        zoom={9}
         scrollWheelZoom={false}
         className="h-full w-full"
         style={{ background: "#dbeafe" }}

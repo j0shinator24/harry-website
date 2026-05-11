@@ -3,7 +3,8 @@ export const BASE_URL = "https://harrythepianomover.com.au"
 export const BUSINESS = {
   name: "Harry The Piano Mover",
   legalName: "Harry The Piano Mover",
-  email: "harrythepianomover@gmail.com",
+  email: "info@harrythepianomover.com.au",
+  emailFallback: "harrythepianomover@gmail.com",
   phone: "0420 687 160",
   phoneInternational: "+61420687160",
   founder: "Harry",
@@ -70,7 +71,8 @@ export const SERVICES: readonly Service[] = [
   },
   {
     title: "Piano Busking",
-    blurb: "Our very own kitsched-out grand piano playing around the streets of Melbourne.",
+    blurb:
+      "My very own kitsched-out acoustic grand piano and humble little upright playing around the streets of Melbourne.",
     icon: "busking",
     image: "/icon-busking.jpg",
   },
