@@ -13,14 +13,14 @@ const MELBOURNE: [number, number] = [-37.8136, 144.9631]
 //   Inner (8 km)    — Footscray, Brunswick, Hawthorn, Balaclava. Lowest rate.
 //   Outer (32 km)   — Werribee (~30 km W), Dandenong (~30 km SE),
 //                     Mickleham (~30 km N). Mid rate.
-//   Outer Mel (75 km) — Lara (~60 km W, near Geelong), Dromana (~75 km S on
-//                     the Mornington Peninsula), Kilmore (~60 km N).
-//                     Anything outside that radius is "beyond" and gets a
-//                     custom quote.
+//   Outer Mel (50 km) — Bacchus Marsh (~50 km NW), Healesville (~55 km E),
+//                     Pakenham (~55 km SE). Deliberately stops short of
+//                     Geelong (~75 km) and Sorrento (~80 km) so the map
+//                     doesn't reveal the full pricing reach.
 const zones = [
   { radius: 8000, color: "#F5B742", label: "Inner Suburbs & CBD" },
   { radius: 32000, color: "#F06681", label: "Outer Suburbs" },
-  { radius: 75000, color: "#9B4D9E", label: "Outer Melbourne" },
+  { radius: 50000, color: "#9B4D9E", label: "Outer Melbourne" },
 ] as const
 
 // Leaflet ships its default marker icon as a CSS background image. Webpack /

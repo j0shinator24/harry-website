@@ -313,3 +313,24 @@ export const PARTNERS: readonly Partner[] = [
     website: "https://epgpianos.com.au/",
   },
 ] as const
+
+export type Review = {
+  name: string
+  stars: 5
+  text: string
+}
+
+export const REVIEWS: readonly Review[] = [
+  { name: "Rachel F.", stars: 5, text: "Quick to respond, very accommodating to our last minute move. Job done smoothly and with care." },
+  { name: "Jen J.", stars: 5, text: "Harry and Jeremy took great care of our Kawai upright on a long move to rural Victoria. Highly recommended." },
+  { name: "Luke S.", stars: 5, text: "Able to problem solve on the fly through very narrow passages and over several steps. No damage at all." },
+  { name: "Satya R.", stars: 5, text: "Harry was awesome! Quick, careful, and friendly. My son's really happy with the piano!" },
+  { name: "Rachael W.", stars: 5, text: "Harry is ace! Safely moved my upright, picked up a bed base, and moved my large plants. Super punctual." },
+  { name: "Ali A.", stars: 5, text: "Helped us on short notice, was punctual, fairly priced. Obviously very experienced. Great care." },
+  { name: "Adam K.", stars: 5, text: "Excellent job moving my piano! Very flexible, accommodating, and the piano arrived in perfect condition." },
+  { name: "Angela V.", stars: 5, text: "Impeccably reliable and trustworthy. Delivered in the necessary time frame with utmost efficiency." },
+  { name: "Tatum O.", stars: 5, text: "Insanely knowledgeable and passionate about what he does. The experience was so personable." },
+  { name: "Bruce B.", stars: 5, text: "A lot of fun watching Harry weave the piano through impossible situations and up into his truck. Well done!" },
+  { name: "Emma C.", stars: 5, text: "Very easy to deal with. Took great care of the piano and very reasonably priced. Highly recommend!" },
+  { name: "Tony W.", stars: 5, text: "Totally painless and totally professional. Movers who know how to play the instrument. Quick and good." },
+] as const

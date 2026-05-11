@@ -6,6 +6,7 @@ import { FeatureCard } from "@/components/feature-card"
 import { PartnerCard } from "@/components/partner-card"
 import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
+import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ const buyRent = PARTNERS.filter((p) => p.category === "buy-rent")
 const FAQ_ITEMS = [
   {
     q: "How much does it cost to move a piano in Melbourne?",
-    a: "Inner Suburbs and CBD starts at $260 for an upright and $460 for a grand. Outer Suburbs is $340 / $570. Outer Melbourne (out to Geelong, Ballarat, the Mornington Peninsula) is $420 / $650. Anything past that is a custom quote — call or text and I'll work it out with you.",
+    a: "Inner Suburbs and CBD starts at $260 for an upright and $460 for a grand. Outer Suburbs is $340 / $570. Outer Melbourne is $420 / $650. Anything past that is a custom quote. Call or text and I'll work it out with you.",
   },
   {
     q: "Are you insured?",
@@ -30,15 +31,15 @@ const FAQ_ITEMS = [
   },
   {
     q: "What types of pianos do you move?",
-    a: "Uprights, grands, baby grands, and digitals. Yamaha, Kawai, Steinway, Schimmel, Bechstein, Beale, the lot. I'm a piano player myself, so I know what's inside the case and treat each one the way I'd want mine treated.",
+    a: "Upright pianos, grand pianos and digital pianos. Ranging from brand-new to new-to-you, specialised in Japanese, Chinese, and European pianos.",
   },
   {
     q: "Can you move a piano up or down stairs?",
-    a: "Yes. The base prices assume four or fewer steps with easy ramp access. Past that, tricky access adds $20 per step. For really difficult access where I need extra hands, expect $200 or more on top — I'll talk you through it before the move so there are no surprises.",
+    a: "Of course! Our base rates are inclusive of three or four entry steps, or easy ramp access. Past that, tricky access adds $20 per step. Difficult access might require extra hands for an additional fee, from $200. Careful and creative approaches are what separate us from other movers.",
   },
   {
-    q: "What areas of Melbourne do you cover?",
-    a: "Greater Melbourne metro plus out to Geelong, Ballarat, the Mornington Peninsula, Phillip Island, and Kilmore. There's a service-zones map further up the page. Past those rings, ring me for a custom quote — I do interstate too on the right job.",
+    q: "What areas do you cover?",
+    a: "Greater Melbourne metro areas, Ballarat, Bendigo, Geelong, Lakes Entrance, Mornington Peninsula, Phillip Island. With enough notice, we can arrange pick up and delivery anywhere within Victoria, as well as interstate piano moves from Sydney to Adelaide.",
   },
   {
     q: "Do you dispose of unwanted pianos?",
@@ -50,7 +51,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "How do I book?",
-    a: "Call or text 0420 687 160, or email info@harrythepianomover.com.au. I'll get back within a few hours.",
+    a: "BOOKING_LINKS",
   },
 ] as const
 
@@ -98,7 +99,12 @@ const faqPageSchema = {
   mainEntity: FAQ_ITEMS.map((item) => ({
     "@type": "Question",
     name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a === "BOOKING_LINKS"
+        ? `Call or text ${BUSINESS.phone}, or email ${BUSINESS.email}. I'll get back within a few hours.`
+        : item.a,
+    },
   })),
 }
 
@@ -500,7 +506,21 @@ export default function HomePage() {
                     +
                   </span>
                 </summary>
-                <p className="mt-3 text-white/85 text-sm sm:text-base leading-relaxed">{item.a}</p>
+                {item.a === "BOOKING_LINKS" ? (
+                  <p className="mt-3 text-white/85 text-sm sm:text-base leading-relaxed">
+                    Call or text{" "}
+                    <a href={`tel:${BUSINESS.phoneInternational}`} className="text-gold hover:underline font-bold">
+                      {BUSINESS.phone}
+                    </a>
+                    , or email{" "}
+                    <a href={`mailto:${BUSINESS.email}`} className="text-gold hover:underline font-bold">
+                      {BUSINESS.email}
+                    </a>
+                    . I&apos;ll get back within a few hours.
+                  </p>
+                ) : (
+                  <p className="mt-3 text-white/85 text-sm sm:text-base leading-relaxed">{item.a}</p>
+                )}
               </details>
             ))}
           </div>
@@ -514,7 +534,7 @@ export default function HomePage() {
           style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
         >
           <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape text-center mb-5 sm:mb-8">
-            Let&apos;s Get It Moving
+            Reach Out
           </h2>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center items-center">
             <a
@@ -540,6 +560,11 @@ export default function HomePage() {
             </a>
           </div>
         </div>
+      </section>
+
+      {/* REVIEWS CAROUSEL */}
+      <section className="py-14 sm:py-20 px-4 sm:px-5 fade-up">
+        <ReviewsCarousel />
       </section>
 
       <FadeUpReveal />
