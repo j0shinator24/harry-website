@@ -37,11 +37,10 @@ export const metadata: Metadata = {
     images: [`${BASE_URL}/harry-piano-1.jpg`],
   },
   robots: { index: true, follow: true },
-  // GSC + Bing WMT tokens — provision via Chrome MCP (§GSC-VERIFICATION-PROTOCOL)
-  // verification: {
-  //   google: "TODO_GSC_TOKEN",
-  //   other: { "msvalidate.01": "TODO_BING_TOKEN" },
-  // },
+  // Bing WMT: verified via GSC import — no msvalidate.01 token needed
+  verification: {
+    google: "3GWShraF4OstDOWi08d-0J89relFpHWCuYvfSIrCj1I",
+  },
 }
 
 const movingCompanyJsonLd = {
