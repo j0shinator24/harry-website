@@ -7,6 +7,7 @@ import { PartnerCard } from "@/components/partner-card"
 import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
+import { InstagramProfile } from "@/components/instagram-profile"
 import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -91,6 +92,55 @@ const partnersItemList = {
   }),
 }
 
+// Service @graph: each thing Harry does as a discrete schema.org Service tied
+// back to the business entity. Helps Google understand service breadth for
+// long-tail queries ("piano disposal melbourne", "furniture moving melbourne")
+// that feed the head terms. Invisible structured data — no page change.
+// Prices pulled from RATES so schema can't drift from the visible rate table.
+const innerRate = RATES.find((r) => r.label === "Inner Suburbs & CBD")
+const outerMelb = RATES.find((r) => r.label === "Outer Melbourne")
+const disposalRate = RATES.find((r) => r.label === "Piano Disposal")
+
+const SERVICE_GEO = {
+  "@type": "City",
+  name: "Melbourne",
+  containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" },
+}
+
+const servicesGraph = {
+  "@context": "https://schema.org",
+  "@graph": SERVICES.map((s) => {
+    const node: Record<string, unknown> = {
+      "@type": "Service",
+      "@id": `${BASE_URL}/#service-${s.icon}`,
+      name: `${s.title} Melbourne`,
+      serviceType: s.title,
+      description: s.blurb,
+      provider: { "@id": `${BASE_URL}/#business` },
+      areaServed: SERVICE_GEO,
+    }
+    if (s.title === "Piano Moving" && innerRate && outerMelb) {
+      node.offers = {
+        "@type": "AggregateOffer",
+        priceCurrency: "AUD",
+        lowPrice: innerRate.upright,
+        highPrice: outerMelb.grand,
+        offerCount: 6,
+      }
+    }
+    if (s.title === "Piano Disposal" && disposalRate) {
+      node.offers = {
+        "@type": "AggregateOffer",
+        priceCurrency: "AUD",
+        lowPrice: disposalRate.upright,
+        highPrice: disposalRate.grand,
+        offerCount: 2,
+      }
+    }
+    return node
+  }),
+}
+
 // FAQPage JSON-LD so Google can render the FAQ as a rich result.
 const faqPageSchema = {
   "@context": "https://schema.org",
@@ -120,6 +170,10 @@ function InstagramIcon({ className }: { className?: string }) {
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesGraph) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(partnersItemList) }}
@@ -379,25 +433,7 @@ export default function HomePage() {
           See the Moves
         </h2>
         <div className="max-w-lg mx-auto fade-up">
-          <div className="glass rounded-2xl p-4 sm:p-6 text-center">
-            <iframe
-              src={`${BUSINESS.instagram}embed`}
-              width="100%"
-              height={480}
-              loading="lazy"
-              title="Harry The Piano Mover Instagram feed"
-              className="border-0 bg-white rounded-xl block max-w-full"
-            />
-            <a
-              href={BUSINESS.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-4 font-heading font-bold text-base sm:text-lg text-gold hover:text-tangerine active:text-coral transition-colors duration-200 py-2 px-2"
-            >
-              <InstagramIcon className="h-5 w-5" />
-              @harrythepianomover
-            </a>
-          </div>
+          <InstagramProfile url={BUSINESS.instagram} />
         </div>
       </section>
 
