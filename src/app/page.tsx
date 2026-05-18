@@ -11,7 +11,7 @@ import { InstagramProfile } from "@/components/instagram-profile"
 import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Piano Mover Melbourne | Harry The Piano Mover",
+  title: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
   description: BUSINESS.description,
   alternates: { canonical: "/" },
 }
