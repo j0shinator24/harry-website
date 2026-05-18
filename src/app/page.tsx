@@ -319,7 +319,7 @@ export default function HomePage() {
         </h2>
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {SERVICES.map((s) => (
-            <FeatureCard key={s.title} title={s.title} description={s.blurb} image={s.image} imageAlt={s.title} />
+            <FeatureCard key={s.title} title={s.title} description={s.blurb} image={s.image} imageAlt={`${s.title} service in Melbourne by Harry The Piano Mover`} />
           ))}
         </div>
       </section>

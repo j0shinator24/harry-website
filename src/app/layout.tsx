@@ -56,12 +56,23 @@ const movingCompanyJsonLd = {
   email: BUSINESS.email,
   priceRange: "$$",
   currenciesAccepted: "AUD",
+  // Areas mirror what the on-page FAQ already states ("Greater Melbourne metro,
+  // Ballarat, Bendigo, Geelong, Lakes Entrance, Mornington Peninsula, Phillip
+  // Island; anywhere in Victoria with notice; interstate Sydney-Adelaide").
+  // Schema must not claim coverage the visible page doesn't. Invisible signal only.
   areaServed: [
     {
       "@type": "City",
       name: "Melbourne",
       containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" },
     },
+    { "@type": "City", name: "Geelong", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
+    { "@type": "City", name: "Ballarat", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
+    { "@type": "City", name: "Bendigo", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
+    { "@type": "Place", name: "Mornington Peninsula" },
+    { "@type": "Place", name: "Phillip Island" },
+    { "@type": "Place", name: "Lakes Entrance" },
+    { "@type": "AdministrativeArea", name: "Victoria" },
     {
       "@type": "GeoCircle",
       name: "Greater Melbourne service area",
