@@ -51,6 +51,10 @@ const FAQ_ITEMS = [
     a: "Plenty. Furniture moves where a full removalist is overkill, Facebook Marketplace pickups and deliveries, gig load-in and load-out for bands (guitars, amps, drums, PA), event deliveries. If it fits in the van, it's worth a chat.",
   },
   {
+    q: "Do you tune the pianos?",
+    a: "I can play and move pianos, but tuning them is not one of my skills. Wait 3-4 weeks before having your piano tuned in the new space. I can help find a good tuner near you.",
+  },
+  {
     q: "How do I book?",
     a: "BOOKING_LINKS",
   },
@@ -309,6 +313,56 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* HOW A PIANO MOVE WORKS — Harry's own copy. Hybrid disclosure pattern:
+          first paragraph is the visible hook; the step-by-step detail is hidden
+          behind a native <details> so mobile users get a scannable section but
+          the full text is in the HTML source (still crawled + ranked by Google,
+          per mobile-first indexing). CSS-only toggle — works in any WebView. */}
+      <section id="how-it-works" className="py-14 sm:py-20 px-4 sm:px-5">
+        <div
+          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
+          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
+        >
+          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">
+            How a piano move works
+          </h2>
+          <p className="text-base sm:text-lg leading-relaxed">
+            Pianos aren&apos;t furniture. They&apos;re heavy, awkward, and sentimental beyond any
+            monetary value. Here&apos;s how we work.
+          </p>
+          <details className="group mt-4">
+            <summary className="cursor-pointer select-none inline-flex items-center gap-2 font-heading font-bold text-grape hover:text-tangerine transition-colors list-none [&::-webkit-details-marker]:hidden">
+              <span className="inline-block text-lg leading-none transition-transform group-open:rotate-90">
+                ▸
+              </span>
+              <span>Read the full process</span>
+            </summary>
+            <div className="mt-4 space-y-3 text-base sm:text-lg leading-relaxed">
+              <p>
+                When booking your move, we confirm everything we need to know: where the piano is
+                going to &amp; from, what size / brand / model is the piano, what the access is
+                like (stairs, narrow or difficult paths), and when you&apos;d like your piano
+                moved.
+              </p>
+              <p>
+                On the day, we protect your floors and anywhere the piano could come close to
+                touching. The piano is lifted onto our custom-made piano dolly and wheeled safely
+                into the van where it is secured and ready to go. For grand pianos, a similar
+                process except we remove the lyre, legs, music stand, and lid to be as careful as
+                possible. We use a ramp for 5 or fewer steps, and custom-made equipment to go up
+                or down more than 5 steps.
+              </p>
+              <p>
+                Careful &amp; creative access is what separates us from a couple blokes off
+                Airtasker. We place the piano where you want it, pedantry included. Advice for
+                environmental factors of the room, long-term protection of your floors, and where
+                it acoustically will flourish.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
       {/* SERVICES */}
       <section id="services" className="py-14 sm:py-20 px-4 sm:px-5">
         <h2
@@ -421,6 +475,46 @@ export default function HomePage() {
             <strong className="text-gray-800">$20 per step</strong> or fees in excess of{" "}
             <strong className="text-gray-800">$200</strong> if extra staff are needed.
           </div>
+        </div>
+      </section>
+
+      {/* SUBURBS I COVER — sits directly after Rates so the suburb groups
+          reinforce the rate-tier zones. Real Melbourne suburbs in body copy
+          capture "[suburb] piano mover" long-tail intent that feeds the head
+          terms. Grouped natural sentence form, not a keyword-stuffed list. */}
+      <section id="suburbs" className="py-14 sm:py-20 px-4 sm:px-5">
+        <div
+          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
+          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
+        >
+          <h2 className="font-heading font-black text-3xl sm:text-4xl text-grape text-center mb-3 sm:mb-4">
+            Suburbs I cover
+          </h2>
+          <p className="text-base sm:text-lg leading-relaxed mb-4">
+            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones
+            fall:
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-3">
+            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD,
+            Carlton, Fitzroy, Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick,
+            Northcote, Footscray, Yarraville, Port Melbourne, Docklands.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-3">
+            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon,
+            Moonee Ponds, Box Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton,
+            Glen Waverley, Doncaster, Reservoir, Heidelberg, Sunshine.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-4">
+            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong,
+            Werribee, Cranbourne, Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale,
+            Craigieburn, Point Cook, Mornington.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed text-gray-600">
+            Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula,
+            Phillip Island and Lakes Entrance, and with enough notice I can move a piano anywhere
+            in Victoria, or interstate between Sydney and Adelaide. Not sure which zone you&apos;re
+            in? Call or text and I&apos;ll tell you straight away.
+          </p>
         </div>
       </section>
 
