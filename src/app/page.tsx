@@ -430,6 +430,43 @@ export default function HomePage() {
             </Link>
           </p>
         </div>
+
+        {/* Suburbs I cover — nested under "Where I Move" so the map + legend +
+            named-suburb list sit together as one logical coverage block. */}
+        <div
+          id="suburbs"
+          className="card-white rounded-3xl max-w-4xl mx-auto mt-8 sm:mt-12 p-5 sm:p-8 md:p-12 fade-up"
+          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
+        >
+          <h3 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">
+            Suburbs I cover
+          </h3>
+          <p className="text-base sm:text-lg leading-relaxed mb-4">
+            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones
+            fall:
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-3">
+            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD,
+            Carlton, Fitzroy, Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick,
+            Northcote, Footscray, Yarraville, Port Melbourne, Docklands.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-3">
+            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon,
+            Moonee Ponds, Box Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton,
+            Glen Waverley, Doncaster, Reservoir, Heidelberg, Sunshine.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-4">
+            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong,
+            Werribee, Cranbourne, Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale,
+            Craigieburn, Point Cook, Mornington.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed text-gray-600">
+            Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula,
+            Phillip Island and Lakes Entrance, and with enough notice I can move a piano anywhere
+            in Victoria, or interstate between Sydney and Adelaide. Not sure which zone you&apos;re
+            in? Call or text and I&apos;ll tell you straight away.
+          </p>
+        </div>
       </section>
 
       {/* RATES */}
@@ -478,45 +515,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SUBURBS I COVER — sits directly after Rates so the suburb groups
-          reinforce the rate-tier zones. Real Melbourne suburbs in body copy
-          capture "[suburb] piano mover" long-tail intent that feeds the head
-          terms. Grouped natural sentence form, not a keyword-stuffed list. */}
-      <section id="suburbs" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div
-          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
-          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
-        >
-          <h2 className="font-heading font-black text-3xl sm:text-4xl text-grape text-center mb-3 sm:mb-4">
-            Suburbs I cover
-          </h2>
-          <p className="text-base sm:text-lg leading-relaxed mb-4">
-            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones
-            fall:
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-3">
-            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD,
-            Carlton, Fitzroy, Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick,
-            Northcote, Footscray, Yarraville, Port Melbourne, Docklands.
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-3">
-            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon,
-            Moonee Ponds, Box Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton,
-            Glen Waverley, Doncaster, Reservoir, Heidelberg, Sunshine.
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-4">
-            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong,
-            Werribee, Cranbourne, Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale,
-            Craigieburn, Point Cook, Mornington.
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed text-gray-600">
-            Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula,
-            Phillip Island and Lakes Entrance, and with enough notice I can move a piano anywhere
-            in Victoria, or interstate between Sydney and Adelaide. Not sure which zone you&apos;re
-            in? Call or text and I&apos;ll tell you straight away.
-          </p>
-        </div>
-      </section>
 
       {/* INSTAGRAM */}
       <section className="py-14 sm:py-20 px-4 sm:px-5">
