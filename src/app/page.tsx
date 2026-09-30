@@ -44,7 +44,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Do you dispose of unwanted pianos?",
-    a: "Yes. If your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $320 upright / $420 grand. It's often cheaper than a piano restoration quote that would never break even.",
+    a: "Yes. If your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $320 upright / $420 grand / $820 upright pianola. It's often cheaper than a piano restoration quote that would never break even.",
   },
   {
     q: "Do you do anything other than pianos?",
@@ -66,7 +66,7 @@ const FAQ_ITEMS = [
 const partnersItemList = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Friends of Mine — Melbourne piano sales and rentals recommended by Harry The Piano Mover",
+  name: "Friends of Mine: Melbourne piano sales and rentals recommended by Harry The Piano Mover",
   description:
     "Hand-picked Melbourne piano sales and rental businesses that Harry recommends to customers buying or hiring a piano.",
   numberOfItems: buyRent.length,
@@ -98,7 +98,7 @@ const partnersItemList = {
 
 // Service @graph: each thing Harry does as a discrete schema.org Service tied
 // back to the business entity. Helps Google understand service breadth for
-// long-tail queries ("piano disposal melbourne", "furniture moving melbourne")
+// long-tail queries ("piano disposal melbourne", "marketplace piano delivery")
 // that feed the head terms. Invisible structured data — no page change.
 // Prices pulled from RATES so schema can't drift from the visible rate table.
 const innerRate = RATES.find((r) => r.label === "Inner Suburbs & CBD")
@@ -133,12 +133,13 @@ const servicesGraph = {
       }
     }
     if (s.title === "Piano Disposal" && disposalRate) {
+      const prices = [disposalRate.upright, disposalRate.grand, ...(disposalRate.extras ?? []).map((e) => e.price)]
       node.offers = {
         "@type": "AggregateOffer",
         priceCurrency: "AUD",
-        lowPrice: disposalRate.upright,
-        highPrice: disposalRate.grand,
-        offerCount: 2,
+        lowPrice: Math.min(...prices),
+        highPrice: Math.max(...prices),
+        offerCount: prices.length,
       }
     }
     return node
@@ -430,43 +431,6 @@ export default function HomePage() {
             </Link>
           </p>
         </div>
-
-        {/* Suburbs I cover — nested under "Where I Move" so the map + legend +
-            named-suburb list sit together as one logical coverage block. */}
-        <div
-          id="suburbs"
-          className="card-white rounded-3xl max-w-4xl mx-auto mt-8 sm:mt-12 p-5 sm:p-8 md:p-12 fade-up"
-          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
-        >
-          <h3 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">
-            Suburbs I cover
-          </h3>
-          <p className="text-base sm:text-lg leading-relaxed mb-4">
-            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones
-            fall:
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-3">
-            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD,
-            Carlton, Fitzroy, Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick,
-            Northcote, Footscray, Yarraville, Port Melbourne, Docklands.
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-3">
-            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon,
-            Moonee Ponds, Box Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton,
-            Glen Waverley, Doncaster, Reservoir, Heidelberg, Sunshine.
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-4">
-            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong,
-            Werribee, Cranbourne, Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale,
-            Craigieburn, Point Cook, Mornington.
-          </p>
-          <p className="text-base sm:text-lg leading-relaxed text-gray-600">
-            Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula,
-            Phillip Island and Lakes Entrance, and with enough notice I can move a piano anywhere
-            in Victoria, or interstate between Sydney and Adelaide. Not sure which zone you&apos;re
-            in? Call or text and I&apos;ll tell you straight away.
-          </p>
-        </div>
       </section>
 
       {/* RATES */}
@@ -496,6 +460,12 @@ export default function HomePage() {
                   <span className="text-sm sm:text-base">Grand Piano</span>
                   <span className="font-heading font-bold text-lg sm:text-xl">${r.grand}</span>
                 </div>
+                {r.extras?.map((e) => (
+                  <div key={e.label} className="flex justify-between items-center py-1.5">
+                    <span className="text-sm sm:text-base">{e.label}</span>
+                    <span className="font-heading font-bold text-lg sm:text-xl">${e.price}</span>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
@@ -515,6 +485,44 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Suburbs I cover. Sits below Rates (Harry's request, Sep 2026) so
+          prices come first and the named-suburb list backs them up. */}
+      <section className="pb-14 sm:pb-20 px-4 sm:px-5">
+        <div
+          id="suburbs"
+          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
+          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
+        >
+          <h2 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">
+            Suburbs I cover
+          </h2>
+          <p className="text-base sm:text-lg leading-relaxed mb-4">
+            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones
+            fall:
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-3">
+            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD,
+            Carlton, Fitzroy, Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick,
+            Northcote, Footscray, Yarraville, Port Melbourne, Docklands.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-3">
+            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon,
+            Moonee Ponds, Box Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton,
+            Glen Waverley, Doncaster, Reservoir, Heidelberg, Sunshine.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed mb-4">
+            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong,
+            Werribee, Cranbourne, Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale,
+            Craigieburn, Point Cook, Mornington.
+          </p>
+          <p className="text-base sm:text-lg leading-relaxed text-gray-600">
+            Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula,
+            Phillip Island and Lakes Entrance, and with enough notice I can move a piano anywhere
+            in Victoria, or interstate between Sydney and Adelaide. Not sure which zone you&apos;re
+            in? Call or text and I&apos;ll tell you straight away.
+          </p>
+        </div>
+      </section>
 
       {/* INSTAGRAM */}
       <section className="py-14 sm:py-20 px-4 sm:px-5">

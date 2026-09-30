@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
     description: BUSINESS.description,
     url: BASE_URL,
-    images: [{ url: `${BASE_URL}/harry-piano-1.jpg`, width: 1200, height: 800, alt: "Harry The Piano Mover — specialist piano moving in Melbourne" }],
+    images: [{ url: `${BASE_URL}/harry-piano-1.jpg`, width: 1200, height: 800, alt: "Harry The Piano Mover, specialist piano moving in Melbourne" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -46,6 +46,10 @@ export const metadata: Metadata = {
 const movingCompanyJsonLd = {
   "@context": "https://schema.org",
   "@type": "MovingCompany",
+  // Entity disambiguation for search + AI engines, which have confused this
+  // business with a similarly named general removalist (GEO audit, Sep 2026).
+  disambiguatingDescription:
+    "Specialist piano-only mover in Melbourne run by Harry, a pianist. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
   "@id": `${BASE_URL}/#business`,
   name: BUSINESS.name,
   description: BUSINESS.description,
@@ -97,7 +101,7 @@ const personJsonLd = {
   jobTitle: "Piano Mover",
   worksFor: { "@id": `${BASE_URL}/#business` },
   description: "Melbourne piano mover and pianist. Sole operator of Harry The Piano Mover.",
-  knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Furniture moving"],
+  knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving"],
   sameAs: [BUSINESS.instagram],
 }
 

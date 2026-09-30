@@ -11,7 +11,7 @@ export const BUSINESS = {
   location: "Melbourne, VIC",
   tagline: "Melbourne's specialist piano mover. Uprights, grands, and digitals.",
   description:
-    "Melbourne piano movers. Uprights, grands, and digitals moved safely across the city. Piano removals, disposal, furniture moves, and Marketplace pickups. Five-star reviews.",
+    "Melbourne piano movers. Uprights, grands, and digitals moved safely across the city. Piano removals, piano disposal, and Marketplace piano pickups. Five-star reviews.",
   instagram: "https://www.instagram.com/harrythepianomover/",
   googleReviews: "https://maps.app.goo.gl/nscqKmX1AwyyrLmE7",
 } as const
@@ -22,19 +22,28 @@ export type RateZone = {
   grand: number
   toneFrom: string
   toneTo: string
+  // Extra line items listed under Upright / Grand (e.g. pianola disposal).
+  extras?: readonly { label: string; price: number }[]
 }
 
 export const RATES: readonly RateZone[] = [
   { label: "Inner Suburbs & CBD", upright: 260, grand: 460, toneFrom: "#F5B742", toneTo: "#F58C5A" },
   { label: "Outer Suburbs", upright: 340, grand: 570, toneFrom: "#F58C5A", toneTo: "#F06681" },
   { label: "Outer Melbourne", upright: 420, grand: 650, toneFrom: "#F06681", toneTo: "#9B4D9E" },
-  { label: "Piano Disposal", upright: 320, grand: 420, toneFrom: "#6B4C9A", toneTo: "#4A4AA0" },
+  {
+    label: "Piano Disposal",
+    upright: 320,
+    grand: 420,
+    toneFrom: "#6B4C9A",
+    toneTo: "#4A4AA0",
+    extras: [{ label: "Upright Pianola", price: 820 }],
+  },
 ] as const
 
 export type Service = {
   title: string
   blurb: string
-  icon: "piano" | "disposal" | "furniture" | "marketplace" | "band" | "busking"
+  icon: "piano" | "disposal" | "marketplace" | "band" | "busking"
   image: string
 }
 
@@ -43,7 +52,7 @@ export const SERVICES: readonly Service[] = [
     title: "Piano Moving",
     blurb: "Rates vary from Melbourne Metro to outer suburbs & beyond, more info below.",
     icon: "piano",
-    image: "/icon-piano-move.jpg",
+    image: "/icon-piano-move.png",
   },
   {
     title: "Piano Disposal",
@@ -52,14 +61,8 @@ export const SERVICES: readonly Service[] = [
     image: "/icon-disposal.png",
   },
   {
-    title: "Furniture Moving",
-    blurb: "Not enough room in the car? We can help move items not worth hiring a truck + team for.",
-    icon: "furniture",
-    image: "/icon-furniture.png",
-  },
-  {
     title: "Marketplace Deliveries",
-    blurb: "Random purchases on Facebook Marketplace can be delivered to save you the awkward train ride.",
+    blurb: "Pianos purchased on Marketplace or online can be delivered without needing you to attend at the pick-up.",
     icon: "marketplace",
     image: "/icon-marketplace.png",
   },
@@ -67,7 +70,7 @@ export const SERVICES: readonly Service[] = [
     title: "Band Equipment Deliveries",
     blurb: "Guitars, amps, drum kits, PA, etc. We pick up your goods to bring to the event, then bring it back after.",
     icon: "band",
-    image: "/icon-band.jpg",
+    image: "/icon-band.png",
   },
   {
     title: "Piano Busking",
