@@ -8,7 +8,7 @@ import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { InstagramProfile } from "@/components/instagram-profile"
-import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
+import { ADDITIONAL_SERVICES, BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
@@ -21,10 +21,19 @@ const buyRent = PARTNERS.filter((p) => p.category === "buy-rent")
 // homepage. They'll live on a dedicated /partners (or similar) page once
 // the broader directory features are ready. Data is still in constants.
 
+// Rate lookups. FAQ answers and schema read prices from RATES so nothing on the
+// page can drift from the visible rate table when Harry changes his prices.
+const innerRate = RATES.find((r) => r.label === "Inner Suburbs & CBD")!
+const outerSub = RATES.find((r) => r.label === "Outer Suburbs")!
+const outerMelb = RATES.find((r) => r.label === "Outer Melbourne")!
+const disposalRate = RATES.find((r) => r.label === "Piano Disposal")!
+const pianolaDisposal = disposalRate.extras?.[0]
+const extraItem = ADDITIONAL_SERVICES.items.find((i) => i.label === "Extra items")!
+
 const FAQ_ITEMS = [
   {
     q: "How much does it cost to move a piano in Melbourne?",
-    a: "Inner Suburbs and CBD starts at $260 for an upright and $460 for a grand. Outer Suburbs is $340 / $570. Outer Melbourne is $420 / $650. Anything past that is a custom quote. Call or text and I'll work it out with you.",
+    a: `Inner Suburbs and CBD starts at $${innerRate.upright} for an upright and $${innerRate.grand} for a grand. Outer Suburbs is $${outerSub.upright} / $${outerSub.grand}. Outer Melbourne is $${outerMelb.upright} / $${outerMelb.grand}. Anything past that is a custom quote. Call or text and I'll work it out with you.`,
   },
   {
     q: "Are you insured?",
@@ -44,11 +53,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "Do you dispose of unwanted pianos?",
-    a: "Yes. If your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $320 upright / $420 grand / $820 upright pianola. It's often cheaper than a piano restoration quote that would never break even.",
+    a: `Yes. If your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $${disposalRate.upright} upright / $${disposalRate.grand} grand${pianolaDisposal ? ` / $${pianolaDisposal.price} upright pianola` : ""}. It's often cheaper than a piano restoration quote that would never break even.`,
   },
   {
     q: "Do you do anything other than pianos?",
-    a: "Plenty. Furniture moves where a full removalist is overkill, Facebook Marketplace pickups and deliveries, gig load-in and load-out for bands (guitars, amps, drums, PA), event deliveries. If it fits in the van, it's worth a chat.",
+    a: `Piano moving is my specialty. I can take additional items alongside your piano ($${extraItem.price} per extra item), deliver pianos bought on Marketplace or online, and do gig load-in and load-out for bands (guitars, amps, drums, PA). Call or text and we'll work it out.`,
   },
   {
     q: "Do you tune the pianos?",
@@ -101,10 +110,6 @@ const partnersItemList = {
 // long-tail queries ("piano disposal melbourne", "marketplace piano delivery")
 // that feed the head terms. Invisible structured data — no page change.
 // Prices pulled from RATES so schema can't drift from the visible rate table.
-const innerRate = RATES.find((r) => r.label === "Inner Suburbs & CBD")
-const outerMelb = RATES.find((r) => r.label === "Outer Melbourne")
-const disposalRate = RATES.find((r) => r.label === "Piano Disposal")
-
 const SERVICE_GEO = {
   "@type": "City",
   name: "Melbourne",
@@ -301,13 +306,10 @@ export default function HomePage() {
               <p className="text-base sm:text-lg leading-relaxed mb-3">
                 See our rates below for piano relocation around Melbourne.
               </p>
-              <p className="text-base sm:text-lg leading-relaxed mb-3">
-                Not just pianos! Event deliveries, furniture moving, marketplace pick-ups, gig
-                equipment deliveries, whatever you need to put in a van.
-              </p>
               <p className="text-base sm:text-lg leading-relaxed text-gray-600">
-                Please enquire via email or phone about pianos or other items you may need
-                transported. We have a versatile van to assist in relocating what you need safely.
+                Please enquire via text, phone or email about the piano you need moved, or
+                additional items you may need transported along with your piano. We have a
+                versatile van to assist in relocating what you need safely.
               </p>
             </div>
           </div>
@@ -466,8 +468,33 @@ export default function HomePage() {
                     <span className="font-heading font-bold text-lg sm:text-xl">${e.price}</span>
                   </div>
                 ))}
+                {r.note && (
+                  <p className="mt-3 pt-3 border-t border-white/30 text-xs sm:text-sm leading-relaxed text-white/90">
+                    {r.note}
+                  </p>
+                )}
               </div>
             ))}
+            {/* Additional Services: Harry's Oct 2026 addition, sits below disposal. */}
+            <div
+              className="rounded-2xl p-4 sm:p-6 text-white sm:col-span-2"
+              style={{
+                background: `linear-gradient(135deg, ${ADDITIONAL_SERVICES.toneFrom}, ${ADDITIONAL_SERVICES.toneTo})`,
+              }}
+            >
+              <h3 className="font-heading font-bold text-base sm:text-lg mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/30">
+                {ADDITIONAL_SERVICES.label}
+              </h3>
+              {ADDITIONAL_SERVICES.items.map((i) => (
+                <div key={i.label} className="flex justify-between items-center py-1.5">
+                  <span className="text-sm sm:text-base">{i.label}</span>
+                  <span className="font-heading font-bold text-lg sm:text-xl">${i.price}</span>
+                </div>
+              ))}
+              <p className="mt-3 pt-3 border-t border-white/30 text-xs sm:text-sm leading-relaxed text-white/90">
+                {ADDITIONAL_SERVICES.note}
+              </p>
+            </div>
           </div>
           <div className="text-center text-sm sm:text-base text-gray-600 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed">
             Outer Melbourne &amp; interstate prices vary, please{" "}

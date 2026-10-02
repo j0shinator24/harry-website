@@ -24,21 +24,38 @@ export type RateZone = {
   toneTo: string
   // Extra line items listed under Upright / Grand (e.g. pianola disposal).
   extras?: readonly { label: string; price: number }[]
+  // Small-print clause shown at the bottom of the card.
+  note?: string
 }
 
+// Rates effective October 2026 (Harry's rate review via the studio).
 export const RATES: readonly RateZone[] = [
-  { label: "Inner Suburbs & CBD", upright: 260, grand: 460, toneFrom: "#F5B742", toneTo: "#F58C5A" },
-  { label: "Outer Suburbs", upright: 340, grand: 570, toneFrom: "#F58C5A", toneTo: "#F06681" },
-  { label: "Outer Melbourne", upright: 420, grand: 650, toneFrom: "#F06681", toneTo: "#9B4D9E" },
+  { label: "Inner Suburbs & CBD", upright: 290, grand: 530, toneFrom: "#F5B742", toneTo: "#F58C5A" },
+  { label: "Outer Suburbs", upright: 380, grand: 630, toneFrom: "#F58C5A", toneTo: "#F06681" },
+  { label: "Outer Melbourne", upright: 470, grand: 720, toneFrom: "#F06681", toneTo: "#9B4D9E" },
   {
     label: "Piano Disposal",
-    upright: 320,
-    grand: 420,
+    upright: 350,
+    grand: 460,
     toneFrom: "#6B4C9A",
     toneTo: "#4A4AA0",
-    extras: [{ label: "Upright Pianola", price: 820 }],
+    extras: [{ label: "Upright Pianola*", price: 870 }],
+    note: "*Pianolas with the mechanism removed may be assessed as a standard piano depending on dimensions and access. Photos and dimensions required.",
   },
 ] as const
+
+// "Additional Services" card, shown below the disposal rates.
+export const ADDITIONAL_SERVICES = {
+  label: "Additional Services",
+  toneFrom: "#4A4AA0",
+  toneTo: "#2F3A7A",
+  items: [
+    { label: "Upright Internal", price: 170 },
+    { label: "Grand Internal", price: 280 },
+    { label: "Extra items", price: 60 },
+  ],
+  note: "Additional items are charged when moving items alongside a piano. Piano moving is our specialty.",
+} as const
 
 export type Service = {
   title: string
