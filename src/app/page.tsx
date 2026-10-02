@@ -300,13 +300,13 @@ export default function HomePage() {
               <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">
                 Hey, I&apos;m Harry
               </h2>
-              <p className="text-base sm:text-lg leading-relaxed mb-3">
+              <p className="text-lg sm:text-xl leading-relaxed mb-3">
                 Trust in your piano being moved by an experienced piano mover &amp; player.
               </p>
-              <p className="text-base sm:text-lg leading-relaxed mb-3">
+              <p className="text-lg sm:text-xl leading-relaxed mb-3">
                 See our rates below for piano relocation around Melbourne.
               </p>
-              <p className="text-base sm:text-lg leading-relaxed text-gray-600">
+              <p className="text-lg sm:text-xl leading-relaxed text-gray-600">
                 Please enquire via text, phone or email about the piano you need moved, or
                 additional items you may need transported along with your piano. We have a
                 versatile van to assist in relocating what you need safely.
@@ -329,7 +329,7 @@ export default function HomePage() {
           <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">
             How a piano move works
           </h2>
-          <p className="text-base sm:text-lg leading-relaxed">
+          <p className="text-lg sm:text-xl leading-relaxed">
             Pianos aren&apos;t furniture. They&apos;re heavy, awkward, and sentimental beyond any
             monetary value. Here&apos;s how we work.
           </p>
@@ -340,7 +340,7 @@ export default function HomePage() {
               </span>
               <span>Read the full process</span>
             </summary>
-            <div className="mt-4 space-y-3 text-base sm:text-lg leading-relaxed">
+            <div className="mt-4 space-y-3 text-lg sm:text-xl leading-relaxed">
               <p>
                 When booking your move, we confirm everything we need to know: where the piano is
                 going to &amp; from, what size / brand / model is the piano, what the access is
@@ -414,18 +414,18 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-3 sm:gap-5 justify-center mt-5 sm:mt-6">
             <div className="flex items-center gap-2">
               <span className="inline-block w-4 h-4 rounded-full" style={{ background: "#F5B742", boxShadow: "0 0 0 1px rgba(255,255,255,0.4)" }} />
-              <span className="text-white text-sm sm:text-base">Inner Suburbs &amp; CBD</span>
+              <span className="text-white text-base sm:text-lg">Inner Suburbs &amp; CBD</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="inline-block w-4 h-4 rounded-full" style={{ background: "#F06681", boxShadow: "0 0 0 1px rgba(255,255,255,0.4)" }} />
-              <span className="text-white text-sm sm:text-base">Outer Suburbs</span>
+              <span className="text-white text-base sm:text-lg">Outer Suburbs</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="inline-block w-4 h-4 rounded-full" style={{ background: "#9B4D9E", boxShadow: "0 0 0 1px rgba(255,255,255,0.4)" }} />
-              <span className="text-white text-sm sm:text-base">Outer Melbourne</span>
+              <span className="text-white text-base sm:text-lg">Outer Melbourne</span>
             </div>
           </div>
-          <p className="text-center text-white/70 text-xs sm:text-sm mt-3 inline-flex items-center gap-1.5 w-full justify-center">
+          <p className="text-center text-white/70 text-sm sm:text-base mt-3 inline-flex items-center gap-1.5 w-full justify-center">
             <MapPin className="h-3.5 w-3.5" />
             Anything beyond?{" "}
             <Link href="#contact" className="text-gold hover:underline">
@@ -451,25 +451,25 @@ export default function HomePage() {
                 className="rounded-2xl p-4 sm:p-6 text-white"
                 style={{ background: `linear-gradient(135deg, ${r.toneFrom}, ${r.toneTo})` }}
               >
-                <h3 className="font-heading font-bold text-base sm:text-lg mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/30">
+                <h3 className="font-heading font-bold text-lg sm:text-xl mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/30">
                   {r.label}
                 </h3>
                 <div className="flex justify-between items-center py-1.5">
-                  <span className="text-sm sm:text-base">Upright Piano</span>
-                  <span className="font-heading font-bold text-lg sm:text-xl">${r.upright}</span>
+                  <span className="text-base sm:text-lg">Upright Piano</span>
+                  <span className="font-heading font-bold text-xl sm:text-2xl">${r.upright}</span>
                 </div>
                 <div className="flex justify-between items-center py-1.5">
-                  <span className="text-sm sm:text-base">Grand Piano</span>
-                  <span className="font-heading font-bold text-lg sm:text-xl">${r.grand}</span>
+                  <span className="text-base sm:text-lg">Grand Piano</span>
+                  <span className="font-heading font-bold text-xl sm:text-2xl">${r.grand}</span>
                 </div>
                 {r.extras?.map((e) => (
                   <div key={e.label} className="flex justify-between items-center py-1.5">
-                    <span className="text-sm sm:text-base">{e.label}</span>
-                    <span className="font-heading font-bold text-lg sm:text-xl">${e.price}</span>
+                    <span className="text-base sm:text-lg">{e.label}</span>
+                    <span className="font-heading font-bold text-xl sm:text-2xl">${e.price}</span>
                   </div>
                 ))}
                 {r.note && (
-                  <p className="mt-3 pt-3 border-t border-white/30 text-xs sm:text-sm leading-relaxed text-white/90">
+                  <p className="mt-3 pt-3 border-t border-white/30 text-sm sm:text-base leading-relaxed text-white/90">
                     {r.note}
                   </p>
                 )}
@@ -482,21 +482,21 @@ export default function HomePage() {
                 background: `linear-gradient(135deg, ${ADDITIONAL_SERVICES.toneFrom}, ${ADDITIONAL_SERVICES.toneTo})`,
               }}
             >
-              <h3 className="font-heading font-bold text-base sm:text-lg mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/30">
+              <h3 className="font-heading font-bold text-lg sm:text-xl mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/30">
                 {ADDITIONAL_SERVICES.label}
               </h3>
               {ADDITIONAL_SERVICES.items.map((i) => (
                 <div key={i.label} className="flex justify-between items-center py-1.5">
-                  <span className="text-sm sm:text-base">{i.label}</span>
-                  <span className="font-heading font-bold text-lg sm:text-xl">${i.price}</span>
+                  <span className="text-base sm:text-lg">{i.label}</span>
+                  <span className="font-heading font-bold text-xl sm:text-2xl">${i.price}</span>
                 </div>
               ))}
-              <p className="mt-3 pt-3 border-t border-white/30 text-xs sm:text-sm leading-relaxed text-white/90">
+              <p className="mt-3 pt-3 border-t border-white/30 text-sm sm:text-base leading-relaxed text-white/90">
                 {ADDITIONAL_SERVICES.note}
               </p>
             </div>
           </div>
-          <div className="text-center text-sm sm:text-base text-gray-600 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed">
+          <div className="text-center text-base sm:text-lg text-gray-600 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed">
             Outer Melbourne &amp; interstate prices vary, please{" "}
             <Link href="#contact" className="text-grape font-bold hover:underline py-1 inline-block">
               contact
@@ -523,26 +523,26 @@ export default function HomePage() {
           <h2 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">
             Suburbs I cover
           </h2>
-          <p className="text-base sm:text-lg leading-relaxed mb-4">
+          <p className="text-lg sm:text-xl leading-relaxed mb-4">
             I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones
             fall:
           </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-3">
+          <p className="text-lg sm:text-xl leading-relaxed mb-3">
             <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD,
             Carlton, Fitzroy, Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick,
             Northcote, Footscray, Yarraville, Port Melbourne, Docklands.
           </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-3">
+          <p className="text-lg sm:text-xl leading-relaxed mb-3">
             <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon,
             Moonee Ponds, Box Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton,
             Glen Waverley, Doncaster, Reservoir, Heidelberg, Sunshine.
           </p>
-          <p className="text-base sm:text-lg leading-relaxed mb-4">
+          <p className="text-lg sm:text-xl leading-relaxed mb-4">
             <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong,
             Werribee, Cranbourne, Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale,
             Craigieburn, Point Cook, Mornington.
           </p>
-          <p className="text-base sm:text-lg leading-relaxed text-gray-600">
+          <p className="text-lg sm:text-xl leading-relaxed text-gray-600">
             Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula,
             Phillip Island and Lakes Entrance, and with enough notice I can move a piano anywhere
             in Victoria, or interstate between Sydney and Adelaide. Not sure which zone you&apos;re
@@ -586,10 +586,10 @@ export default function HomePage() {
                   ✓
                 </span>
                 <div>
-                  <p className="font-heading font-bold text-base sm:text-lg text-white">
+                  <p className="font-heading font-bold text-lg sm:text-xl text-white">
                     Public liability insurance
                   </p>
-                  <p className="text-white/75 text-sm sm:text-base leading-relaxed">
+                  <p className="text-white/75 text-base sm:text-lg leading-relaxed">
                     Covers damage to your home or property during a job.
                   </p>
                 </div>
@@ -602,10 +602,10 @@ export default function HomePage() {
                   ✓
                 </span>
                 <div>
-                  <p className="font-heading font-bold text-base sm:text-lg text-white">
+                  <p className="font-heading font-bold text-lg sm:text-xl text-white">
                     Goods in transit (carriers) insurance
                   </p>
-                  <p className="text-white/75 text-sm sm:text-base leading-relaxed">
+                  <p className="text-white/75 text-base sm:text-lg leading-relaxed">
                     Covers your piano, furniture, and equipment while it&apos;s in the van.
                   </p>
                 </div>
@@ -625,7 +625,7 @@ export default function HomePage() {
             >
               Friends of Mine
             </h2>
-            <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white/80 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
               For buying or hiring a piano in Melbourne, these are the folks I recommend.
             </p>
           </div>
@@ -636,7 +636,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <p className="mt-10 max-w-xl mx-auto text-center text-xs sm:text-sm text-white/55 leading-relaxed border-l-2 border-white/30 pl-3">
+          <p className="mt-10 max-w-xl mx-auto text-center text-sm sm:text-base text-white/55 leading-relaxed border-l-2 border-white/30 pl-3">
             A full directory of Melbourne piano tuners and technicians is coming to a separate page.
             No paid placements.
           </p>
@@ -660,7 +660,7 @@ export default function HomePage() {
                 style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }}
                 {...(i === 0 ? { open: true } : {})}
               >
-                <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-heading font-bold text-base sm:text-lg text-white">
+                <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-heading font-bold text-lg sm:text-xl text-white">
                   {item.q}
                   <span
                     aria-hidden="true"
@@ -670,7 +670,7 @@ export default function HomePage() {
                   </span>
                 </summary>
                 {item.a === "BOOKING_LINKS" ? (
-                  <p className="mt-3 text-white/85 text-sm sm:text-base leading-relaxed">
+                  <p className="mt-3 text-white/85 text-base sm:text-lg leading-relaxed">
                     Call or text{" "}
                     <a href={`tel:${BUSINESS.phoneInternational}`} className="text-gold hover:underline font-bold">
                       {BUSINESS.phone}
@@ -682,7 +682,7 @@ export default function HomePage() {
                     . I&apos;ll get back within a few hours.
                   </p>
                 ) : (
-                  <p className="mt-3 text-white/85 text-sm sm:text-base leading-relaxed">{item.a}</p>
+                  <p className="mt-3 text-white/85 text-base sm:text-lg leading-relaxed">{item.a}</p>
                 )}
               </details>
             ))}

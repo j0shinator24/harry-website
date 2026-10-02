@@ -29,8 +29,8 @@ export function PartnerCard({ p }: { p: Partner }) {
       )}
       <div className="relative z-[2] pointer-events-none">
         <div className="flex items-start justify-between gap-3 mb-2">
-          <h4 className="font-heading font-bold text-lg sm:text-xl text-white">{p.name}</h4>
-          <span className="flex-shrink-0 inline-flex items-center gap-1 text-gold font-heading font-bold text-sm sm:text-base">
+          <h4 className="font-heading font-bold text-xl sm:text-2xl text-white">{p.name}</h4>
+          <span className="flex-shrink-0 inline-flex items-center gap-1 text-gold font-heading font-bold text-base sm:text-lg">
             <Star className="h-3.5 w-3.5 fill-current" />
             {p.rating.toFixed(1)}
             {typeof p.reviews === "number" && (

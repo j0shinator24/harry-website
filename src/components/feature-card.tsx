@@ -22,8 +22,8 @@ export function FeatureCard({ title, description, image, imageAlt = "" }: Featur
           className="w-full h-full object-contain"
         />
       </div>
-      <h3 className="font-heading font-bold text-lg sm:text-xl mb-2 text-white">{title}</h3>
-      <p className="text-white/85 text-[0.95rem] sm:text-base leading-relaxed">{description}</p>
+      <h3 className="font-heading font-bold text-xl sm:text-2xl mb-2 text-white">{title}</h3>
+      <p className="text-white/85 text-base sm:text-lg leading-relaxed">{description}</p>
     </div>
   )
 }

@@ -72,10 +72,10 @@ export function ReviewsCarousel() {
                 <Star key={i} className="h-4 w-4 text-gold fill-current" aria-hidden="true" />
               ))}
             </div>
-            <p className="text-white/90 text-sm sm:text-base leading-relaxed mb-4 italic">
+            <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-4 italic">
               &ldquo;{r.text}&rdquo;
             </p>
-            <p className="text-white/60 text-xs sm:text-sm font-heading font-bold">
+            <p className="text-white/60 text-sm sm:text-base font-heading font-bold">
               {r.name}
             </p>
           </div>
@@ -92,7 +92,7 @@ export function ReviewsCarousel() {
           href={BUSINESS.googleReviews}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-gold hover:text-tangerine font-heading font-bold text-sm sm:text-base transition-colors duration-200 py-2 px-2"
+          className="inline-flex items-center gap-2 text-gold hover:text-tangerine font-heading font-bold text-base sm:text-lg transition-colors duration-200 py-2 px-2"
         >
           <Star className="h-4 w-4 fill-current" aria-hidden="true" />
           See all reviews on Google
