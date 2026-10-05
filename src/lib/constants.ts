@@ -44,19 +44,6 @@ export const RATES: readonly RateZone[] = [
   },
 ] as const
 
-// "Additional Services" card, shown below the disposal rates.
-export const ADDITIONAL_SERVICES = {
-  label: "Additional Services",
-  toneFrom: "#4A4AA0",
-  toneTo: "#2F3A7A",
-  items: [
-    { label: "Upright Internal", price: 170 },
-    { label: "Grand Internal", price: 280 },
-    { label: "Extra items", price: 60 },
-  ],
-  note: "Additional items are charged when moving items alongside a piano. Piano moving is our specialty.",
-} as const
-
 export type Service = {
   title: string
   blurb: string

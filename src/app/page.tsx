@@ -8,7 +8,7 @@ import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { InstagramProfile } from "@/components/instagram-profile"
-import { ADDITIONAL_SERVICES, BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
+import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
@@ -28,7 +28,6 @@ const outerSub = RATES.find((r) => r.label === "Outer Suburbs")!
 const outerMelb = RATES.find((r) => r.label === "Outer Melbourne")!
 const disposalRate = RATES.find((r) => r.label === "Piano Disposal")!
 const pianolaDisposal = disposalRate.extras?.[0]
-const extraItem = ADDITIONAL_SERVICES.items.find((i) => i.label === "Extra items")!
 
 const FAQ_ITEMS = [
   {
@@ -57,7 +56,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Do you do anything other than pianos?",
-    a: `Piano moving is my specialty. I can take additional items alongside your piano ($${extraItem.price} per extra item), deliver pianos bought on Marketplace or online, and do gig load-in and load-out for bands (guitars, amps, drums, PA). Call or text and we'll work it out.`,
+    a: `Piano moving is my specialty. I can take additional items alongside your piano, deliver pianos bought on Marketplace or online, and do gig load-in and load-out for bands (guitars, amps, drums, PA). Call or text and we'll work it out.`,
   },
   {
     q: "Do you tune the pianos?",
@@ -475,26 +474,6 @@ export default function HomePage() {
                 )}
               </div>
             ))}
-            {/* Additional Services: Harry's Oct 2026 addition, sits below disposal. */}
-            <div
-              className="rounded-2xl p-4 sm:p-6 text-white sm:col-span-2"
-              style={{
-                background: `linear-gradient(135deg, ${ADDITIONAL_SERVICES.toneFrom}, ${ADDITIONAL_SERVICES.toneTo})`,
-              }}
-            >
-              <h3 className="font-heading font-bold text-lg sm:text-xl mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/30">
-                {ADDITIONAL_SERVICES.label}
-              </h3>
-              {ADDITIONAL_SERVICES.items.map((i) => (
-                <div key={i.label} className="flex justify-between items-center py-1.5">
-                  <span className="text-base sm:text-lg">{i.label}</span>
-                  <span className="font-heading font-bold text-xl sm:text-2xl">${i.price}</span>
-                </div>
-              ))}
-              <p className="mt-3 pt-3 border-t border-white/30 text-sm sm:text-base leading-relaxed text-white/90">
-                {ADDITIONAL_SERVICES.note}
-              </p>
-            </div>
           </div>
           <div className="text-center text-base sm:text-lg text-gray-600 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed">
             Outer Melbourne &amp; interstate prices vary, please{" "}
