@@ -8,6 +8,7 @@ import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { InstagramProfile } from "@/components/instagram-profile"
+import { Picture } from "@/components/picture"
 import { BASE_URL, BUSINESS, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -155,19 +156,44 @@ const servicesGraph = {
       provider: { "@id": `${BASE_URL}/#business` },
       areaServed: SERVICE_GEO,
     }
+    // Zone prices are BASE rates (the visible rates box: up to three or four
+    // entry steps or easy ramp access). Steps and extra staff are separate
+    // offers, and extra staff is a minimum, never a fixed price.
     if (s.title === "Piano Moving" && innerRate && outerMelb) {
-      node.offers = {
-        "@type": "AggregateOffer",
-        priceCurrency: "AUD",
-        lowPrice: innerRate.upright,
-        highPrice: outerMelb.grand,
-        offerCount: 6,
-      }
+      node.offers = [
+        {
+          "@type": "AggregateOffer",
+          name: "Base zone rates, upright and grand pianos",
+          description:
+            "Published base zone rates, confirmed October 2026, for access with less than four steps or easy ramp access. Difficult access may add $20 per step, or fees in excess of $200 if extra staff are needed, so a move can cost more than its base rate. Interstate prices vary.",
+          priceCurrency: "AUD",
+          lowPrice: innerRate.upright,
+          highPrice: outerMelb.grand,
+          offerCount: 6,
+        },
+        {
+          "@type": "Offer",
+          name: "Difficult access, per step",
+          description: "Added to the base rate for difficult access: $20 per step.",
+          price: 20,
+          priceCurrency: "AUD",
+          priceSpecification: { "@type": "UnitPriceSpecification", price: 20, priceCurrency: "AUD", unitText: "step" },
+        },
+        {
+          "@type": "Offer",
+          name: "Extra staff for difficult access",
+          description: "Added to the base rate when extra staff are needed: fees in excess of $200.",
+          priceCurrency: "AUD",
+          priceSpecification: { "@type": "PriceSpecification", minPrice: 200, priceCurrency: "AUD" },
+        },
+      ]
     }
     if (s.title === "Piano Disposal" && disposalRate) {
       const prices = [disposalRate.upright, disposalRate.grand, ...(disposalRate.extras ?? []).map((e) => e.price)]
       node.offers = {
         "@type": "AggregateOffer",
+        name: "Piano disposal prices",
+        description: `Published disposal prices for an upright, a grand and an upright pianola, confirmed October 2026. ${(disposalRate.note ?? "").replace(/^\*\s*/, "")}`.trim(),
         priceCurrency: "AUD",
         lowPrice: Math.min(...prices),
         highPrice: Math.max(...prices),
@@ -315,12 +341,13 @@ export default function HomePage() {
               className="relative w-full sm:w-52 h-48 sm:h-52 flex-shrink-0 rounded-2xl overflow-hidden"
               style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
             >
-              <Image
+              <Picture
                 src="/harry-piano-1.jpg"
                 alt="Harry playing piano with Melbourne skyline"
-                fill
+                width={900}
+                height={1200}
                 sizes="(max-width: 640px) 100vw, 208px"
-                className="object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
                 style={{ objectPosition: "center 72%" }}
               />
             </div>
@@ -422,7 +449,7 @@ export default function HomePage() {
               className="relative rounded-xl sm:rounded-2xl overflow-hidden h-32 sm:h-52 md:h-72"
               style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.2)" }}
             >
-              <Image src={p.src} alt={p.alt} width={900} height={1200} sizes="33vw" className="absolute inset-0 h-full w-full object-cover" />
+              <Picture src={p.src} alt={p.alt} width={900} height={1200} sizes="33vw" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </div>
           ))}

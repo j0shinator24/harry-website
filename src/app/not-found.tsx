@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
 // Own title, no canonical; Next adds the single noindex robots tag itself.
-export const metadata: Metadata = { title: "Page not found" }
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: "This page isn't here, but the Harry The Piano Mover homepage has rates, service areas and ways to get in touch.",
+}
 
 export default function NotFound() {
   return (

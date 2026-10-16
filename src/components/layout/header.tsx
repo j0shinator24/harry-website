@@ -23,7 +23,8 @@ function smoothScrollToHash(e: React.MouseEvent<HTMLAnchorElement>, hash: string
   const target = typeof document !== "undefined" ? document.querySelector(hash) : null
   if (!target) return
   e.preventDefault()
-  target.scrollIntoView({ behavior: "smooth", block: "start" })
+  const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" })
   if (typeof window !== "undefined" && window.history?.replaceState) {
     window.history.replaceState(null, "", hash)
   }

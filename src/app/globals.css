@@ -154,3 +154,18 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
   line-height: 1.1;
 }
+
+/* Reduced motion (WCAG 2.3.3): no smooth scrolling and no non-essential
+   transitions or animations outside the homepage hero, whose design is
+   locked. Nothing changes for visitors who have not asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *:not(#hero, #hero *),
+  *:not(#hero, #hero *)::before,
+  *:not(#hero, #hero *)::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
