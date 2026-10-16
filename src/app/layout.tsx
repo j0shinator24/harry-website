@@ -16,7 +16,7 @@ const alegreya = Alegreya({
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
+    default: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
     template: "%s | Harry The Piano Mover",
   },
   description: BUSINESS.description,
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_AU",
     siteName: BUSINESS.name,
-    title: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
+    title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
     description: BUSINESS.description,
     url: BASE_URL,
     images: [{ url: `${BASE_URL}/harry-piano-1.jpg`, width: 1200, height: 800, alt: "Harry The Piano Mover, specialist piano moving in Melbourne" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
+    title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
     description: BUSINESS.description,
     images: [`${BASE_URL}/harry-piano-1.jpg`],
   },

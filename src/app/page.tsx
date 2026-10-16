@@ -11,7 +11,7 @@ import { InstagramProfile } from "@/components/instagram-profile"
 import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Melbourne Piano Movers & Removals | Harry The Piano Mover",
+  title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
   description: BUSINESS.description,
   alternates: { canonical: "/" },
 }
@@ -195,7 +195,7 @@ export default function HomePage() {
       <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/hero-bg.png"
+            src="/hero-bg.webp"
             alt=""
             aria-hidden="true"
             fill
