@@ -9,7 +9,7 @@ import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { InstagramProfile } from "@/components/instagram-profile"
 import { Picture } from "@/components/picture"
-import { BASE_URL, BUSINESS, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS } from "@/lib/constants"
+import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
@@ -142,6 +142,11 @@ const homeWebPage = {
   isPartOf: { "@id": `${BASE_URL}/#website` },
   about: { "@id": `${BASE_URL}/#business` },
   primaryImageOfPage: `${BASE_URL}${OG_IMAGE.url}`,
+  // Harry writes the page; dateModified is the last real content change (the
+  // sitemap's lastmod). No datePublished: the first publication date is not
+  // on record.
+  author: { "@id": `${BASE_URL}/#harry` },
+  dateModified: LAST_UPDATED["/"],
 }
 
 const servicesGraph = {
