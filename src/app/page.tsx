@@ -8,12 +8,27 @@ import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { InstagramProfile } from "@/components/instagram-profile"
-import { BASE_URL, BUSINESS, RATES, SERVICES, PARTNERS } from "@/lib/constants"
+import { BASE_URL, BUSINESS, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
   description: BUSINESS.description,
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", types: LLMS_ALTERNATE },
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    siteName: BUSINESS.name,
+    title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
+    description: BUSINESS.description,
+    url: `${BASE_URL}/`,
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
+    description: BUSINESS.description,
+    images: [OG_IMAGE.url],
+  },
 }
 
 const buyRent = PARTNERS.filter((p) => p.category === "buy-rent")
@@ -87,15 +102,6 @@ const partnersItemList = {
     }
     if (p.website) item.url = p.website
     if (p.phoneIntl) item.telephone = p.phoneIntl
-    if (typeof p.reviews === "number" && p.reviews > 0) {
-      item.aggregateRating = {
-        "@type": "AggregateRating",
-        ratingValue: p.rating,
-        reviewCount: p.reviews,
-        bestRating: 5,
-        worstRating: 1,
-      }
-    }
     return {
       "@type": "ListItem",
       position: i + 1,
@@ -115,6 +121,28 @@ const SERVICE_GEO = {
   containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" },
 }
 
+// Schema descriptions written as plain statements of what the visible page
+// says about each service (the card blurbs are conversational).
+const SERVICE_SCHEMA_DESCRIPTIONS: Record<string, string> = {
+  piano: `Upright, grand and digital piano moving across Greater Melbourne, priced by zone: uprights from $${innerRate.upright} (Inner Suburbs and CBD) to $${outerMelb.upright} (Outer Melbourne), grands from $${innerRate.grand} to $${outerMelb.grand}. Custom quotes beyond Outer Melbourne.`,
+  disposal: `Removal of pianos beyond repair: what is worth saving is recycled and the rest disposed of responsibly. Upright $${disposalRate.upright}, grand $${disposalRate.grand}${pianolaDisposal ? `, upright pianola $${pianolaDisposal.price}` : ""}.`,
+  marketplace: "Collection and delivery of pianos bought on Marketplace or online, without the buyer needing to attend the pick-up.",
+  band: "Band equipment deliveries (guitars, amps, drum kits, PA) to an event and back again afterwards.",
+  busking: "Harry's own acoustic grand piano and upright, played on the streets of Melbourne.",
+}
+
+const homeWebPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${BASE_URL}/#webpage`,
+  url: `${BASE_URL}/`,
+  name: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
+  inLanguage: "en-AU",
+  isPartOf: { "@id": `${BASE_URL}/#website` },
+  about: { "@id": `${BASE_URL}/#business` },
+  primaryImageOfPage: `${BASE_URL}${OG_IMAGE.url}`,
+}
+
 const servicesGraph = {
   "@context": "https://schema.org",
   "@graph": SERVICES.map((s) => {
@@ -123,7 +151,7 @@ const servicesGraph = {
       "@id": `${BASE_URL}/#service-${s.icon}`,
       name: `${s.title} Melbourne`,
       serviceType: s.title,
-      description: s.blurb,
+      description: SERVICE_SCHEMA_DESCRIPTIONS[s.icon] ?? s.blurb,
       provider: { "@id": `${BASE_URL}/#business` },
       areaServed: SERVICE_GEO,
     }
@@ -183,6 +211,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesGraph) }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeWebPage) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(partnersItemList) }}
@@ -393,7 +422,7 @@ export default function HomePage() {
               className="relative rounded-xl sm:rounded-2xl overflow-hidden h-32 sm:h-52 md:h-72"
               style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.2)" }}
             >
-              <Image src={p.src} alt={p.alt} fill sizes="(max-width: 768px) 33vw, 33vw" className="object-cover" />
+              <Image src={p.src} alt={p.alt} width={900} height={1200} sizes="33vw" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </div>
           ))}

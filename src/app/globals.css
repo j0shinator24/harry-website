@@ -136,6 +136,9 @@ html.can-animate .fade-up {
 }
 
 html { scroll-behavior: smooth; }
+/* Hidden scrollbar for horizontal scrollers (Chrome/Safari; Firefox uses
+   scrollbar-width inline). */
+.no-scrollbar::-webkit-scrollbar { display: none; }
 /* Sticky header is h-16 (64px). Adding a 5rem cushion to every anchored
    section means the section title clears the header instead of being
    covered when you click a nav link. */

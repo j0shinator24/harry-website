@@ -24,12 +24,13 @@ const zones = [
 ] as const
 
 // Leaflet ships its default marker icon as a CSS background image. Webpack /
-// Turbopack don't bundle those URLs correctly out of the box, so we point
-// the icons at the public CDN copies. This is the standard react-leaflet fix.
+// Turbopack don't bundle those URLs correctly out of the box, so the icons
+// are copied from node_modules/leaflet/dist/images into public/leaflet and
+// served from this site (no CDN, so the CSP needs no third-party img host).
 const defaultIcon = L.icon({
-  iconUrl: "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconUrl: "/leaflet/marker-icon.png",
+  iconRetinaUrl: "/leaflet/marker-icon-2x.png",
+  shadowUrl: "/leaflet/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],

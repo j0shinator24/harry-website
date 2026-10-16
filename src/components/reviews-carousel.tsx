@@ -50,7 +50,7 @@ export function ReviewsCarousel() {
       {/* CSS scroll-snap carousel. Works without JS in WebViews. */}
       <div
         ref={trackRef}
-        className="flex gap-4 overflow-x-auto pb-4 px-1"
+        className="no-scrollbar flex gap-4 overflow-x-auto pb-4 px-1"
         style={{
           scrollSnapType: "x mandatory",
           WebkitOverflowScrolling: "touch",
@@ -81,11 +81,6 @@ export function ReviewsCarousel() {
           </div>
         ))}
       </div>
-
-      {/* Hide scrollbar for Webkit (Chrome/Safari) */}
-      <style>{`
-        div[style*="scroll-snap-type"]::-webkit-scrollbar { display: none; }
-      `}</style>
 
       <p className="text-center mt-4 sm:mt-5">
         <a

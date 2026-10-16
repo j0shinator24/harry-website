@@ -14,7 +14,31 @@ export const BUSINESS = {
     "Harry The Piano Mover: specialist piano movers in Melbourne. Uprights, grands and digitals, piano removals, disposal and Marketplace pickups. Five-star reviews.",
   instagram: "https://www.instagram.com/harrythepianomover/",
   googleReviews: "https://maps.app.goo.gl/nscqKmX1AwyyrLmE7",
+  // The long forms of the shortlink above (resolved with curl -I, Oct 2026),
+  // for schema sameAs and hasMap.
+  googleMapsPlace:
+    "https://www.google.com/maps/place/Harry+The+Piano+Mover/data=!4m2!3m1!1s0xa2e941c6c9a22755:0x18c503e426195acc",
+  googleMapsCid: "https://maps.google.com/?cid=1784837105748892364",
 } as const
+
+// Shared Open Graph image: a true 1200 x 630 crop of Harry at the piano.
+export const OG_IMAGE = {
+  url: "/og-image.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Harry The Piano Mover playing a grand piano on a Melbourne rooftop",
+} as const
+
+// Adds <link rel="alternate" type="text/plain" href="/llms.txt"> to a page.
+// Each page sets its own `alternates`, which replaces the parent's, so every
+// page spreads this in next to its canonical.
+export const LLMS_ALTERNATE = { "text/plain": "/llms.txt" } as const
+
+// Last real content change per page, for the sitemap's <lastmod>. Update the
+// date when a page's visible content changes, never on a rebuild.
+export const LAST_UPDATED: Record<string, string> = {
+  "/": "2026-10-17",
+}
 
 export type RateZone = {
   label: string

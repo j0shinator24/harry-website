@@ -1,13 +1,15 @@
 import type { MetadataRoute } from "next"
-import { BASE_URL } from "@/lib/constants"
+import { BASE_URL, LAST_UPDATED } from "@/lib/constants"
 
 export const dynamic = "force-static"
 
+// <lastmod> is each page's last real content change (LAST_UPDATED), not the
+// build time, so a rebuild never tells search engines a page changed.
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: BASE_URL,
-      lastModified: new Date(),
+      url: `${BASE_URL}/`,
+      lastModified: LAST_UPDATED["/"],
       changeFrequency: "weekly",
       priority: 1,
     },

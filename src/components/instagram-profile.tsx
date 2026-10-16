@@ -59,6 +59,8 @@ export function InstagramProfile({ url }: { url: string }) {
                 src={img.src}
                 alt={img.alt}
                 loading="lazy"
+                width={900}
+                height={1200}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <span className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />

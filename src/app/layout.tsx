@@ -3,7 +3,7 @@ import { Alegreya } from "next/font/google"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { SunsetBackdrop } from "@/components/sunset-backdrop"
-import { BASE_URL, BUSINESS } from "@/lib/constants"
+import { BASE_URL, BUSINESS, OG_IMAGE } from "@/lib/constants"
 import "./globals.css"
 
 const alegreya = Alegreya({
@@ -13,111 +13,103 @@ const alegreya = Alegreya({
   style: ["normal", "italic"],
 })
 
+// Site-wide defaults. Pages set their own title, canonical and Open Graph url;
+// nothing here names a canonical or a robots value, so the 404 page never
+// inherits the homepage's canonical or an "index" next to its "noindex".
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
+    default: BUSINESS.name,
     template: "%s | Harry The Piano Mover",
   },
   description: BUSINESS.description,
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_AU",
     siteName: BUSINESS.name,
-    title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
-    description: BUSINESS.description,
-    url: BASE_URL,
-    images: [{ url: `${BASE_URL}/harry-piano-1.jpg`, width: 1200, height: 800, alt: "Harry The Piano Mover, specialist piano moving in Melbourne" }],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
-    description: BUSINESS.description,
-    images: [`${BASE_URL}/harry-piano-1.jpg`],
+    images: [OG_IMAGE.url],
   },
-  robots: { index: true, follow: true },
   // Bing WMT: verified via GSC import, no msvalidate.01 token needed
   verification: {
     google: "3GWShraF4OstDOWi08d-0J89relFpHWCuYvfSIrCj1I",
   },
 }
 
-const movingCompanyJsonLd = {
+// One @graph for the entities every page shares: the website, the business
+// and Harry. Pages add their own nodes and point back here by @id.
+const siteGraph = {
   "@context": "https://schema.org",
-  "@type": "MovingCompany",
-  // Entity disambiguation for search + AI engines, which have confused this
-  // business with a similarly named general removalist (GEO audit, Sep 2026).
-  disambiguatingDescription:
-    "Specialist piano-only mover in Melbourne run by Harry, a pianist. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
-  "@id": `${BASE_URL}/#business`,
-  name: BUSINESS.name,
-  description: BUSINESS.description,
-  url: BASE_URL,
-  logo: `${BASE_URL}/logo.png`,
-  image: `${BASE_URL}/logo.png`,
-  telephone: BUSINESS.phoneInternational,
-  email: BUSINESS.email,
-  priceRange: "$$",
-  currenciesAccepted: "AUD",
-  // Areas mirror what the on-page FAQ already states ("Greater Melbourne metro,
-  // Ballarat, Bendigo, Geelong, Lakes Entrance, Mornington Peninsula, Phillip
-  // Island; anywhere in Victoria with notice; interstate Sydney-Adelaide").
-  // Schema must not claim coverage the visible page doesn't. Invisible signal only.
-  areaServed: [
+  "@graph": [
     {
-      "@type": "City",
-      name: "Melbourne",
-      containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" },
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: `${BASE_URL}/`,
+      name: BUSINESS.name,
+      inLanguage: "en-AU",
+      publisher: { "@id": `${BASE_URL}/#business` },
     },
-    { "@type": "City", name: "Geelong", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
-    { "@type": "City", name: "Ballarat", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
-    { "@type": "City", name: "Bendigo", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
-    { "@type": "Place", name: "Mornington Peninsula" },
-    { "@type": "Place", name: "Phillip Island" },
-    { "@type": "Place", name: "Lakes Entrance" },
-    { "@type": "AdministrativeArea", name: "Victoria" },
     {
-      "@type": "GeoCircle",
-      name: "Greater Melbourne service area",
-      geoMidpoint: { "@type": "GeoCoordinates", latitude: -37.8136, longitude: 144.9631 },
-      geoRadius: "60000",
+      "@type": "MovingCompany",
+      "@id": `${BASE_URL}/#business`,
+      name: BUSINESS.name,
+      // Entity disambiguation for search and AI engines, which have confused
+      // this business with a similarly named general removalist.
+      disambiguatingDescription:
+        "Specialist piano mover in Melbourne run by Harry, a pianist. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
+      description: BUSINESS.description,
+      url: `${BASE_URL}/`,
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png`, width: 512, height: 512 },
+      image: [`${BASE_URL}${OG_IMAGE.url}`, `${BASE_URL}/harry-piano-1.jpg`],
+      telephone: BUSINESS.phoneInternational,
+      email: BUSINESS.email,
+      priceRange: "$$",
+      currenciesAccepted: "AUD",
+      founder: { "@id": `${BASE_URL}/#harry` },
+      // Areas mirror the visible FAQ ("Greater Melbourne metro, Ballarat,
+      // Bendigo, Geelong, Lakes Entrance, Mornington Peninsula, Phillip
+      // Island; anywhere in Victoria with notice"). Schema never claims more.
+      areaServed: [
+        { "@type": "City", name: "Melbourne", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
+        { "@type": "City", name: "Geelong", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
+        { "@type": "City", name: "Ballarat", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
+        { "@type": "City", name: "Bendigo", containedInPlace: { "@type": "AdministrativeArea", name: "Victoria" } },
+        { "@type": "Place", name: "Mornington Peninsula" },
+        { "@type": "Place", name: "Phillip Island" },
+        { "@type": "Place", name: "Lakes Entrance" },
+        { "@type": "AdministrativeArea", name: "Victoria" },
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Melbourne",
+        addressRegion: "VIC",
+        addressCountry: "AU",
+      },
+      hasMap: BUSINESS.googleMapsCid,
+      sameAs: [BUSINESS.instagram, BUSINESS.googleMapsPlace, BUSINESS.googleMapsCid],
+    },
+    {
+      "@type": "Person",
+      "@id": `${BASE_URL}/#harry`,
+      name: "Harry",
+      jobTitle: "Piano Mover",
+      worksFor: { "@id": `${BASE_URL}/#business` },
+      description: "Melbourne piano mover and pianist. Sole operator of Harry The Piano Mover.",
+      knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving"],
+      sameAs: [BUSINESS.instagram],
     },
   ],
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Melbourne",
-    addressRegion: "VIC",
-    addressCountry: "AU",
-  },
-  sameAs: [BUSINESS.instagram, BUSINESS.googleReviews],
-}
-
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": `${BASE_URL}/#harry`,
-  name: "Harry",
-  jobTitle: "Piano Mover",
-  worksFor: { "@id": `${BASE_URL}/#business` },
-  description: "Melbourne piano mover and pianist. Sole operator of Harry The Piano Mover.",
-  knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving"],
-  sameAs: [BUSINESS.instagram],
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${alegreya.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en-AU" className={`${alegreya.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="relative min-h-full flex flex-col text-white overflow-x-hidden" suppressHydrationWarning>
         <SunsetBackdrop />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(movingCompanyJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteGraph) }} />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-gold focus:px-4 focus:py-2 focus:text-[#1C1C1C] focus:text-sm"

@@ -40,7 +40,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-5">
         <Link href="/" className="flex items-center gap-2.5 group min-h-[48px]">
           <Image
-            src="/logo.png"
+            src="/logo-80.png"
             alt="Harry The Piano Mover"
             width={40}
             height={40}
