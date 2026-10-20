@@ -1,8 +1,5 @@
-import Image from "next/image"
-
-// Wavy SVG sunset that stretches the full document height, plus the
-// Melbourne skyline silhouette anchored to the bottom edge. Identical
-// composition to the original site so Harry's brand reads at first glance.
+// Wavy SVG sunset that stretches the full document height. The Melbourne
+// skyline silhouette now lives in SkylineBand, standing on the footer.
 export function SunsetBackdrop() {
   return (
     <>
@@ -22,18 +19,6 @@ export function SunsetBackdrop() {
         <path d="M 0,600 Q 500,575 1000,600 L 1000,1000 L 0,1000 Z" fill="#4A4AA0" />
         <path d="M 0,680 Q 500,705 1000,680 L 1000,1000 L 0,1000 Z" fill="#4A6FB5" />
       </svg>
-      {/* Skyline silhouette anchored to the bottom of the document.
-          mix-blend-mode:darken kills the asset's pale checkerboard background. */}
-      <Image
-        src="/skyline.png"
-        alt=""
-        aria-hidden="true"
-        width={1920}
-        height={400}
-        priority={false}
-        className="absolute inset-x-0 bottom-0 w-full pointer-events-none -z-[5]"
-        style={{ height: "auto", mixBlendMode: "darken" }}
-      />
     </>
   )
 }

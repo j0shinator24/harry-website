@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { BUSINESS } from "@/lib/constants"
 
 export default function ErrorBoundary({
@@ -31,9 +30,13 @@ export default function ErrorBoundary({
           Error reference: {error.digest}
         </p>
       )}
-      <Button onClick={reset} className="mt-8" size="lg">
+      <button
+        type="button"
+        onClick={reset}
+        className="mt-8 inline-flex items-center justify-center rounded-full bg-gold px-6 py-3 font-heading font-bold text-[#1C1C1C] hover:bg-tangerine focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+      >
         Try again
-      </Button>
+      </button>
     </section>
   )
 }

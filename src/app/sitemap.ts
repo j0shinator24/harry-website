@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { BASE_URL, LAST_UPDATED } from "@/lib/constants"
+import { GUIDES } from "@/lib/guides"
 
 export const dynamic = "force-static"
 
@@ -13,5 +14,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    ...GUIDES.map((g) => ({
+      url: `${BASE_URL}${g.href}`,
+      lastModified: LAST_UPDATED[g.href],
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ]
 }

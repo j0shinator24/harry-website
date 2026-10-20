@@ -3,6 +3,9 @@ import { Alegreya } from "next/font/google"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { SunsetBackdrop } from "@/components/sunset-backdrop"
+import { SkylineBand } from "@/components/skyline-band"
+import { StickyCta } from "@/components/sticky-cta"
+import { IconSprite } from "@/components/icons"
 import { BASE_URL, BUSINESS, OG_IMAGE } from "@/lib/constants"
 import "./globals.css"
 
@@ -59,7 +62,7 @@ const siteGraph = {
       // Entity disambiguation for search and AI engines, which have confused
       // this business with a similarly named general removalist.
       disambiguatingDescription:
-        "Specialist piano mover in Melbourne run by Harry, a pianist. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
+        "Specialist piano mover in Melbourne, owner-operated by Harry, a pianist, with an assistant on most moves. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
       description: BUSINESS.description,
       url: `${BASE_URL}/`,
       logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png`, width: 512, height: 512 },
@@ -89,7 +92,7 @@ const siteGraph = {
         addressCountry: "AU",
       },
       hasMap: BUSINESS.googleMapsCid,
-      sameAs: [BUSINESS.instagram, BUSINESS.googleMapsPlace, BUSINESS.googleMapsCid],
+      sameAs: [BUSINESS.instagram, BUSINESS.facebook, BUSINESS.googleMapsPlace, BUSINESS.googleMapsCid],
     },
     {
       "@type": "Person",
@@ -97,7 +100,9 @@ const siteGraph = {
       name: "Harry",
       jobTitle: "Piano Mover",
       worksFor: { "@id": `${BASE_URL}/#business` },
-      description: "Melbourne piano mover and pianist. Sole operator of Harry The Piano Mover.",
+      description: "Melbourne piano mover and pianist. Owner-operator of Harry The Piano Mover, with an assistant on most moves.",
+      // The homepage photo of Harry at the piano (its alt text names him).
+      image: `${BASE_URL}/harry-piano-1.jpg`,
       knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving"],
       sameAs: [BUSINESS.instagram],
     },
@@ -109,16 +114,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en-AU" className={`${alegreya.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="relative min-h-full flex flex-col text-white overflow-x-hidden" suppressHydrationWarning>
         <SunsetBackdrop />
+        <IconSprite />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteGraph) }} />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-gold focus:px-4 focus:py-2 focus:text-[#1C1C1C] focus:text-sm"
+          className="skip-link"
         >
           Skip to main content
         </a>
         <Header />
         <main id="main" className="flex-1 relative z-10">{children}</main>
+        <SkylineBand />
         <Footer />
+        <StickyCta />
       </body>
     </html>
   )

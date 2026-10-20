@@ -1,29 +1,40 @@
-import Image from "next/image"
+import { ArrowLink } from "@/components/arrow-link"
+import { ServiceIcon } from "@/components/service-icon"
+import type { Service } from "@/lib/constants"
 
 type FeatureCardProps = {
   title: string
   description: string
-  image: string
-  imageAlt?: string
+  icon: Service["icon"]
+  // Optional links (the rates on this page, the guide page for the service).
+  links?: readonly { href: string; label: string }[]
 }
 
-export function FeatureCard({ title, description, image, imageAlt = "" }: FeatureCardProps) {
+// A tile inside the Specialty Services dark card: white text on the opaque
+// card stays well above 4.5:1 (WCAG 1.4.3).
+export function FeatureCard({ title, description, icon, links = [] }: FeatureCardProps) {
   return (
     <div
-      className="glass rounded-2xl p-5 sm:p-7 hover:-translate-y-1.5 active:scale-[0.98] focus-within:ring-2 focus-within:ring-gold/50 transition-transform duration-200 fade-up"
-      style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.12)" }}
+      className="glass-dark feature-card"
     >
-      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl mb-3 sm:mb-4 bg-white/10 p-2 flex items-center justify-center">
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={80}
-          height={80}
-          className="w-full h-full object-contain"
-        />
+      <div className="mb-3 sm:mb-4">
+        <ServiceIcon icon={icon} />
       </div>
-      <h3 className="font-heading font-bold text-xl sm:text-2xl mb-2 text-white">{title}</h3>
-      <p className="text-white/85 text-base sm:text-lg leading-relaxed">{description}</p>
+      <h3 className="feature-h">{title}</h3>
+      <p className="copy-dim">{description}</p>
+      {links.length > 0 && (
+        <ul className="mt-3 list-none">
+          {links.map((l) => (
+            <li key={l.href}>
+              <ArrowLink
+                href={l.href}
+                label={l.label}
+                className="feature-more"
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @theme inline {
   --color-background: var(--background);
@@ -40,6 +38,87 @@
   --radius-xl: calc(var(--radius) * 1.4);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
+}
+
+/* Shared component classes (18 Oct 2026). Each class is exactly the list of
+   Tailwind utilities its elements used to carry inline, applied here once, so
+   a long class list is no longer repeated in every page's HTML and again in
+   its React payload (the page looks the same). They sit in @layer components,
+   so a utility written next to one of them still wins, as utilities always
+   did. Edit a list here and every use changes. */
+@layer components {
+  /* Header, on every page */
+  .nav-link { @apply font-heading text-base text-white/90 hover:text-gold transition-colors duration-200 py-2 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
+  .nav-guides { @apply list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center gap-1; }
+  .nav-guides-panel { @apply absolute right-0 top-full mt-3 w-72 rounded-2xl p-2 list-none; }
+  .nav-guide-link { @apply block rounded-xl px-3 py-2.5 text-base text-white/90 hover:bg-white/10 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .nav-quote { @apply font-heading text-base font-bold bg-gold text-[#1C1C1C] px-5 py-2.5 rounded-full hover:bg-tangerine hover:scale-105 active:scale-95 transition-transform duration-200 inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none; }
+  .header-bar { @apply relative mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-5; }
+  .header-logo { @apply rounded-full flex-shrink-0 transition-transform duration-200 group-hover:scale-110; }
+  .header-name { @apply font-heading font-black text-base sm:text-lg text-gold tracking-wide whitespace-nowrap; }
+  .menu-toggle { @apply list-none [&::-webkit-details-marker]:hidden flex items-center justify-center w-12 h-12 -mr-2 rounded-lg cursor-pointer active:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .mnav-panel { @apply absolute left-0 right-0 top-16 px-4 pb-4 max-h-[calc(100vh-4rem)] overflow-y-auto; }
+  .mnav-link { @apply block py-3.5 font-heading text-lg text-white/90 hover:text-gold border-b border-white/10; }
+  .mnav-label { @apply pt-4 pb-1 font-heading text-sm font-bold tracking-wider uppercase text-gold; }
+  .mnav-guide-link { @apply block py-3 text-base text-white/90 hover:text-gold border-b border-white/10; }
+  .mnav-quote { @apply mt-4 flex items-center justify-center font-heading font-bold text-lg bg-gold text-[#1C1C1C] py-3 rounded-full; }
+  .skip-link { @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-gold focus:px-4 focus:py-2 focus:text-[#1C1C1C] focus:text-sm; }
+  /* Footer, on every page */
+  .site-footer { @apply text-center pt-8 pb-28 md:pb-8 px-4 sm:px-5 text-white/80 text-sm relative z-10; }
+  .foot-reviews { @apply text-gold hover:text-tangerine hover:underline transition-colors duration-200 py-2 px-2 inline-flex items-center gap-1.5; }
+  .foot-social { @apply text-white/85 hover:text-gold transition-colors duration-200 py-2 px-2 inline-block; }
+  .foot-contact { @apply text-gold hover:underline py-1 px-1 inline-block; }
+  .foot-credit { @apply inline-flex items-center gap-2 py-2 px-1 text-xs text-white/70 hover:text-white transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  /* Mobile call / text bar, on every page */
+  .cta-bar { @apply md:hidden fixed inset-x-0 bottom-0 z-40 px-3 pt-2 transition-transform duration-300; }
+  .bar-call { @apply inline-flex items-center justify-center gap-2 bg-gold text-[#1C1C1C] font-heading font-bold text-base py-3 rounded-full active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white; }
+  .bar-text { @apply inline-flex items-center justify-center gap-2 bg-grape text-white font-heading font-bold text-base py-3 rounded-full active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  /* Call, text and email buttons (homepage contact card and every guide) */
+  .btn-call { @apply inline-flex items-center justify-center gap-2 bg-gold text-[#1C1C1C] font-heading font-bold text-base sm:text-lg w-full sm:w-auto px-6 py-3.5 rounded-full hover:bg-tangerine hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-grape focus-visible:ring-offset-2 focus-visible:outline-none; }
+  .btn-text { @apply inline-flex items-center justify-center gap-2 bg-grape text-white font-heading font-bold text-base sm:text-lg w-full sm:w-auto px-6 py-3.5 rounded-full hover:bg-plum hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:outline-none; }
+  .btn-mail { @apply inline-flex items-center justify-center gap-2 border-2 border-grape text-grape font-heading font-bold text-base sm:text-lg w-full sm:w-auto px-6 py-3 rounded-full hover:bg-grape hover:text-white hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:outline-none; }
+  /* 404 page (its content also rides in every page's React payload) */
+  .nf-home { @apply inline-flex items-center justify-center gap-2 bg-gold text-[#1C1C1C] font-heading font-bold text-lg px-6 py-3.5 rounded-full hover:bg-tangerine focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape focus-visible:ring-offset-2; }
+  .nf-link { @apply flex items-center gap-2 py-2.5 text-lg text-grape font-bold underline underline-offset-2 hover:text-plum; }
+  /* Grape text links (guides and the homepage rates card) */
+  .link-grape { @apply text-grape font-bold underline underline-offset-2 hover:text-plum; }
+  /* Guide pages */
+  .answer-lead { @apply text-lg sm:text-xl leading-relaxed font-bold text-gray-900; }
+  .guide-card { @apply rounded-3xl p-5 sm:p-8 md:p-10; }
+  .guide-h2 { @apply font-heading font-black text-grape mb-3 sm:mb-4; }
+  .guide-q-next { @apply mt-7 sm:mt-9 pt-7 sm:pt-9 border-t border-black/10; }
+  /* Rate cards (homepage and guides) */
+  .rate-h { @apply font-heading font-bold text-xl mb-3 sm:mb-4 pb-2 sm:pb-3 border-b; }
+  .rate-row { @apply flex justify-between items-center py-1.5; }
+  .rate-price { @apply font-heading font-bold text-xl sm:text-2xl; }
+  .rate-label { @apply text-base sm:text-lg; }
+  /* Homepage */
+  .faq-item { @apply rounded-2xl px-5 sm:px-6 py-4 sm:py-5; }
+  .faq-q { @apply cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 font-heading font-bold text-lg sm:text-xl text-white; }
+  .faq-plus { @apply flex-shrink-0 text-gold transition-transform duration-200 group-open:rotate-45 text-2xl leading-none; }
+  .faq-a { @apply mt-3 text-white/90 text-base sm:text-lg leading-relaxed; }
+  .faq-more { @apply text-base sm:text-lg font-bold text-white underline decoration-gold decoration-2 underline-offset-4 hover:text-gold transition-colors duration-200; }
+  .sec-card { @apply rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12; }
+  .sec-wide { @apply rounded-3xl max-w-5xl mx-auto p-5 sm:p-8 md:p-10; }
+  .panel-h2 { @apply font-heading font-black text-3xl sm:text-4xl text-center mb-6 sm:mb-8 text-white; }
+  .step-num { @apply flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full bg-grape text-white font-heading font-black text-lg; }
+  .service-cell { @apply w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]; }
+  .copy-dim { @apply text-white/90 text-base sm:text-lg leading-relaxed; }
+  .feature-card { @apply rounded-2xl p-5 sm:p-7 h-full focus-within:ring-2 focus-within:ring-gold/60; }
+  .feature-h { @apply font-heading font-bold text-xl sm:text-2xl mb-2 text-white; }
+  .feature-more { @apply font-heading font-bold text-base sm:text-lg text-white underline decoration-gold decoration-2 underline-offset-4 hover:text-gold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
+  .service-tile { @apply inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl; }
+  .service-glyph { @apply w-7 h-7 sm:w-8 sm:h-8 text-[#1C1C1C]; }
+  .review { @apply rounded-2xl p-5 sm:p-6 h-full flex flex-col; }
+  .review-stars { @apply flex gap-0.5 mb-3 text-gold; }
+  .review-quote { @apply text-white text-base sm:text-lg leading-relaxed italic flex-1; }
+  .review-cite { @apply mt-4 text-white/90 text-sm sm:text-base; }
+  .review-src { @apply text-gold underline underline-offset-2 hover:text-white; }
+  .photo-link { @apply block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-2xl; }
+  .photo-frame { @apply relative aspect-square overflow-hidden rounded-2xl; }
+  .photo-img { @apply absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105; }
+  /* Large reading text (homepage, guides, 404) */
+  .body-lg { @apply text-lg sm:text-xl leading-relaxed; }
 }
 
 /* Harry's brand is a dark site only. Tokens live on the dark base. */
@@ -98,16 +177,73 @@
   }
 }
 
-/* Used for legibility-critical sections (about, rates, contact). */
+/* Light cards (about, rates, guides, contact). Opaque, so the sunset and the
+   skyline never show through text (Gate 7 r2). */
 .card-white {
-  background: rgba(255, 255, 255, 0.95);
+  background: #FFFFFF;
   color: #1F2937;
 }
-@media (min-width: 640px) {
-  .card-white {
-    background: rgba(255, 255, 255, 0.93);
-    backdrop-filter: blur(8px);
-  }
+
+/* Guide card treatments (Gate 7 r3): prices sit on warm cream with a gold
+   edge, booking steps on pale lilac with a grape edge, the closing call to
+   book on white under a grape band. All opaque, all dark ink. */
+.card-prices,
+.card-booking,
+.card-final {
+  position: relative;
+  overflow: hidden;
+  color: #1F2937;
+}
+.card-prices { background: #FFF7E8; }
+.card-booking { background: #F4EFFA; }
+.card-final { background: #FFFFFF; }
+/* The accent edge is drawn inside the rounded card, so the corners stay
+   clean (a plain border on a rounded box draws a crescent). */
+.card-prices::before,
+.card-booking::before,
+.card-final::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.card-prices::before,
+.card-booking::before {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+}
+.card-final::before {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 8px;
+}
+.card-prices::before { background: var(--gold); }
+.card-booking::before,
+.card-final::before { background: var(--grape); }
+
+/* The mobile call/text bar lives in the root layout. A page that needs a
+   different text template (disposal: collection only) marks its wrapper with
+   data-sms, and the bar swaps its Text link here, without JavaScript. */
+.sticky-cta .sms-disposal {
+  display: none;
+}
+body:has([data-sms="disposal"]) .sticky-cta .sms-quote {
+  display: none;
+}
+body:has([data-sms="disposal"]) .sticky-cta .sms-disposal {
+  display: inline-flex;
+}
+
+/* Dark cards: the second surface of the card system. Sections whose
+   headings used to sit straight on the sunset (on dark "pills") now sit in a
+   solid deep-plum card, so white and gold text clear WCAG 1.4.3 on every
+   band of the backdrop without a patch behind each line. */
+.panel-dark {
+  background: #211833;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 @keyframes float {
@@ -154,6 +290,24 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
   line-height: 1.1;
 }
+
+/* Tiles inside a dark card (service, review, partner and FAQ tiles). Over
+   the opaque #211833 card the surface is about rgb(48,40,63): white text
+   measures 13:1 and white/90 over 10:1 (WCAG 1.4.3). */
+.glass-dark {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Keyboard focus for <details> toggles whose visible pill is a child span. */
+summary:focus-visible > span {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Anchored panels that are not sections (e.g. #suburbs) also clear the
+   sticky header. */
+[id] { scroll-margin-top: 5rem; }
 
 /* Reduced motion (WCAG 2.3.3): no smooth scrolling and no non-essential
    transitions or animations outside the homepage hero, whose design is

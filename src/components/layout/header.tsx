@@ -1,124 +1,130 @@
-"use client"
-
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
-import { Menu, X } from "lucide-react"
+/* eslint-disable @next/next/no-img-element -- static export with unoptimised images; a plain img ships no client JS */
+/* eslint-disable @next/next/no-html-link-for-pages -- plain anchors on purpose: static pages with no client router code (Gate 7 r2 O11) */
+import { ChevronDown, Menu, X } from "@/components/icons"
+import { GUIDES } from "@/lib/guides"
+import { MenuEnhance } from "@/components/layout/menu-enhance"
 
 const navItems = [
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#rates", label: "Rates" },
-  { href: "#partners", label: "Partners" },
+  { href: "/#about", label: "About" },
+  { href: "/#rates", label: "Rates" },
+  { href: "/#services", label: "Services" },
+  { href: "/#partners", label: "Friends of Mine" },
 ] as const
 
-// Hash-anchor click handler. Three things to fix vs the default browser behaviour:
-//   1. If the URL hash already matches (user clicked once, scrolled past, clicked
-//      again), the browser skips the scroll because it considers the navigation
-//      a no-op. Force scrollIntoView regardless.
-//   2. Smooth-scroll explicitly so it works even when the hash matches.
-//   3. Use replaceState to update the address bar without pushing a duplicate
-//      history entry every time you tap a nav item.
-function smoothScrollToHash(e: React.MouseEvent<HTMLAnchorElement>, hash: string) {
-  const target = typeof document !== "undefined" ? document.querySelector(hash) : null
-  if (!target) return
-  e.preventDefault()
-  const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-  target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" })
-  if (typeof window !== "undefined" && window.history?.replaceState) {
-    window.history.replaceState(null, "", hash)
-  }
-}
-
+// A server component: the menus are native <details> elements and the links
+// are plain anchors, so everything works with JavaScript off (in-app
+// browsers) and no icon or menu code ships to the browser. Same-page hash
+// links scroll with CSS (smooth unless the visitor prefers reduced motion).
+// MenuEnhance only adds polish: close on link tap, Escape and outside tap.
+// Class names such as nav-link are defined in app/globals.css (@layer components).
 export function Header() {
-  const [open, setOpen] = useState(false)
-
   return (
-    <header
-      className="sticky top-0 z-50 w-full transition-shadow duration-300"
-      style={{ background: "rgba(28,28,28,0.92)" }}
-    >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-5">
-        <Link href="/" className="flex items-center gap-2.5 group min-h-[48px]">
-          <Image
+    <header className="sticky top-0 z-50 w-full" style={{ background: "rgba(28,28,28,0.97)" }}>
+      <div className="header-bar">
+        <a href="/" className="flex items-center gap-2.5 group min-h-[48px] min-w-0">
+          <img
             src="/logo-80.png"
-            alt="Harry The Piano Mover"
+            alt=""
             width={40}
             height={40}
-            className="rounded-full transition-transform duration-200 group-hover:scale-110"
+            className="header-logo"
           />
-          <span className="hidden sm:inline font-heading font-black text-lg text-gold tracking-wide">
+          {/* The business name shows at every width (it used to hide on phones). */}
+          <span className="header-name">
             Harry The Piano Mover
           </span>
-        </Link>
+        </a>
 
-        <ul className="hidden md:flex items-center gap-7 list-none">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                onClick={(e) => smoothScrollToHash(e, item.href)}
-                className="font-heading text-sm text-white/80 tracking-wider hover:text-gold transition-colors duration-200 py-2 px-1"
-              >
-                {item.label}
+        <nav aria-label="Main" className="hidden lg:block">
+          <ul className="flex items-center gap-6 list-none">
+            {navItems.slice(0, 3).map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className="nav-link">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <details data-menu className="relative group">
+                <summary className="nav-link nav-guides">
+                  Guides
+                  <ChevronDown className="h-4 w-4 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <ul
+                  className="nav-guides-panel"
+                  style={{ background: "rgba(28,28,28,0.98)", boxShadow: "0 12px 32px rgba(0,0,0,0.35)" }}
+                >
+                  {GUIDES.map((g) => (
+                    <li key={g.href}>
+                      <a
+                        href={g.href}
+                        className="nav-guide-link"
+                      >
+                        {g.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+            <li>
+              <a href={navItems[3].href} className="nav-link">
+                {navItems[3].label}
               </a>
             </li>
-          ))}
-          <li>
+            <li>
+              <a
+                href="/#contact"
+                className="nav-quote"
+              >
+                Get a Quote
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <details data-menu className="lg:hidden group flex-shrink-0">
+          <summary
+            className="menu-toggle"
+            aria-label="Menu"
+          >
+            <Menu className="h-6 w-6 group-open:hidden" aria-hidden="true" />
+            <X className="h-6 w-6 hidden group-open:block" aria-hidden="true" />
+          </summary>
+          <nav
+            aria-label="Main"
+            className="mnav-panel"
+            style={{ background: "rgba(28,28,28,0.98)" }}
+          >
+            <ul className="list-none">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href} className="mnav-link">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="mnav-label">Guides</p>
+            <ul className="list-none">
+              {GUIDES.map((g) => (
+                <li key={g.href}>
+                  <a href={g.href} className="mnav-guide-link">
+                    {g.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
             <a
-              href="#contact"
-              onClick={(e) => smoothScrollToHash(e, "#contact")}
-              className="font-heading text-sm font-bold bg-coral text-white px-5 py-2.5 rounded-full hover:bg-tangerine hover:scale-105 active:scale-95 transition-transform duration-200 inline-block focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              href="/#contact"
+              className="mnav-quote"
             >
               Get a Quote
             </a>
-          </li>
-        </ul>
-
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 rounded-lg active:bg-white/10 transition-colors duration-150"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+          </nav>
+        </details>
       </div>
-
-      {open && (
-        <div
-          className="md:hidden px-4 pb-2"
-          style={{ background: "rgba(28,28,28,0.97)" }}
-          role="menu"
-        >
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={(e) => {
-                setOpen(false)
-                smoothScrollToHash(e, item.href)
-              }}
-              className="block py-3.5 font-heading text-base text-white/80 hover:text-gold active:text-gold border-b border-white/10 transition-colors duration-150"
-              role="menuitem"
-            >
-              {item.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={(e) => {
-              setOpen(false)
-              smoothScrollToHash(e, "#contact")
-            }}
-            className="block py-3.5 font-heading font-bold text-base text-gold active:text-tangerine transition-colors duration-150"
-            role="menuitem"
-          >
-            Get a Quote
-          </a>
-        </div>
-      )}
+      <MenuEnhance />
     </header>
   )
 }

@@ -1,15 +1,18 @@
+/* eslint-disable @next/next/no-img-element -- static export with unoptimised images; a plain img ships no client JS */
 import type { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import { Phone, MessageSquare, Mail, Star, MapPin } from "lucide-react"
+import { Phone, MessageSquare, Mail, MapPin, StarIcon } from "@/components/icons"
+import { ArrowLink } from "@/components/arrow-link"
 import { FeatureCard } from "@/components/feature-card"
 import { PartnerCard } from "@/components/partner-card"
 import { ZonesMap } from "@/components/zones-map"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
-import { ReviewsCarousel } from "@/components/reviews-carousel"
-import { InstagramProfile } from "@/components/instagram-profile"
+import { ReviewsGrid } from "@/components/reviews-grid"
+import { PhotoGallery } from "@/components/photo-gallery"
+import { RateCards } from "@/components/rate-cards"
+import { CallTextButtons } from "@/components/call-text-buttons"
 import { Picture } from "@/components/picture"
-import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS } from "@/lib/constants"
+import { RATES_CONFIRMED, disposalOffer, movingOffers } from "@/lib/rates"
+import { ACCESS_FEES, BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS, SMS_QUOTE_HREF } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
@@ -33,9 +36,7 @@ export const metadata: Metadata = {
 }
 
 const buyRent = PARTNERS.filter((p) => p.category === "buy-rent")
-// Mobile tuner + piano technician partners are temporarily hidden from the
-// homepage. They'll live on a dedicated /partners (or similar) page once
-// the broader directory features are ready. Data is still in constants.
+// Tuner and technician partners stay in constants but are not shown.
 
 // Rate lookups. FAQ answers and schema read prices from RATES so nothing on the
 // page can drift from the visible rate table when Harry changes his prices.
@@ -44,35 +45,72 @@ const outerSub = RATES.find((r) => r.label === "Outer Suburbs")!
 const outerMelb = RATES.find((r) => r.label === "Outer Melbourne")!
 const disposalRate = RATES.find((r) => r.label === "Piano Disposal")!
 const pianolaDisposal = disposalRate.extras?.[0]
+const movingZones = RATES.filter((r) => r.label !== disposalRate.label)
+
+// "How a piano move works", shown as numbered steps (copy via Ghostwriter).
+const HOW_STEPS = [
+  {
+    title: "Tell me about the move.",
+    text: "When you book, I confirm where the piano is going from and to, its size, brand and model, what the access is like (stairs, narrow or difficult paths), and when you'd like it moved.",
+  },
+  {
+    title: "Floors protected first.",
+    text: "On the day, I protect your floors and anywhere the piano could come close to touching.",
+  },
+  {
+    title: "Onto the dolly, into the van.",
+    text: "The piano is lifted onto my custom-made piano dolly and wheeled into the van, where it's secured and ready to go. For a grand, I remove the lyre, legs, music stand and lid first.",
+  },
+  {
+    title: "The right gear for steps.",
+    text: "I use a ramp for 4 or fewer steps, and custom-made equipment to go up or down more than 4.",
+  },
+  {
+    title: "Placed where you want it.",
+    text: "I place the piano where you want it, pedantry included, with advice on the room, long-term protection of your floors, and where it will sound best. I play piano myself.",
+  },
+] as const
 
 const FAQ_ITEMS = [
   {
     q: "How much does it cost to move a piano in Melbourne?",
-    a: `Inner Suburbs and CBD starts at $${innerRate.upright} for an upright and $${innerRate.grand} for a grand. Outer Suburbs is $${outerSub.upright} / $${outerSub.grand}. Outer Melbourne is $${outerMelb.upright} / $${outerMelb.grand}. Anything past that is a custom quote. Call or text and I'll work it out with you.`,
+    a: `Inner Suburbs and CBD starts at $${innerRate.upright} for an upright and $${innerRate.grand} for a grand. Outer Suburbs is $${outerSub.upright} / $${outerSub.grand}. Outer Melbourne is $${outerMelb.upright} / $${outerMelb.grand}. If a move crosses zones, the higher zone's rate applies. Anything past that is a custom quote. All prices include GST. Call or text and I'll work it out with you.`,
   },
   {
     q: "Are you insured?",
-    a: "Yes. Harry The Piano Mover carries public liability insurance (covers damage to your home or property on the day) and goods in transit / carriers insurance (covers the piano or any item while it's in the van). Both are active and current.",
+    a: "Yes. My public liability insurance covers your home or property during the move. My goods in transit (carriers) insurance covers your piano while it's in my care and while it travels in the van. Both are active and current.",
   },
   {
     q: "What types of pianos do you move?",
     a: "Upright pianos, grand pianos and digital pianos. Ranging from brand-new to new-to-you, specialised in Japanese, Chinese, and European pianos.",
+    more: { href: "/piano-types/", label: "How I move each type of piano" },
   },
   {
     q: "Can you move a piano up or down stairs?",
-    a: "Of course! Our base rates are inclusive of three or four entry steps, or easy ramp access. Past that, tricky access adds $20 per step. Difficult access might require extra hands for an additional fee, from $200. Careful and creative approaches are what separate us from other movers.",
+    a: `Of course, and my base rates include up to 4 entry steps, or easy ramp access. Past that, tricky access adds $${ACCESS_FEES.perStep} per step. More than 4 steps that can't take a simple ramp need a third person, for an additional fee from $${ACCESS_FEES.extraHandsFrom}. Careful and creative approaches are what set me apart from other movers.`,
+    more: { href: "/piano-stairs-difficult-access/", label: "Stairs and difficult access" },
+  },
+  {
+    // Harry's own wording (17 Oct 2026), punctuation only.
+    q: "Where should the piano go in a room?",
+    a: "Pianos should be kept away from outside walls and windows, but wherever you want it, pedantry included! I can give advice on the room's environmental factors and where it will look and sound best.",
   },
   {
     q: "What areas do you cover?",
-    a: "Greater Melbourne metro areas, Ballarat, Bendigo, Geelong, Lakes Entrance, Mornington Peninsula, Phillip Island. With enough notice, we can arrange pick up and delivery anywhere within Victoria, as well as interstate piano moves from Sydney to Adelaide.",
+    a: "I cover Greater Melbourne, Ballarat, Bendigo, Geelong, Lakes Entrance, the Mornington Peninsula and Phillip Island. With enough notice, I can arrange pick-up and delivery anywhere in Victoria. Interstate, I do Melbourne to Sydney and Melbourne to Adelaide myself, by appointment only.",
+    more: { href: "/piano-movers-geelong/", label: "Geelong and regional Victoria" },
   },
   {
     q: "Do you dispose of unwanted pianos?",
-    a: `Yes. If your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $${disposalRate.upright} upright / $${disposalRate.grand} grand${pianolaDisposal ? ` / $${pianolaDisposal.price} upright pianola` : ""}. It's often cheaper than a piano restoration quote that would never break even.`,
+    a: `Yes, if your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $${disposalRate.upright} upright / $${disposalRate.grand} grand${pianolaDisposal ? ` / $${pianolaDisposal.price} upright pianola` : ""}, and that includes property insurance, GST and the disposal fee. In my experience, it's often cheaper than a piano restoration quote that would never break even.${pianolaDisposal ? " If a pianola's mechanism has been removed, I may assess it as a standard piano depending on dimensions and access, so send me photos and dimensions." : ""}`,
   },
   {
     q: "Do you do anything other than pianos?",
     a: `Piano moving is my specialty. I can take additional items alongside your piano, deliver pianos bought on Marketplace or online, and do gig load-in and load-out for bands (guitars, amps, drums, PA). Call or text and we'll work it out.`,
+  },
+  {
+    q: "Can you move a piano within the same home?",
+    a: "Yes. If your floors are being restored or installed, I can move the piano out of the way for a couple of weeks, then put it back. A grand can sometimes stay on my equipment in between, so it doesn't need fully setting up twice. Call or text for a quote.",
   },
   {
     q: "Do you tune the pianos?",
@@ -83,6 +121,36 @@ const FAQ_ITEMS = [
     a: "BOOKING_LINKS",
   },
 ] as const
+
+type FaqLink = { href: string; label: string }
+function faqLinks(item: (typeof FAQ_ITEMS)[number]): FaqLink[] {
+  const out: FaqLink[] = []
+  if ("more" in item) out.push(item.more)
+  return out
+}
+
+// Specialty Services card links: one guide link per card at most, and no
+// guide is linked twice on the homepage (Harry, 17 Oct 2026: "less is more").
+const SERVICE_LINKS: Record<string, readonly FaqLink[]> = {
+  piano: [{ href: "/piano-moving-cost-melbourne/", label: "Prices and what affects them" }],
+  disposal: [{ href: "/piano-disposal-melbourne/", label: "How piano disposal works" }],
+  marketplace: [{ href: "/marketplace-piano-delivery/", label: "How Marketplace delivery works" }],
+}
+
+// Elements reused as they are, so the page payload holds each one once:
+// the hero's five stars and every FAQ's "+" (it turns into a cross when open).
+const HERO_STAR = <StarIcon className="h-5 w-5 sm:h-6 sm:w-6 fill-current" />
+const FAQ_PLUS = (
+  <span aria-hidden="true" className="faq-plus">
+    +
+  </span>
+)
+
+// Class names such as sec-card and faq-q are defined in app/globals.css (@layer components).
+// Card styles shared by the homepage sections.
+const CARD_SHADOW = { boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }
+const PANEL_SHADOW = { boxShadow: "0 8px 40px rgba(0,0,0,0.2)" }
+const PANEL_H2 = "panel-h2"
 
 // JSON-LD schema for the Friends of Mine section — just the buy/rent partners
 // for now. The full tuners + technicians directory will get its own page
@@ -130,6 +198,7 @@ const SERVICE_SCHEMA_DESCRIPTIONS: Record<string, string> = {
   marketplace: "Collection and delivery of pianos bought on Marketplace or online, without the buyer needing to attend the pick-up.",
   band: "Band equipment deliveries (guitars, amps, drum kits, PA) to an event and back again afterwards.",
   busking: "Harry's own acoustic grand piano and upright, played on the streets of Melbourne.",
+  inhome: "Moving a piano within the same home, for example out of the way while floors are restored or installed and back into place a couple of weeks later. A grand can sometimes stay on Harry's equipment in between, so it does not need fully setting up twice. Quoted on request.",
 }
 
 const homeWebPage = {
@@ -161,50 +230,9 @@ const servicesGraph = {
       provider: { "@id": `${BASE_URL}/#business` },
       areaServed: SERVICE_GEO,
     }
-    // Zone prices are BASE rates (the visible rates box: up to three or four
-    // entry steps or easy ramp access). Steps and extra staff are separate
-    // offers, and extra staff is a minimum, never a fixed price.
-    if (s.title === "Piano Moving" && innerRate && outerMelb) {
-      node.offers = [
-        {
-          "@type": "AggregateOffer",
-          name: "Base zone rates, upright and grand pianos",
-          description:
-            "Published base zone rates, confirmed October 2026, for access with less than four steps or easy ramp access. Difficult access may add $20 per step, or fees in excess of $200 if extra staff are needed, so a move can cost more than its base rate. Interstate prices vary.",
-          priceCurrency: "AUD",
-          lowPrice: innerRate.upright,
-          highPrice: outerMelb.grand,
-          offerCount: 6,
-        },
-        {
-          "@type": "Offer",
-          name: "Difficult access, per step",
-          description: "Added to the base rate for difficult access: $20 per step.",
-          price: 20,
-          priceCurrency: "AUD",
-          priceSpecification: { "@type": "UnitPriceSpecification", price: 20, priceCurrency: "AUD", unitText: "step" },
-        },
-        {
-          "@type": "Offer",
-          name: "Extra staff for difficult access",
-          description: "Added to the base rate when extra staff are needed: fees in excess of $200.",
-          priceCurrency: "AUD",
-          priceSpecification: { "@type": "PriceSpecification", minPrice: 200, priceCurrency: "AUD" },
-        },
-      ]
-    }
-    if (s.title === "Piano Disposal" && disposalRate) {
-      const prices = [disposalRate.upright, disposalRate.grand, ...(disposalRate.extras ?? []).map((e) => e.price)]
-      node.offers = {
-        "@type": "AggregateOffer",
-        name: "Piano disposal prices",
-        description: `Published disposal prices for an upright, a grand and an upright pianola, confirmed October 2026. ${(disposalRate.note ?? "").replace(/^\*\s*/, "")}`.trim(),
-        priceCurrency: "AUD",
-        lowPrice: Math.min(...prices),
-        highPrice: Math.max(...prices),
-        offerCount: prices.length,
-      }
-    }
+    // Zone prices are base rates; steps and a third person are separate offers.
+    if (s.title === "Piano Moving") node.offers = movingOffers()
+    if (s.title === "Piano Disposal") node.offers = disposalOffer()
     return node
   }),
 }
@@ -226,15 +254,6 @@ const faqPageSchema = {
   })),
 }
 
-// Inline Instagram glyph: lucide-react@1.x doesn't export Instagram.
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
-      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-    </svg>
-  )
-}
-
 export default function HomePage() {
   return (
     <>
@@ -252,17 +271,21 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
       />
       {/* HERO with faded piano backdrop. Layered: bg photo + gradient wash + content. */}
-      <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image
+          {/* Plain <img> (next/image is a client component and the export
+              serves images unoptimised anyway). Not lazy, so React preloads it
+              in the head; fetchPriority marks it as the likely LCP image. */}
+          <img
             src="/hero-bg.webp"
             alt=""
             aria-hidden="true"
-            fill
-            priority
-            className="object-cover object-center"
-            style={{ filter: "brightness(0.35)" }}
-            sizes="100vw"
+            width={1792}
+            height={2390}
+            decoding="async"
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            style={{ color: "transparent", filter: "brightness(0.35)" }}
           />
           <div
             className="absolute inset-0"
@@ -274,13 +297,14 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-3xl px-4 sm:px-5 pt-16 pb-16 fade-up">
-          <Image
+          <img
             src="/logo-on-dark.png"
             alt="Harry The Piano Mover"
             width={260}
             height={260}
-            priority
+            decoding="async"
             className="w-40 sm:w-52 md:w-64 h-auto mx-auto mb-6 sm:mb-8 float-anim drop-shadow-2xl"
+            style={{ color: "transparent" }}
           />
           <h1
             className="font-heading font-medium text-[2.5rem] sm:text-6xl lg:text-7xl leading-none mb-4 sm:mb-5 text-white"
@@ -300,29 +324,29 @@ export default function HomePage() {
             className="inline-flex items-center gap-2 text-xl sm:text-2xl text-gold mb-6 sm:mb-8 py-2 px-1 hover:text-tangerine transition-colors duration-200"
             style={{ textShadow: "0 2px 10px rgba(245,183,66,0.5)" }}
           >
-            <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
-            <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
-            <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
-            <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
-            <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" aria-hidden="true" />
+            {HERO_STAR}
+            {HERO_STAR}
+            {HERO_STAR}
+            {HERO_STAR}
+            {HERO_STAR}
             <span className="ml-1">Reviews!</span>
           </a>
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-3 justify-center items-center px-2 sm:px-0">
             <a
-              href={`tel:${BUSINESS.phoneInternational}`}
-              className="inline-flex items-center justify-center gap-2 bg-tangerine text-white font-heading font-bold text-base w-full sm:w-auto px-7 py-4 rounded-full hover:bg-coral hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-              style={{ boxShadow: "0 4px 20px rgba(245,140,90,0.4)" }}
-            >
-              <Phone className="h-4 w-4" />
-              Call {BUSINESS.phone}
-            </a>
-            <a
-              href={`sms:${BUSINESS.phoneInternational}?&body=Hi%20Harry%2C%20I%27d%20like%20a%20quote%20for...`}
+              href={SMS_QUOTE_HREF}
               className="inline-flex items-center justify-center gap-2 bg-grape text-white font-heading font-bold text-base w-full sm:w-auto px-7 py-4 rounded-full hover:bg-plum hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
               style={{ boxShadow: "0 4px 20px rgba(107,76,154,0.4)" }}
             >
               <MessageSquare className="h-4 w-4" />
               Text Harry
+            </a>
+            <a
+              href={`tel:${BUSINESS.phoneInternational}`}
+              className="inline-flex items-center justify-center gap-2 bg-tangerine text-[#1C1C1C] font-heading font-bold text-base w-full sm:w-auto px-7 py-4 rounded-full hover:bg-coral hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              style={{ boxShadow: "0 4px 20px rgba(245,140,90,0.4)" }}
+            >
+              <Phone className="h-4 w-4" />
+              Call {BUSINESS.phone}
             </a>
             <a
               href={`mailto:${BUSINESS.email}`}
@@ -335,12 +359,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section id="about" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div
-          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
-          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
-        >
+      {/* Below the locked hero: one column of light and dark cards on the
+          sunset. Order (Gate 7 r2): introduction, reviews, then pricing and
+          coverage as one sequence (map, rates, suburbs), then how it works,
+          services, protection, photos, friends, FAQ and the contact card. Dark cards replace the old dark pills behind headings. */}
+      <div className="px-4 sm:px-5 pt-12 sm:pt-16 pb-10 sm:pb-12 space-y-8 sm:space-y-12">
+        {/* ABOUT */}
+        <section id="about" className="card-white sec-card fade-up" style={CARD_SHADOW}>
           <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8">
             <div
               className="relative w-full sm:w-52 h-48 sm:h-52 flex-shrink-0 rounded-2xl overflow-hidden"
@@ -360,265 +385,158 @@ export default function HomePage() {
               <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">
                 Hey, I&apos;m Harry
               </h2>
-              <p className="text-lg sm:text-xl leading-relaxed mb-3">
+              <p className="body-lg mb-3">
                 Trust in your piano being moved by an experienced piano mover &amp; player.
               </p>
-              <p className="text-lg sm:text-xl leading-relaxed mb-3">
-                See our rates below for piano relocation around Melbourne.
+              <p className="body-lg mb-3">
+                See my rates below for piano relocation around Melbourne.
               </p>
-              <p className="text-lg sm:text-xl leading-relaxed text-gray-600">
-                Please enquire via text, phone or email about the piano you need moved, or
-                additional items you may need transported along with your piano. We have a
-                versatile van to assist in relocating what you need safely.
+              <p className="body-lg text-gray-600">
+                Please enquire via text, phone or email about the piano you need moved, or any
+                additional items you need transported along with it. I have a versatile van to
+                help move what you need safely. I&apos;m on every move myself, with an assistant on
+                most.
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* HOW A PIANO MOVE WORKS — Harry's own copy. Hybrid disclosure pattern:
-          first paragraph is the visible hook; the step-by-step detail is hidden
-          behind a native <details> so mobile users get a scannable section but
-          the full text is in the HTML source (still crawled + ranked by Google,
-          per mobile-first indexing). CSS-only toggle — works in any WebView. */}
-      <section id="how-it-works" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div
-          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
-          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
-        >
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">
-            How a piano move works
-          </h2>
-          <p className="text-lg sm:text-xl leading-relaxed">
-            Pianos aren&apos;t furniture. They&apos;re heavy, awkward, and sentimental beyond any
-            monetary value. Here&apos;s how we work.
-          </p>
-          <details className="group mt-4">
-            <summary className="cursor-pointer select-none inline-flex items-center gap-2 font-heading font-bold text-grape hover:text-tangerine transition-colors list-none [&::-webkit-details-marker]:hidden">
-              <span className="inline-block text-lg leading-none transition-transform group-open:rotate-90">
-                ▸
-              </span>
-              <span>Read the full process</span>
-            </summary>
-            <div className="mt-4 space-y-3 text-lg sm:text-xl leading-relaxed">
-              <p>
-                When booking your move, we confirm everything we need to know: where the piano is
-                going to &amp; from, what size / brand / model is the piano, what the access is
-                like (stairs, narrow or difficult paths), and when you&apos;d like your piano
-                moved.
-              </p>
-              <p>
-                On the day, we protect your floors and anywhere the piano could come close to
-                touching. The piano is lifted onto our custom-made piano dolly and wheeled safely
-                into the van where it is secured and ready to go. For grand pianos, a similar
-                process except we remove the lyre, legs, music stand, and lid to be as careful as
-                possible. We use a ramp for 5 or fewer steps, and custom-made equipment to go up
-                or down more than 5 steps.
-              </p>
-              <p>
-                Careful &amp; creative access is what separates us from a couple blokes off
-                Airtasker. We place the piano where you want it, pedantry included. Advice for
-                environmental factors of the room, long-term protection of your floors, and where
-                it acoustically will flourish.
-              </p>
-            </div>
-          </details>
-        </div>
-      </section>
+        {/* REVIEWS: three first, the rest behind "Show more" (works without JS). */}
+        <section id="reviews" className="fade-up">
+          <ReviewsGrid />
+        </section>
 
-      {/* SERVICES */}
-      <section id="services" className="py-14 sm:py-20 px-4 sm:px-5">
-        <h2
-          className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-center mb-8 sm:mb-12 fade-up text-white"
-          style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
-        >
-          Specialty Services
-        </h2>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {SERVICES.map((s) => (
-            <FeatureCard key={s.title} title={s.title} description={s.blurb} image={s.image} imageAlt={`${s.title} service in Melbourne by Harry The Piano Mover`} />
-          ))}
-        </div>
-      </section>
-
-      {/* PHOTO STRIP */}
-      <section className="py-6 sm:py-8 px-4 sm:px-5">
-        <div className="max-w-5xl mx-auto grid grid-cols-3 gap-2 sm:gap-4 fade-up">
-          {[
-            { src: "/harry-piano-1.jpg", alt: "Harry playing piano overlooking Melbourne" },
-            { src: "/harry-piano-2.jpg", alt: "Grand piano on a Melbourne rooftop at sunset" },
-            { src: "/harry-piano-3.jpg", alt: "Piano outdoors with the Melbourne skyline" },
-          ].map((p) => (
-            <div
-              key={p.src}
-              className="relative rounded-xl sm:rounded-2xl overflow-hidden h-32 sm:h-52 md:h-72"
-              style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.2)" }}
-            >
-              <Picture src={p.src} alt={p.alt} width={900} height={1200} sizes="33vw" className="absolute inset-0 h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ZONES */}
-      <section id="zones" className="py-14 sm:py-20 px-4 sm:px-5">
-        <h2
-          className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-center mb-8 sm:mb-12 fade-up text-white"
-          style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
-        >
-          Where I Move
-        </h2>
-        <div className="max-w-5xl mx-auto fade-up">
+        {/* PRICING AND COVERAGE: where I move, the rates, and the suburbs. */}
+        <section id="zones" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
+          <h2 className={PANEL_H2}>Where I Move</h2>
           <ZonesMap />
-          <div className="flex flex-wrap gap-3 sm:gap-5 justify-center mt-5 sm:mt-6">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-4 h-4 rounded-full" style={{ background: "#F5B742", boxShadow: "0 0 0 1px rgba(255,255,255,0.4)" }} />
-              <span className="text-white text-base sm:text-lg">Inner Suburbs &amp; CBD</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-4 h-4 rounded-full" style={{ background: "#F06681", boxShadow: "0 0 0 1px rgba(255,255,255,0.4)" }} />
-              <span className="text-white text-base sm:text-lg">Outer Suburbs</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-4 h-4 rounded-full" style={{ background: "#9B4D9E", boxShadow: "0 0 0 1px rgba(255,255,255,0.4)" }} />
-              <span className="text-white text-base sm:text-lg">Outer Melbourne</span>
-            </div>
-          </div>
-          <p className="text-center text-white/70 text-sm sm:text-base mt-3 inline-flex items-center gap-1.5 w-full justify-center">
-            <MapPin className="h-3.5 w-3.5" />
-            Anything beyond?{" "}
-            <Link href="#contact" className="text-gold hover:underline">
-              Call or text for a quote.
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      {/* RATES */}
-      <section id="rates" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div
-          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
-          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
-        >
-          <h2 className="font-heading font-black text-3xl sm:text-4xl text-grape text-center mb-6 sm:mb-10">
-            Rates
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
-            {RATES.map((r) => (
-              <div
-                key={r.label}
-                className="rounded-2xl p-4 sm:p-6 text-white"
-                style={{ background: `linear-gradient(135deg, ${r.toneFrom}, ${r.toneTo})` }}
-              >
-                <h3 className="font-heading font-bold text-lg sm:text-xl mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/30">
-                  {r.label}
-                </h3>
-                <div className="flex justify-between items-center py-1.5">
-                  <span className="text-base sm:text-lg">Upright Piano</span>
-                  <span className="font-heading font-bold text-xl sm:text-2xl">${r.upright}</span>
-                </div>
-                <div className="flex justify-between items-center py-1.5">
-                  <span className="text-base sm:text-lg">Grand Piano</span>
-                  <span className="font-heading font-bold text-xl sm:text-2xl">${r.grand}</span>
-                </div>
-                {r.extras?.map((e) => (
-                  <div key={e.label} className="flex justify-between items-center py-1.5">
-                    <span className="text-base sm:text-lg">{e.label}</span>
-                    <span className="font-heading font-bold text-xl sm:text-2xl">${e.price}</span>
-                  </div>
-                ))}
-                {r.note && (
-                  <p className="mt-3 pt-3 border-t border-white/30 text-sm sm:text-base leading-relaxed text-white/90">
-                    {r.note}
-                  </p>
-                )}
-              </div>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 justify-center mt-5 sm:mt-6 list-none">
+            {[
+              { label: "Inner Suburbs & CBD", color: "#F5B742" },
+              { label: "Outer Suburbs", color: "#F06681" },
+              { label: "Outer Melbourne", color: "#9B4D9E" },
+            ].map((z) => (
+              <li key={z.label} className="flex items-center gap-2">
+                <span aria-hidden="true" className="inline-block w-4 h-4 rounded-full" style={{ background: z.color, boxShadow: "0 0 0 1px rgba(255,255,255,0.5)" }} />
+                <span className="text-white text-base sm:text-lg">{z.label}</span>
+              </li>
             ))}
+          </ul>
+          <p className="mt-3 text-center text-white/90 text-base sm:text-lg">
+            <MapPin className="inline h-4 w-4 mr-1.5 -mt-0.5" aria-hidden="true" />
+            The rings are a rough guide. Anything beyond?{" "}
+            <a href="#contact" className="text-gold font-bold underline underline-offset-2 hover:text-white">
+              Call or text for a quote.
+            </a>
+          </p>
+        </section>
+
+        <section id="rates" className="card-white sec-card fade-up" style={CARD_SHADOW}>
+          <h2 className="font-heading font-black text-3xl sm:text-4xl text-grape text-center mb-2 sm:mb-3">Rates</h2>
+          <p className="text-center text-lg sm:text-xl text-gray-700 mb-6 sm:mb-8">All prices include GST.</p>
+          {/* Three moving zones in one row, disposal full width beneath. Shared
+              with the guide pages. */}
+          <div className="space-y-3 sm:space-y-4 mb-6">
+            <RateCards zones={movingZones} />
+            <RateCards zones={[disposalRate]} />
           </div>
-          <div className="text-center text-base sm:text-lg text-gray-600 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed">
-            Outer Melbourne &amp; interstate prices vary, please{" "}
-            <Link href="#contact" className="text-grape font-bold hover:underline py-1 inline-block">
-              contact
-            </Link>{" "}
-            for a chat.
-            <br />
-            Access to property with less than four steps / easy to ramp are prices above.
-            <br />
-            Difficult access may procure a higher fee at{" "}
-            <strong className="text-gray-800">$20 per step</strong> or fees in excess of{" "}
-            <strong className="text-gray-800">$200</strong> if extra staff are needed.
-          </div>
-        </div>
-      </section>
+          <ul className="text-base sm:text-lg text-gray-700 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed space-y-1.5 list-none text-center">
+            <li>
+              Beyond Outer Melbourne, and for interstate moves, it&apos;s a custom quote, so please{" "}
+              <a href="#contact" className="link-grape">
+                get in touch for a chat
+              </a>
+              .
+            </li>
+            <li>The prices above include up to 4 entry steps, or easy ramp access.</li>
+            <li>If a move crosses zones, the higher zone&apos;s rate applies.</li>
+            <li>
+              Tricky access past that adds <strong className="text-gray-900">${ACCESS_FEES.perStep} per step</strong>. More
+              than 4 steps that can&apos;t take a simple ramp need a third person, from{" "}
+              <strong className="text-gray-900">${ACCESS_FEES.extraHandsFrom}</strong>.
+            </li>
+          </ul>
+          <p className="mt-4 text-center text-base text-gray-600">Rates confirmed {RATES_CONFIRMED}.</p>
+        </section>
 
-      {/* Suburbs I cover. Sits below Rates (Harry's request, Sep 2026) so
-          prices come first and the named-suburb list backs them up. */}
-      <section className="pb-14 sm:pb-20 px-4 sm:px-5">
-        <div
-          id="suburbs"
-          className="card-white rounded-3xl max-w-4xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
-          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
-        >
-          <h2 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">
-            Suburbs I cover
-          </h2>
-          <p className="text-lg sm:text-xl leading-relaxed mb-4">
-            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones
-            fall:
+        {/* Suburbs I cover, straight after the rates so the named suburbs back them up. */}
+        <section id="suburbs" className="card-white sec-card fade-up" style={CARD_SHADOW}>
+          <h2 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">Suburbs I cover</h2>
+          <p className="body-lg mb-4">
+            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones fall:
           </p>
-          <p className="text-lg sm:text-xl leading-relaxed mb-3">
-            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD,
-            Carlton, Fitzroy, Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick,
-            Northcote, Footscray, Yarraville, Port Melbourne, Docklands.
+          <p className="body-lg mb-3">
+            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD, Carlton, Fitzroy,
+            Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick, Northcote, Footscray, Yarraville,
+            Port Melbourne, Docklands.
           </p>
-          <p className="text-lg sm:text-xl leading-relaxed mb-3">
-            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon,
-            Moonee Ponds, Box Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton,
-            Glen Waverley, Doncaster, Reservoir, Heidelberg, Sunshine.
+          <p className="body-lg mb-3">
+            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon, Moonee Ponds, Box
+            Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton, Glen Waverley, Doncaster, Reservoir,
+            Heidelberg, Sunshine.
           </p>
-          <p className="text-lg sm:text-xl leading-relaxed mb-4">
-            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong,
-            Werribee, Cranbourne, Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale,
-            Craigieburn, Point Cook, Mornington.
+          <p className="body-lg mb-4">
+            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong, Werribee, Cranbourne,
+            Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale, Craigieburn, Point Cook, Mornington.
           </p>
-          <p className="text-lg sm:text-xl leading-relaxed text-gray-600">
-            Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula,
-            Phillip Island and Lakes Entrance, and with enough notice I can move a piano anywhere
-            in Victoria, or interstate between Sydney and Adelaide. Not sure which zone you&apos;re
-            in? Call or text and I&apos;ll tell you straight away.
+          <p className="body-lg text-gray-600">
+            Further out? I also cover Geelong, Ballarat, Bendigo, the Mornington Peninsula, Phillip Island and
+            Lakes Entrance, and with enough notice I can move a piano anywhere in Victoria. Interstate, I do
+            Melbourne to Sydney and Melbourne to Adelaide myself, by appointment only. Not sure which zone
+            you&apos;re in? Call or text and I&apos;ll tell you straight away.
           </p>
-        </div>
-      </section>
+        </section>
 
-      {/* INSTAGRAM */}
-      <section className="py-14 sm:py-20 px-4 sm:px-5">
-        <h2
-          className="font-heading font-bold text-xl sm:text-2xl text-center mb-6 sm:mb-8 fade-up text-white"
-          style={{ textShadow: "0 2px 8px rgba(0,0,0,0.2)" }}
-        >
-          See the Moves
-        </h2>
-        <div className="max-w-lg mx-auto fade-up">
-          <InstagramProfile url={BUSINESS.instagram} />
-        </div>
-      </section>
+        {/* HOW A PIANO MOVE WORKS: visible numbered steps. */}
+        <section id="how-it-works" className="card-white sec-card fade-up" style={CARD_SHADOW}>
+          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">How a piano move works</h2>
+          <p className="body-lg mb-6">
+            Pianos aren&apos;t furniture. They&apos;re heavy, awkward, and sentimental beyond any monetary value.
+            Here&apos;s how I work.
+          </p>
+          <ol className="space-y-5 list-none">
+            {HOW_STEPS.map((st, i) => (
+              <li key={st.title} className="flex gap-4">
+                <span
+                  aria-hidden="true"
+                  className="step-num"
+                >
+                  {i + 1}
+                </span>
+                <p className="body-lg">
+                  <strong className="font-heading text-grape">{st.title}</strong> {st.text}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-      {/* PROTECTION */}
-      <section id="protection" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div className="max-w-3xl mx-auto">
-          <h2
-            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-center mb-8 sm:mb-12 fade-up text-white"
-            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
-          >
-            Protection
-          </h2>
-          <div
-            className="glass rounded-3xl p-6 sm:p-8 md:p-10 fade-up"
-            style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}
-          >
-            <ul className="space-y-4 sm:space-y-5">
-              <li className="flex items-start gap-3 sm:gap-4">
+        {/* SERVICES. Flex-wrap so a short last row sits centred. */}
+        <section id="services" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
+          <h2 className={PANEL_H2}>Specialty Services</h2>
+          <ul className="flex flex-wrap justify-center gap-4 sm:gap-5 list-none">
+            {SERVICES.map((sv) => (
+              <li key={sv.title} className="service-cell">
+                <FeatureCard
+                  title={sv.title}
+                  description={sv.blurb}
+                  icon={sv.icon}
+                  links={SERVICE_LINKS[sv.icon]}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* PROTECTION */}
+        <section id="protection" className="panel-dark rounded-3xl max-w-3xl mx-auto p-6 sm:p-8 md:p-10 fade-up" style={PANEL_SHADOW}>
+          <h2 className={PANEL_H2}>Protection</h2>
+          <ul className="space-y-4 sm:space-y-5">
+            {[
+              { t: "Public liability insurance", d: "Covers your home or property during the move." },
+              { t: "Goods in transit (carriers) insurance", d: "Covers your piano while it's in my care and while it travels in the van." },
+            ].map((p) => (
+              <li key={p.t} className="flex items-start gap-3 sm:gap-4">
                 <span
                   aria-hidden="true"
                   className="flex-shrink-0 mt-0.5 inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold text-[#1C1C1C] font-bold"
@@ -626,91 +544,46 @@ export default function HomePage() {
                   ✓
                 </span>
                 <div>
-                  <p className="font-heading font-bold text-lg sm:text-xl text-white">
-                    Public liability insurance
-                  </p>
-                  <p className="text-white/75 text-base sm:text-lg leading-relaxed">
-                    Covers damage to your home or property during a job.
-                  </p>
+                  <p className="font-heading font-bold text-lg sm:text-xl text-white">{p.t}</p>
+                  <p className="copy-dim">{p.d}</p>
                 </div>
               </li>
-              <li className="flex items-start gap-3 sm:gap-4">
-                <span
-                  aria-hidden="true"
-                  className="flex-shrink-0 mt-0.5 inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold text-[#1C1C1C] font-bold"
-                >
-                  ✓
-                </span>
-                <div>
-                  <p className="font-heading font-bold text-lg sm:text-xl text-white">
-                    Goods in transit (carriers) insurance
-                  </p>
-                  <p className="text-white/75 text-base sm:text-lg leading-relaxed">
-                    Covers your piano, furniture, and equipment while it&apos;s in the van.
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+            ))}
+          </ul>
+        </section>
 
-      {/* PARTNERS */}
-      <section id="partners" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 sm:mb-12 fade-up">
-            <h2
-              className="font-heading font-black text-3xl sm:text-4xl md:text-5xl mb-3 text-white"
-              style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
-            >
-              Friends of Mine
-            </h2>
-            <p className="text-white/80 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
-              For buying or hiring a piano in Melbourne, these are the folks I recommend.
-            </p>
-          </div>
+        {/* PHOTOS: Harry's own photos, each opening his Instagram profile. */}
+        <section id="photos" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
+          <h2 className={PANEL_H2}>On Instagram</h2>
+          <PhotoGallery />
+        </section>
 
+        {/* PARTNERS */}
+        <section id="partners" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
+          <h2 className="font-heading font-black text-3xl sm:text-4xl text-center mb-3 text-white">Friends of Mine</h2>
+          <p className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 text-white/90 body-lg">
+            For buying or hiring a piano in Melbourne, these are the folks I recommend.
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             {buyRent.map((p) => (
               <PartnerCard key={p.name} p={p} />
             ))}
           </div>
+          <p className="mt-5 text-center text-white/90 text-base">No paid placements.</p>
+        </section>
 
-          <p className="mt-10 max-w-xl mx-auto text-center text-sm sm:text-base text-white/55 leading-relaxed border-l-2 border-white/30 pl-3">
-            A full directory of Melbourne piano tuners and technicians is coming to a separate page.
-            No paid placements.
-          </p>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div className="max-w-3xl mx-auto">
-          <h2
-            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-center mb-8 sm:mb-12 fade-up text-white"
-            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
-          >
-            Frequently Asked
-          </h2>
-          <div className="space-y-3 sm:space-y-4">
+        {/* FAQ */}
+        <section id="faq" className="panel-dark rounded-3xl max-w-3xl mx-auto p-5 sm:p-8 md:p-10 fade-up" style={PANEL_SHADOW}>
+          <h2 className={PANEL_H2}>Frequently Asked</h2>
+          <div className="space-y-3">
             {FAQ_ITEMS.map((item, i) => (
-              <details
-                key={item.q}
-                className="glass rounded-2xl px-5 sm:px-6 py-4 sm:py-5 fade-up group"
-                style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }}
-                {...(i === 0 ? { open: true } : {})}
-              >
-                <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-heading font-bold text-lg sm:text-xl text-white">
+              <details key={item.q} className="glass-dark faq-item group" {...(i === 0 ? { open: true } : {})}>
+                <summary className="faq-q">
                   {item.q}
-                  <span
-                    aria-hidden="true"
-                    className="flex-shrink-0 text-gold transition-transform duration-200 group-open:rotate-45 text-2xl leading-none"
-                  >
-                    +
-                  </span>
+                  {FAQ_PLUS}
                 </summary>
                 {item.a === "BOOKING_LINKS" ? (
-                  <p className="mt-3 text-white/85 text-base sm:text-lg leading-relaxed">
+                  <p className="faq-a">
                     Call or text{" "}
                     <a href={`tel:${BUSINESS.phoneInternational}`} className="text-gold hover:underline font-bold">
                       {BUSINESS.phone}
@@ -722,53 +595,37 @@ export default function HomePage() {
                     . I&apos;ll get back within a few hours.
                   </p>
                 ) : (
-                  <p className="mt-3 text-white/85 text-base sm:text-lg leading-relaxed">{item.a}</p>
+                  <p className="faq-a">{item.a}</p>
+                )}
+                {faqLinks(item).length > 0 && (
+                  <ul className="mt-2 flex flex-wrap gap-x-5 list-none">
+                    {faqLinks(item).map((l) => (
+                      <li key={l.href}>
+                        <ArrowLink
+                          href={l.href}
+                          label={l.label}
+                          className="faq-more"
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </details>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CONTACT */}
-      <section id="contact" className="py-14 sm:py-20 px-4 sm:px-5">
-        <div
-          className="card-white rounded-3xl max-w-2xl mx-auto p-5 sm:p-8 md:p-12 fade-up"
-          style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}
-        >
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape text-center mb-5 sm:mb-8">
-            Reach Out
-          </h2>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center items-center">
-            <a
-              href={`tel:${BUSINESS.phoneInternational}`}
-              className="inline-flex items-center justify-center gap-2 bg-tangerine text-white font-heading font-bold px-5 py-3 sm:py-2.5 rounded-full w-full sm:w-auto hover:bg-coral hover:scale-105 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-            >
-              <Phone className="h-4 w-4" />
-              {BUSINESS.phone}
-            </a>
-            <a
-              href={`sms:${BUSINESS.phoneInternational}?&body=Hi%20Harry%2C%20I%27d%20like%20a%20quote%20for...`}
-              className="inline-flex items-center justify-center gap-2 bg-plum text-white font-heading font-bold px-5 py-3 sm:py-2.5 rounded-full w-full sm:w-auto hover:bg-magenta hover:scale-105 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-            >
-              <MessageSquare className="h-4 w-4" />
-              Text Harry
-            </a>
-            <a
-              href={`mailto:${BUSINESS.email}`}
-              className="inline-flex items-center justify-center gap-2 bg-grape text-white font-heading font-bold px-5 py-3 sm:py-2.5 rounded-full w-full sm:w-auto hover:bg-indigo hover:scale-105 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-            >
-              <Mail className="h-4 w-4" />
-              Email Harry
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* REVIEWS CAROUSEL */}
-      <section className="py-14 sm:py-20 px-4 sm:px-5 fade-up">
-        <ReviewsCarousel />
-      </section>
+        {/* CONTACT: opaque card, the quote checklist beside the buttons. */}
+        <section id="contact" className="card-white rounded-3xl max-w-2xl mx-auto p-5 sm:p-8 md:p-12 fade-up text-center" style={CARD_SHADOW}>
+          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-4 sm:mb-5">Reach Out</h2>
+          <p className="body-lg mb-6">
+            For a quick quote, text me five things: the piano type and model if you know it, the suburb or town at
+            each end, your preferred date, how many steps there are at both ends, and a photo of the piano and any
+            tricky access. I&apos;ll get back to you within a few hours.
+          </p>
+          <CallTextButtons email align="center" />
+        </section>
+      </div>
 
       <FadeUpReveal />
     </>

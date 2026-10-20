@@ -33,8 +33,8 @@ export function ZonesMap() {
     const el = ref.current
     if (!el) return
     if (typeof IntersectionObserver === "undefined") {
-      setShow(true)
-      return
+      const t = setTimeout(() => setShow(true), 0)
+      return () => clearTimeout(t)
     }
     const io = new IntersectionObserver(
       (entries) => {
