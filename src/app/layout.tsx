@@ -6,7 +6,7 @@ import { SunsetBackdrop } from "@/components/sunset-backdrop"
 import { SkylineBand } from "@/components/skyline-band"
 import { StickyCta } from "@/components/sticky-cta"
 import { IconSprite } from "@/components/icons"
-import { BASE_URL, BUSINESS, OG_IMAGE } from "@/lib/constants"
+import { BASE_URL, BUSINESS, HOURS, OG_IMAGE } from "@/lib/constants"
 import "./globals.css"
 
 const alegreya = Alegreya({
@@ -71,6 +71,12 @@ const siteGraph = {
       email: BUSINESS.email,
       priceRange: "$$",
       currenciesAccepted: "AUD",
+      openingHoursSpecification: HOURS.spec.map((h) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: h.days.map((d) => `https://schema.org/${d}`),
+        opens: h.opens,
+        closes: h.closes,
+      })),
       founder: { "@id": `${BASE_URL}/#harry` },
       // Areas mirror the visible FAQ ("Greater Melbourne metro, Ballarat,
       // Bendigo, Geelong, Lakes Entrance, Mornington Peninsula, Phillip

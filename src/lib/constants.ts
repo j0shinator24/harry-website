@@ -31,6 +31,16 @@ export const BUSINESS = {
   googleMapsCid: "https://maps.google.com/?cid=1784837105748892364",
 } as const
 
+// Hours supplied by Harry, 22 Oct 2026. Shown in the footer and the
+// MovingCompany schema; Sunday closed.
+export const HOURS = {
+  text: "Mon to Fri 10am to 5pm, Sat 11am to 4pm, Sun closed",
+  spec: [
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "17:00" },
+    { days: ["Saturday"], opens: "11:00", closes: "16:00" },
+  ],
+} as const
+
 // Shared Open Graph image: a true 1200 x 630 crop of Harry at the piano.
 export const OG_IMAGE = {
   url: "/og-image.jpg",

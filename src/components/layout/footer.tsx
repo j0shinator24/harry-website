@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- static export with unoptimised images; a plain img ships no client JS */
 import { StarIcon } from "@/components/icons"
-import { BUSINESS } from "@/lib/constants"
+import { BUSINESS, HOURS } from "@/lib/constants"
 
 // Minimal footer (Harry, 17 Oct 2026): Google reviews, socials, copyright and
 // contact, then the small web-design credit. The guides live in the header's
@@ -41,6 +41,7 @@ export function Footer() {
           {BUSINESS.email}
         </a>
       </p>
+      <p className="mt-1.5 leading-relaxed">Hours: {HOURS.text}.</p>
       {/* Web-design credit, approved by Harry and Joshua (17 Oct 2026). The
           compact light-ink lockup at its 24px minimum, on the dark ground. */}
       <p className="mt-4">
