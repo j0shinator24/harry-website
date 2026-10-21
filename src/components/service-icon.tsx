@@ -8,6 +8,7 @@ const ICONS: Record<Service["icon"], LineIcon> = {
   inhome: House,
   disposal: Recycle,
   marketplace: ShoppingBag,
+  rehoming: House,
   band: Guitar,
   busking: Music,
 }

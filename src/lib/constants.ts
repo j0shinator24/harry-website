@@ -65,6 +65,7 @@ export const LAST_UPDATED: Record<string, string> = {
   "/marketplace-piano-delivery/": "2026-10-20",
   "/piano-movers-geelong/": "2026-10-20",
   "/interstate-piano-removals/": "2026-10-20",
+  "/free-piano-melbourne/": "2026-10-22",
 }
 
 export type RateZone = {
@@ -110,7 +111,7 @@ export const ACCESS_FEES = {
 export type Service = {
   title: string
   blurb: string
-  icon: "piano" | "inhome" | "disposal" | "marketplace" | "band" | "busking"
+  icon: "piano" | "inhome" | "disposal" | "marketplace" | "rehoming" | "band" | "busking"
 }
 
 // Card copy via Ghostwriter (Gate 7 round 1, Oct 2026). Icons are one
@@ -136,6 +137,11 @@ export const SERVICES: readonly Service[] = [
     title: "Marketplace Deliveries",
     blurb: "Pianos purchased on Marketplace or online can be delivered without needing you to attend at the pick-up.",
     icon: "marketplace",
+  },
+  {
+    title: "Free Piano Rehoming",
+    blurb: "I have pianos that need a new home. The piano is free, you pay delivery, and you can join the waitlist by text or email.",
+    icon: "rehoming",
   },
   {
     title: "Band Equipment Deliveries",
@@ -183,6 +189,14 @@ export const SMS_DISPOSAL_BODY = encodeURIComponent(
   ].join(String.fromCharCode(10)),
 )
 export const SMS_DISPOSAL_HREF = `sms:${BUSINESS.phoneInternational}?&body=${SMS_DISPOSAL_BODY}`
+
+// Harry's Piano Rehoming waitlist (22 Oct 2026): the text and the email carry
+// the same details (name, delivery suburb, email, phone, access). The site
+// collects nothing; both open the visitor's own messaging app.
+const REHOMING_TEXT = "Piano Rehoming waitlist. Name: , Suburb: , Email: , Phone: , Access (steps, stairs, tight spots): "
+export const SMS_REHOMING_BODY = encodeURIComponent(REHOMING_TEXT)
+export const SMS_REHOMING_HREF = `sms:${BUSINESS.phoneInternational}?&body=${SMS_REHOMING_BODY}`
+export const EMAIL_REHOMING_HREF = `mailto:${BUSINESS.email}?subject=${encodeURIComponent("Piano Rehoming waitlist")}&body=${SMS_REHOMING_BODY}`
 
 export type Partner = {
   name: string

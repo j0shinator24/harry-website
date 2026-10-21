@@ -8,6 +8,7 @@ export const GUIDES = [
   { href: "/piano-types/", label: "Grand, upright and digital pianos" },
   { href: "/piano-stairs-difficult-access/", label: "Stairs and difficult access" },
   { href: "/marketplace-piano-delivery/", label: "Marketplace piano delivery" },
+  { href: "/free-piano-melbourne/", label: "Free pianos in Melbourne" },
   { href: "/piano-movers-geelong/", label: "Geelong and regional Victoria" },
   { href: "/interstate-piano-removals/", label: "Interstate piano removals" },
 ] as const
@@ -28,6 +29,7 @@ export const GUIDE_PHOTOS: Record<GuideHref, Photo> = {
   "/piano-types/": P3,
   "/piano-stairs-difficult-access/": P4,
   "/marketplace-piano-delivery/": P2,
+  "/free-piano-melbourne/": P1,
   "/piano-movers-geelong/": P3,
   "/interstate-piano-removals/": P1,
 }

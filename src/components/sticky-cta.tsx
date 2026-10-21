@@ -1,5 +1,5 @@
 import { MessageSquare, Phone } from "@/components/icons"
-import { BUSINESS, SMS_DISPOSAL_HREF, SMS_QUOTE_HREF } from "@/lib/constants"
+import { BUSINESS, SMS_DISPOSAL_HREF, SMS_QUOTE_HREF, SMS_REHOMING_HREF } from "@/lib/constants"
 import { StickyCtaHeroWatch } from "@/components/sticky-cta-hero-watch"
 
 // Mobile-only call / text bar fixed to the bottom of the screen. A server
@@ -24,6 +24,14 @@ export function StickyCta() {
         <a
           href={SMS_DISPOSAL_HREF}
           className="sms-disposal bar-text"
+        >
+          <MessageSquare className="h-4 w-4" aria-hidden="true" />
+          Text Harry
+        </a>
+        {/* Shown instead on the free-piano waitlist page. */}
+        <a
+          href={SMS_REHOMING_HREF}
+          className="sms-rehoming bar-text"
         >
           <MessageSquare className="h-4 w-4" aria-hidden="true" />
           Text Harry

@@ -5,7 +5,7 @@ import { starRow } from "@/components/icons"
 import { CallTextButtons, type SmsKind } from "@/components/call-text-buttons"
 import { RateCards } from "@/components/rate-cards"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
-import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, REVIEW_SOURCE_LABEL, type RateZone, type Review } from "@/lib/constants"
+import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, REVIEW_SOURCE_LABEL, type RateZone, type Review } from "@/lib/constants"
 import { RATES_CONFIRMED } from "@/lib/rates"
 import { GUIDE_PHOTOS, type GuideHref } from "@/lib/guides"
 
@@ -116,6 +116,9 @@ export type GuidePageProps = {
   service: GuideService
   // Which pre-filled text every "Text Harry" button on the page sends.
   sms?: SmsKind
+  // Overrides the closing card (default: "Ready to book?" and the quote line)
+  // for a page where the next step is not a quote.
+  closing?: { heading: string; text: string }
 }
 
 const DEFAULT_AREA = {
@@ -126,7 +129,10 @@ const DEFAULT_AREA = {
 
 // Each guide has its own 1200 x 630 share card in public/og/ (Harry's photo
 // and the page's H1), so a shared link shows which guide it is.
+// A page without its own card yet falls back to the shared site card.
+const SHARED_OG_PAGES: readonly string[] = ["/free-piano-melbourne/"]
 export function guideOgImage(path: string, title: string) {
+  if (SHARED_OG_PAGES.includes(path)) return { url: OG_IMAGE.url, width: OG_IMAGE.width, height: OG_IMAGE.height, alt: title }
   return { url: `/og/${path.replace(/\//g, "")}.jpg`, width: 1200, height: 630, alt: title }
 }
 
@@ -243,7 +249,7 @@ function BlockView({ block, sms }: { block: Block; sms: SmsKind }) {
   return <CallTextButtons sms={sms} />
 }
 
-export function GuidePage({ path, crumb, h1, intro, introIds, sections, service, sms = "quote" }: GuidePageProps) {
+export function GuidePage({ path, crumb, h1, intro, introIds, sections, service, sms = "quote", closing }: GuidePageProps) {
   const url = `${BASE_URL}${path}`
   const questions = sections.flatMap((g) => g.items)
   const photo = GUIDE_PHOTOS[path]
@@ -389,10 +395,10 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
 
           <section aria-labelledby="quote-h" className="card-final guide-card text-center fade-up" style={cardShadow}>
             <h2 id="quote-h" className="font-heading font-black text-2xl sm:text-3xl text-grape mb-3 sm:mb-4">
-              Ready to book?
+              {closing?.heading ?? "Ready to book?"}
             </h2>
             <p className="body-lg mb-5">
-              {`Text me the details and I'll price it properly. Call or text ${BUSINESS.phone} and I'll get back to you within a few hours.`}
+              {closing?.text ?? `Text me the details and I'll price it properly. Call or text ${BUSINESS.phone} and I'll get back to you within a few hours.`}
             </p>
             <CallTextButtons email align="center" sms={sms} />
           </section>

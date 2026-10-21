@@ -226,13 +226,16 @@
 /* The mobile call/text bar lives in the root layout. A page that needs a
    different text template (disposal: collection only) marks its wrapper with
    data-sms, and the bar swaps its Text link here, without JavaScript. */
-.sticky-cta .sms-disposal {
+.sticky-cta .sms-disposal,
+.sticky-cta .sms-rehoming {
   display: none;
 }
-body:has([data-sms="disposal"]) .sticky-cta .sms-quote {
+body:has([data-sms="disposal"]) .sticky-cta .sms-quote,
+body:has([data-sms="rehoming"]) .sticky-cta .sms-quote {
   display: none;
 }
-body:has([data-sms="disposal"]) .sticky-cta .sms-disposal {
+body:has([data-sms="disposal"]) .sticky-cta .sms-disposal,
+body:has([data-sms="rehoming"]) .sticky-cta .sms-rehoming {
   display: inline-flex;
 }
 
