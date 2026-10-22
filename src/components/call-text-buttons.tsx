@@ -1,10 +1,11 @@
 import { Phone, MessageSquare, Mail } from "@/components/icons"
-import { BUSINESS, EMAIL_REHOMING_HREF, SMS_DISPOSAL_HREF, SMS_QUOTE_HREF, SMS_REHOMING_HREF } from "@/lib/constants"
+import { BUSINESS, SMS_DISPOSAL_HREF, SMS_QUOTE_HREF, SMS_REHOMING_HREF } from "@/lib/constants"
 
 // Which pre-filled text the Text button sends: the moving quote checklist, or
 // the collection-only disposal one.
-// "rehoming" is the free-piano waitlist: Text and Email only (no Call), and
-// both carry the waitlist details.
+// "rehoming" is the free-piano page: the gallery and the waitlist form come
+// first (Harry's Piano Rehoming, /free-pianos/, 22 Oct 2026), with Text Harry
+// kept as the secondary option. No Call button.
 export type SmsKind = "quote" | "disposal" | "rehoming"
 export const SMS_HREF: Record<SmsKind, string> = { quote: SMS_QUOTE_HREF, disposal: SMS_DISPOSAL_HREF, rehoming: SMS_REHOMING_HREF }
 
@@ -19,6 +20,25 @@ export function CallTextButtons({
   align?: "start" | "center"
   sms?: SmsKind
 }) {
+  if (sms === "rehoming") {
+    return (
+      <div className={`flex flex-col sm:flex-row flex-wrap gap-3 ${align === "center" ? "sm:justify-center" : ""}`}>
+        <a href="/free-pianos/" className="btn-call">
+          See the free pianos
+        </a>
+        <a href="/free-pianos/waitlist/" className="btn-text">
+          Join the waitlist
+        </a>
+        <a href="/free-pianos/give/" className="btn-mail">
+          Give a piano away
+        </a>
+        <a href={SMS_HREF.rehoming} className="link-grape self-center inline-flex items-center gap-2 py-2">
+          <MessageSquare className="h-4 w-4" aria-hidden="true" />
+          Or text Harry
+        </a>
+      </div>
+    )
+  }
   return (
     <div
       className={`flex flex-col sm:flex-row flex-wrap gap-3 ${align === "center" ? "sm:justify-center" : ""}`}
@@ -30,18 +50,16 @@ export function CallTextButtons({
         <MessageSquare className="h-4 w-4" aria-hidden="true" />
         Text Harry
       </a>
-      {sms !== "rehoming" && (
+      <a
+        href={`tel:${BUSINESS.phoneInternational}`}
+        className="btn-call"
+      >
+        <Phone className="h-4 w-4" aria-hidden="true" />
+        Call {BUSINESS.phone}
+      </a>
+      {email && (
         <a
-          href={`tel:${BUSINESS.phoneInternational}`}
-          className="btn-call"
-        >
-          <Phone className="h-4 w-4" aria-hidden="true" />
-          Call {BUSINESS.phone}
-        </a>
-      )}
-      {(email || sms === "rehoming") && (
-        <a
-          href={sms === "rehoming" ? EMAIL_REHOMING_HREF : `mailto:${BUSINESS.email}`}
+          href={`mailto:${BUSINESS.email}`}
           className="btn-mail"
         >
           <Mail className="h-4 w-4" aria-hidden="true" />

@@ -140,7 +140,7 @@ export const SERVICES: readonly Service[] = [
   },
   {
     title: "Free Piano Rehoming",
-    blurb: "I have pianos that need a new home. The piano is free, you pay delivery, and you can join the waitlist by text or email.",
+    blurb: "I have pianos that need a new home. The piano is free, you pay delivery, and you can see them and join the waitlist online.",
     icon: "rehoming",
   },
   {

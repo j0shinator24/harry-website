@@ -8,15 +8,16 @@ export const metadata = guideMetadata({
   path: PATH,
   title: "Free Pianos Melbourne | Harry's Piano Rehoming Waitlist",
   description:
-    "Harry The Piano Mover rehomes free pianos in Melbourne. The piano is free, you pay delivery at standard rates. Join the waitlist by text or email.",
+    "Harry The Piano Mover rehomes free pianos in Melbourne. The piano is free, you pay delivery at standard rates. See the free pianos and join the waitlist online.",
 })
 
 const qs: GuideSection[] = [
   {
     id: "how-to-join",
     q: "How to join the waitlist",
-    a: "Text or email me these five things and I'll add you to the waitlist.",
+    a: "Fill in the waitlist form and I'll add you to the waitlist.",
     body: [
+      "The [waitlist form](/free-pianos/waitlist/) asks for six things.",
       {
         list: [
           "Name.",
@@ -24,8 +25,10 @@ const qs: GuideSection[] = [
           "Email.",
           "Phone.",
           "Access. Steps at the entry, stairs, narrow paths or tight turns, and which floor.",
+          "The types of piano you'd take.",
         ],
       },
+      "If you'd rather, text me the same details and I'll add you myself.",
       { cta: true },
     ],
   },
@@ -51,8 +54,11 @@ const qs: GuideSection[] = [
   {
     id: "faq-how-to-join",
     q: "How do I join?",
-    a: "Text or email me your name, delivery suburb, email, phone and access details.",
-    body: ["The list is under [how to join the waitlist](#how-to-join)."],
+    a: "Fill in the waitlist form, or ask for a piano you see in the free piano gallery.",
+    body: [
+      "The [free piano gallery](/free-pianos/) shows the pianos I have right now, and each one has a Request this piano button. The [waitlist form](/free-pianos/waitlist/) puts you on the list for the next one.",
+      "What the form asks for is under [how to join the waitlist](#how-to-join).",
+    ],
   },
   {
     id: "hear-back",
@@ -63,13 +69,20 @@ const qs: GuideSection[] = [
     id: "your-details",
     q: "What happens to my details?",
     a: "I only use them to contact you about the waitlist.",
+    body: ["[Privacy for free pianos](/free-pianos/privacy/) says what I keep, who sees it and when it's deleted."],
+  },
+  {
+    id: "give-a-piano",
+    q: "Have a piano to give away?",
+    a: "Send me photos and a few details. It costs you nothing.",
+    body: ["Use the [give a piano form](/free-pianos/give/). Only the suburb is ever shown, never your address or contact details, and anyone interested talks to me."],
   },
 ]
 
 const sections = grouped(qs, [
   ["booking", "how-to-join"],
   ["prices", "delivery-cost"],
-  ["info", "really-free", "faq-how-to-join", "hear-back", "your-details"],
+  ["info", "really-free", "faq-how-to-join", "hear-back", "your-details", "give-a-piano"],
 ])
 
 export default function FreePianoMelbournePage() {
@@ -80,12 +93,12 @@ export default function FreePianoMelbournePage() {
       h1="Free pianos in Melbourne: Harry's Piano Rehoming waitlist"
       intro={[
         "I have two pianos that need a new home right now. The piano is free, and you only pay delivery at my standard zone rates.",
-        "Join the waitlist by text or email and I'll get in touch when a piano is available for you.",
+        "[See the free pianos](/free-pianos/), ask for one, or join the waitlist and I'll get in touch when a piano is available for you.",
       ]}
       sms="rehoming"
       closing={{
         heading: "Join the waitlist",
-        text: "Text or email me your name, delivery suburb, email, phone and access details, and I'll get in touch when a piano is available for you.",
+        text: "Fill in the waitlist form and I'll get in touch when a piano is available for you. Got a piano to give away? It costs you nothing.",
       }}
       sections={sections}
       service={{

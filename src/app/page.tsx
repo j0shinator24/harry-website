@@ -197,7 +197,7 @@ const SERVICE_SCHEMA_DESCRIPTIONS: Record<string, string> = {
   piano: `Upright, grand and digital piano moving across Greater Melbourne, priced by zone: uprights from $${innerRate.upright} (Inner Suburbs and CBD) to $${outerMelb.upright} (Outer Melbourne), grands from $${innerRate.grand} to $${outerMelb.grand}. Custom quotes beyond Outer Melbourne.`,
   disposal: `Removal of pianos beyond repair: what is worth saving is recycled and the rest disposed of responsibly. Upright $${disposalRate.upright}, grand $${disposalRate.grand}${pianolaDisposal ? `, upright pianola $${pianolaDisposal.price}` : ""}.`,
   marketplace: "Collection and delivery of pianos bought on Marketplace or online, without the buyer needing to attend the pick-up.",
-  rehoming: "Free pianos in need of a new home. The piano is free and the person taking it pays delivery at Harry's standard zone rates. Join the waitlist by text or email.",
+  rehoming: "Free pianos in need of a new home. The piano is free and the person taking it pays delivery at Harry's standard zone rates. See the free pianos and join the waitlist online.",
   band: "Band equipment deliveries (guitars, amps, drum kits, PA) to an event and back again afterwards.",
   busking: "Harry's own acoustic grand piano and upright, played on the streets of Melbourne.",
   inhome: "Moving a piano within the same home, for example out of the way while floors are restored or installed and back into place a couple of weeks later. A grand can sometimes stay on Harry's equipment in between, so it does not need fully setting up twice. Quoted on request.",
