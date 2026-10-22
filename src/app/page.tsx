@@ -135,7 +135,6 @@ const SERVICE_LINKS: Record<string, readonly FaqLink[]> = {
   piano: [{ href: "/piano-moving-cost-melbourne/", label: "Prices and what affects them" }],
   disposal: [{ href: "/piano-disposal-melbourne/", label: "How piano disposal works" }],
   marketplace: [{ href: "/marketplace-piano-delivery/", label: "How Marketplace delivery works" }],
-  rehoming: [{ href: "/free-piano-melbourne/", label: "Join the waitlist" }],
 }
 
 // Elements reused as they are, so the page payload holds each one once:
@@ -524,6 +523,7 @@ export default function HomePage() {
                   description={sv.blurb}
                   icon={sv.icon}
                   links={SERVICE_LINKS[sv.icon]}
+                  featured={sv.featured}
                 />
               </li>
             ))}

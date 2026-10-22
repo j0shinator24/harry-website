@@ -112,11 +112,22 @@ export type Service = {
   title: string
   blurb: string
   icon: "piano" | "inhome" | "disposal" | "marketplace" | "rehoming" | "band" | "busking"
+  // A card that is one big link (the free piano scheme): where it goes, the
+  // call to action and the corner badge.
+  featured?: { href: string; cta: string; badge: string }
 }
 
 // Card copy via Ghostwriter (Gate 7 round 1, Oct 2026). Icons are one
 // matching line set (lucide), drawn in components/service-icon.tsx.
 export const SERVICES: readonly Service[] = [
+  {
+    // Joshua, 22 Oct 2026: the free piano scheme must be easy to find, so this
+    // card goes first and the whole card links to the Worker gallery.
+    title: "Free Piano Rehoming",
+    blurb: "I have pianos that need a new home. The piano is free, you pay delivery, and you can see them and join the waitlist online.",
+    icon: "rehoming",
+    featured: { href: "/free-pianos/", cta: "See the free pianos", badge: "Free" },
+  },
   {
     title: "Piano Moving",
     blurb: "Rates are set by zone, from the inner suburbs and CBD out to Outer Melbourne and beyond.",
@@ -137,11 +148,6 @@ export const SERVICES: readonly Service[] = [
     title: "Marketplace Deliveries",
     blurb: "Pianos purchased on Marketplace or online can be delivered without needing you to attend at the pick-up.",
     icon: "marketplace",
-  },
-  {
-    title: "Free Piano Rehoming",
-    blurb: "I have pianos that need a new home. The piano is free, you pay delivery, and you can see them and join the waitlist online.",
-    icon: "rehoming",
   },
   {
     title: "Band Equipment Deliveries",

@@ -73,6 +73,12 @@ export function Header() {
               </a>
             </li>
             <li>
+              <a href="/free-pianos/" className="nav-free">
+                Free pianos
+                <span className="free-tag">New</span>
+              </a>
+            </li>
+            <li>
               <a
                 href="/#contact"
                 className="nav-quote"
@@ -96,6 +102,10 @@ export function Header() {
             className="mnav-panel"
             style={{ background: "rgba(28,28,28,0.98)" }}
           >
+            <a href="/free-pianos/" className="mnav-free">
+              Free pianos
+              <span className="free-tag">New</span>
+            </a>
             <ul className="list-none">
               {navItems.map((item) => (
                 <li key={item.href}>
