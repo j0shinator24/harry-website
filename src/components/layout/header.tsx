@@ -36,7 +36,7 @@ export function Header() {
         </a>
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-6 list-none">
+          <ul className="flex items-center gap-4 xl:gap-6 list-none">
             {navItems.slice(0, 3).map((item) => (
               <li key={item.href}>
                 <a href={item.href} className="nav-link">
@@ -75,7 +75,7 @@ export function Header() {
             <li>
               <a href="/free-pianos/" className="nav-free">
                 Free pianos
-                <span className="free-tag">New</span>
+                <span className="free-tag hidden xl:inline-block">New</span>
               </a>
             </li>
             <li>

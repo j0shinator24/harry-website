@@ -48,12 +48,12 @@
    did. Edit a list here and every use changes. */
 @layer components {
   /* Header, on every page */
-  .nav-link { @apply font-heading text-base text-white/90 hover:text-gold transition-colors duration-200 py-2 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
+  .nav-link { @apply whitespace-nowrap font-heading text-base text-white/90 hover:text-gold transition-colors duration-200 py-2 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
   .nav-guides { @apply list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center gap-1; }
   .nav-guides-panel { @apply absolute right-0 top-full mt-3 w-72 rounded-2xl p-2 list-none; }
   .nav-guide-link { @apply block rounded-xl px-3 py-2.5 text-base text-white/90 hover:bg-white/10 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
-  .nav-quote { @apply font-heading text-base font-bold bg-gold text-[#1C1C1C] px-5 py-2.5 rounded-full hover:bg-tangerine hover:scale-105 active:scale-95 transition-transform duration-200 inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none; }
-  .nav-free { @apply inline-flex items-center gap-1.5 font-heading text-base font-bold text-gold border-2 border-tangerine rounded-full px-3.5 py-1.5 whitespace-nowrap hover:bg-tangerine hover:text-[#1C1C1C] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .nav-quote { @apply whitespace-nowrap font-heading text-base font-bold bg-gold text-[#1C1C1C] px-5 py-2.5 rounded-full hover:bg-tangerine hover:scale-105 active:scale-95 transition-transform duration-200 inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none; }
+  .nav-free { @apply inline-flex items-center gap-1.5 font-heading text-base font-bold text-gold border-2 border-tangerine rounded-full px-3 xl:px-3.5 py-1.5 whitespace-nowrap hover:bg-tangerine hover:text-[#1C1C1C] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .mnav-free { @apply mt-3 flex items-center justify-center gap-2 font-heading font-bold text-lg text-gold border-2 border-tangerine rounded-full py-2.5 active:bg-tangerine active:text-[#1C1C1C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .free-tag { @apply inline-block rounded-full bg-tangerine text-[#1C1C1C] text-[0.65rem] font-black uppercase tracking-wider leading-none px-1.5 py-1; }
   .header-bar { @apply relative mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-5; }
