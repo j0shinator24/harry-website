@@ -73,7 +73,7 @@ export function Header() {
               </a>
             </li>
             <li>
-              <a href="/free-pianos/" className="nav-free">
+              <a href="/free-piano-melbourne/" className="nav-free">
                 Free pianos
                 <span className="free-tag hidden xl:inline-block">New</span>
               </a>
@@ -102,7 +102,7 @@ export function Header() {
             className="mnav-panel"
             style={{ background: "rgba(28,28,28,0.98)" }}
           >
-            <a href="/free-pianos/" className="mnav-free">
+            <a href="/free-piano-melbourne/" className="mnav-free">
               Free pianos
               <span className="free-tag">New</span>
             </a>

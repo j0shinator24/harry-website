@@ -31,7 +31,7 @@ const qs: GuideSection[] = [
     // recites them; the FAQPage answer keeps them (schema below).
     a: "It depends on your zone and the type of piano, and every rate is below.",
     body: [
-      "All prices include GST.",
+      "All prices include GST and are set by zone, so you can see what your piano removal will cost before you book.",
       {
         rates: MOVING_ZONES,
         schema: `An upright costs $${INNER.upright} in the Inner Suburbs and CBD, $${OUTER_SUB.upright} in the Outer Suburbs and $${OUTER_MELB.upright} in Outer Melbourne, and a grand costs $${INNER.grand}, $${OUTER_SUB.grand} or $${OUTER_MELB.grand} across the same three zones.`,

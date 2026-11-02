@@ -62,7 +62,7 @@ const siteGraph = {
       // Entity disambiguation for search and AI engines, which have confused
       // this business with a similarly named general removalist.
       disambiguatingDescription:
-        "Specialist piano mover in Melbourne, owner-operated by Harry, a pianist, with an assistant on most moves. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
+        "Specialist piano mover in Melbourne, owner-operated by Harry, a piano player, with an assistant on most moves. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
       description: BUSINESS.description,
       url: `${BASE_URL}/`,
       logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png`, width: 512, height: 512 },
@@ -106,7 +106,7 @@ const siteGraph = {
       name: "Harry",
       jobTitle: "Piano Mover",
       worksFor: { "@id": `${BASE_URL}/#business` },
-      description: "Melbourne piano mover and pianist. Owner-operator of Harry The Piano Mover, with an assistant on most moves.",
+      description: "Melbourne piano mover and piano player. Owner-operator of Harry The Piano Mover, with an assistant on most moves.",
       // The homepage photo of Harry at the piano (its alt text names him).
       image: `${BASE_URL}/harry-piano-1.jpg`,
       knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving"],

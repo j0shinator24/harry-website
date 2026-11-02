@@ -101,7 +101,7 @@ export default function PianoTypesPage() {
       service={{
         name: "Grand and Upright Piano Moving Melbourne",
         serviceType: "Piano Moving",
-        description: `Upright, grand and digital piano moving in Melbourne by a pianist. Grands have the lyre, legs, music stand and lid removed for the move. Uprights from $${INNER.upright}, grands from $${INNER.grand}.`,
+        description: `Upright, grand and digital piano moving in Melbourne by a piano player. Grands have the lyre, legs, music stand and lid removed for the move. Uprights from $${INNER.upright}, grands from $${INNER.grand}.`,
         offers: movingOffers(),
       }}
     />

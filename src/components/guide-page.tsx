@@ -190,7 +190,7 @@ function answerText(s: GuideSection): string {
 
 const cardShadow = { boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }
 
-const GUIDE_BYLINE = "By Harry, pianist and piano mover at Harry The Piano Mover. Updated October 2026."
+const GUIDE_BYLINE = "By Harry, piano player and piano mover at Harry The Piano Mover. Updated October 2026."
 
 function BlockView({ block, sms }: { block: Block; sms: SmsKind }) {
   if (typeof block === "string") {

@@ -122,11 +122,12 @@ export type Service = {
 export const SERVICES: readonly Service[] = [
   {
     // Joshua, 22 Oct 2026: the free piano scheme must be easy to find, so this
-    // card goes first and the whole card links to the Worker gallery.
+    // card goes first. Harry, 1 Nov 2026: softer copy, and the card links to the
+    // static explainer page (good for search) rather than the Worker gallery.
     title: "Free Piano Rehoming",
-    blurb: "I have pianos that need a new home. The piano is free, you pay delivery, and you can see them and join the waitlist online.",
+    blurb: "Good, tuned pianos that need a new home. Join my wait list and only pay delivery.",
     icon: "rehoming",
-    featured: { href: "/free-pianos/", cta: "See the free pianos", badge: "Free" },
+    featured: { href: "/free-piano-melbourne/", cta: "Find out more", badge: "Free" },
   },
   {
     title: "Piano Moving",
@@ -196,247 +197,49 @@ export const SMS_DISPOSAL_BODY = encodeURIComponent(
 )
 export const SMS_DISPOSAL_HREF = `sms:${BUSINESS.phoneInternational}?&body=${SMS_DISPOSAL_BODY}`
 
-// Harry's Piano Rehoming waitlist (22 Oct 2026): the text and the email carry
+// Harry's Piano Rehoming wait list (22 Oct 2026): the text and the email carry
 // the same details (name, delivery suburb, email, phone, access). The site
 // collects nothing; both open the visitor's own messaging app.
-const REHOMING_TEXT = "Piano Rehoming waitlist. Name: , Suburb: , Email: , Phone: , Access (steps, stairs, tight spots): "
+const REHOMING_TEXT = "Free piano wait list. Name: , Suburb: , Email: , Phone: , Access (steps, stairs, tight spots): "
 export const SMS_REHOMING_BODY = encodeURIComponent(REHOMING_TEXT)
 export const SMS_REHOMING_HREF = `sms:${BUSINESS.phoneInternational}?&body=${SMS_REHOMING_BODY}`
-export const EMAIL_REHOMING_HREF = `mailto:${BUSINESS.email}?subject=${encodeURIComponent("Piano Rehoming waitlist")}&body=${SMS_REHOMING_BODY}`
+export const EMAIL_REHOMING_HREF = `mailto:${BUSINESS.email}?subject=${encodeURIComponent("Free piano wait list")}&body=${SMS_REHOMING_BODY}`
 
 export type Partner = {
   name: string
-  category: "buy-rent" | "tuner" | "technician"
-  rating: number
-  reviews?: number
   blurb: string
+  website?: string
   phone?: string
   phoneIntl?: string
-  website?: string
   credentials?: readonly string[]
 }
 
+// Friends of Mine, set by Harry on 1 Nov 2026. Text-only cards, in this order.
 export const PARTNERS: readonly Partner[] = [
   {
-    name: "Melbourne Piano Sales",
-    category: "buy-rent",
-    rating: 5.0,
-    reviews: 69,
-    blurb: "Matt and his father Ross. Family business since 1994. New Kawai plus as-new Yamaha uprights and grands. Showroom in Nunawading.",
-    phone: "03 9429 7999",
-    phoneIntl: "+61394297999",
-    website: "https://www.melbournepianosales.com.au/",
+    name: "Eliza Mithen Pianos",
+    blurb: "Tuner and technician",
+    website: "https://www.elizamithenpianos.com.au/",
   },
   {
-    name: "Melbourne Piano Rentals",
-    category: "buy-rent",
-    rating: 5.0,
-    reviews: 1,
-    blurb: "Erin Carrigy, women-owned, piano tuner herself. Long and short-term piano rentals across greater Melbourne. Frankston base.",
-    phone: "0414 644 650",
-    phoneIntl: "+61414644650",
-    website: "https://melbournepianorentals.com.au/",
+    name: "Erin Tunes",
+    blurb: "Tuner",
+    website: "https://www.erintunes.com.au/",
   },
   {
-    name: "Piano Tuning & Solutions",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 23,
-    blurb: "David. \"Professional, prompt, honest, reliable, expert, thorough.\" Newport, services Melbourne-wide.",
-    phone: "0412 446 213",
-    phoneIntl: "+61412446213",
-    website: "http://pianotuningsolutions.com/",
+    name: "Joe Major Pianos",
+    blurb: "Tuner",
+    website: "https://joemajor.com/",
   },
   {
-    name: "Chandler Piano Tuning",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 23,
-    blurb: "Greater Melbourne mobile service. Strong repeat-client base, customers come back yearly.",
-    phone: "0466 719 292",
-    phoneIntl: "+61466719292",
-    website: "http://chandlerpiano.com/",
+    name: "Pianos Victoria (with Lachlan Brown)",
+    blurb: "Tuning and climate-controlled piano storage",
+    website: "https://www.pianosvictoria.com/",
   },
   {
-    name: "Imlach Tuning",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 7,
-    blurb: "Rob Imlach. Nunawading, eastern suburbs. Graduate of the Chicago School for Piano Technology; current contract tuner for Australian Piano Warehouse.",
-    phone: "0411 916 536",
-    phoneIntl: "+61411916536",
-    website: "https://www.imlachtuning.com/",
-    credentials: ["Chicago School"],
-  },
-  {
-    name: "Gourley Music",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 30,
-    blurb: "Brend Gourley. Yarra Valley base, services east Melbourne. \"Took great care tuning my very flat much loved piano!\"",
-    phone: "0433 035 451",
-    phoneIntl: "+61433035451",
-    website: "http://www.gourleymusic.com/",
-  },
-  {
-    name: "WestEnd Piano Tuning",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 29,
-    blurb: "Newport. Servicing inner west, western suburbs, Geelong, and the Bellarine.",
-    phone: "0425 782 542",
-    phoneIntl: "+61425782542",
-    website: "https://www.westendpianotuning.com.au/",
-  },
-  {
-    name: "Max Piano Tuner",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 14,
-    blurb: "Max Kourilov. South-east Bayside. \"Took about an hour, fair pricing, and my piano sounds fantastic.\"",
-    phone: "0490 334 056",
-    phoneIntl: "+61490334056",
-    website: "https://maxpianotuner.com.au/",
-  },
-  {
-    name: "Baghdad Piano Shop",
-    category: "tuner",
-    rating: 4.7,
-    reviews: 13,
-    blurb: "Roxburgh Park, north Melbourne. Tuning services and a small piano shop. \"Musical genius who tuned my piano perfectly!\"",
-    phone: "0474 726 777",
-    phoneIntl: "+61474726777",
-  },
-  {
-    name: "Stuart's Piano Tuning",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 3,
-    blurb: "Stuart Stevens. Warrandyte Rd, east Melbourne. \"Friendly and does a great job.\"",
-    phone: "0402 502 982",
-    phoneIntl: "+61402502982",
-    website: "https://stuartstevensenter.wixsite.com/stuart-s-piano-tunin",
-  },
-  {
-    name: "Yarra Valley Piano Tuning",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 5,
-    blurb: "Edo. Yarra Valley specialist. \"Quality service, low price and friendly.\"",
-    phone: "0437 240 590",
-    phoneIntl: "+61437240590",
-    website: "https://pianotuningyarravalley.wordpress.com/",
-  },
-  {
-    name: "Peninsula Piano Tuning Service",
-    category: "tuner",
-    rating: 5.0,
-    reviews: 2,
-    blurb: "Mt Martha, Mornington Peninsula. McLeod Rd. Servicing the Peninsula.",
-    phone: "03 5974 3783",
-    phoneIntl: "+61359743783",
-  },
-  {
-    name: "Julian Morgan-Smith",
-    category: "technician",
-    rating: 5.0,
-    reviews: 32,
-    blurb: "Tuning, regulation, voicing, repairs, restoration. Trusted by artists, schools, and institutions across Melbourne.",
-    phone: "0439 039 509",
-    phoneIntl: "+61439039509",
-    website: "http://www.julianmorgansmith.com/",
-  },
-  {
-    name: "House of Pianos",
-    category: "technician",
-    rating: 5.0,
-    reviews: 57,
-    blurb: "Stewart Kelly. Coventry St, South Melbourne. Piano shop, technician services, plus a music academy.",
-    phone: "03 9942 0348",
-    phoneIntl: "+61399420348",
-    website: "http://houseofpianos.com.au/",
-  },
-  {
-    name: "Forte Piano Tuning",
-    category: "technician",
-    rating: 4.9,
-    reviews: 16,
-    blurb: "Christine McCrae. Kew. Australian School of Piano Tuning trained.",
-    phone: "0467 553 088",
-    phoneIntl: "+61467553088",
-    website: "https://fortepianotuning.com.au/",
-    credentials: ["Yamaha-accredited", "PTGV"],
-  },
-  {
-    name: "The Piano Fellow",
-    category: "technician",
-    rating: 5.0,
-    reviews: 10,
-    blurb: "Vincent Tarin, French-Australian technician. Itemm (France) graduated, BDK (Germany) member, Yamaha authorised service agent. Restorations, repairs, adsilent silent-system installer.",
-    phone: "0432 885 397",
-    phoneIntl: "+61432885397",
-    website: "https://pianofellow.com.au/",
-    credentials: ["Yamaha", "BDK", "Itemm"],
-  },
-  {
-    name: "Christopher Streader",
-    category: "technician",
-    rating: 5.0,
-    reviews: 4,
-    blurb: "Master tuner since 1975, trained by his father Don. ARPT-accredited, PTTGV Life Member (awarded 2017 for outstanding service). Long-term contracts with private/government schools, churches, and Crown Melbourne Casino.",
-    phone: "1300 486 797",
-    phoneIntl: "+611300486797",
-    website: "https://www.pianotuner.melbourne/",
-    credentials: ["ARPT", "PTTGV Life Member"],
-  },
-  {
-    name: "Gary Beadell Piano Services",
-    category: "technician",
-    rating: 5.0,
-    reviews: 4,
-    blurb: "Point Cook, west Melbourne. Repairs, tuning, voicing, parts replacement, restoration. Supplies the Melbourne Recital Centre and ABC Classic FM.",
-    phone: "0427 530 863",
-    phoneIntl: "+61427530863",
-    website: "http://garybeadellpianoservices.com.au/",
-  },
-  {
-    name: "Andrew Gooden & Co",
-    category: "technician",
-    rating: 5.0,
-    reviews: 33,
-    blurb: "Mt Eliza, Mornington Peninsula. Restoration specialist. \"Andrew restored my old piano back to life, was very easy to work with.\"",
-    phone: "0439 045 519",
-    phoneIntl: "+61439045519",
-  },
-  {
-    name: "Pianos Victoria",
-    category: "technician",
-    rating: 4.8,
-    reviews: 41,
-    blurb: "Lachlan Brown. Mt Eliza, Mornington Peninsula. Tuning and restoration. \"His expertise is unmatched and we are very pleased with the results.\"",
-    phone: "0434 091 533",
-    phoneIntl: "+61434091533",
-    website: "https://pianosvictoria.com/",
-  },
-  {
-    name: "Australia Piano World",
-    category: "technician",
-    rating: 4.8,
-    reviews: 149,
-    blurb: "Springvale showroom plus technical services. Largest review base on the page, big operation.",
-    phone: "03 9125 3938",
-    phoneIntl: "+61391253938",
-    website: "https://australiapianoworld.com.au/",
-  },
-  {
-    name: "EPG Pianos",
-    category: "technician",
-    rating: 4.9,
-    reviews: 70,
-    blurb: "High St, Malvern. Repair service plus a clearance store for stock pianos.",
-    phone: "1300 922 902",
-    phoneIntl: "+611300922902",
-    website: "https://epgpianos.com.au/",
+    name: "Melbourne Pianist Calvin",
+    blurb: "Piano player for events",
+    website: "https://www.melbournepianistcalvin.com/",
   },
 ] as const
 

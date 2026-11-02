@@ -10,8 +10,7 @@ type FeatureCardProps = {
   // Optional links (the rates on this page, the guide page for the service).
   links?: readonly { href: string; label: string }[]
   // Makes the whole card one link (the free piano scheme), with a call to
-  // action and a corner badge. A plain anchor: /free-pianos/ is a separate
-  // Worker gallery on the same host, not a Next route.
+  // action and a corner badge.
   featured?: Service["featured"]
 }
 

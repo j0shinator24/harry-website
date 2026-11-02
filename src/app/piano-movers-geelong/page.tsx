@@ -19,7 +19,7 @@ const qs: GuideSection[] = [
     q: "Do you move pianos to and from Geelong?",
     a: "Geelong is one of the regional areas I cover outside Greater Melbourne.",
     body: [
-      "Whether the piano is heading down the highway to Geelong or coming back up to Melbourne, text me both suburbs and I'll work out a price with you.",
+      "Whether it's piano transport down the highway to Geelong or back up to Melbourne, text me both suburbs and I'll work out a price with you.",
     ],
   },
   {

@@ -3,9 +3,9 @@ import { BUSINESS, SMS_DISPOSAL_HREF, SMS_QUOTE_HREF, SMS_REHOMING_HREF } from "
 
 // Which pre-filled text the Text button sends: the moving quote checklist, or
 // the collection-only disposal one.
-// "rehoming" is the free-piano page: the gallery and the waitlist form come
-// first (Harry's Piano Rehoming, /free-pianos/, 22 Oct 2026), with Text Harry
-// kept as the secondary option. No Call button.
+// "rehoming" is the free-piano page: the wait list form comes first
+// (/free-pianos/waitlist/, a separate Worker, so a plain anchor), with Text
+// Harry as the secondary option. No Call button.
 export type SmsKind = "quote" | "disposal" | "rehoming"
 export const SMS_HREF: Record<SmsKind, string> = { quote: SMS_QUOTE_HREF, disposal: SMS_DISPOSAL_HREF, rehoming: SMS_REHOMING_HREF }
 
@@ -23,18 +23,12 @@ export function CallTextButtons({
   if (sms === "rehoming") {
     return (
       <div className={`flex flex-col sm:flex-row flex-wrap gap-3 ${align === "center" ? "sm:justify-center" : ""}`}>
-        <a href="/free-pianos/" className="btn-call">
-          See the free pianos
+        <a href="/free-pianos/waitlist/" className="btn-call">
+          Join the wait list
         </a>
-        <a href="/free-pianos/waitlist/" className="btn-text">
-          Join the waitlist
-        </a>
-        <a href="/free-pianos/give/" className="btn-mail">
-          Give a piano away
-        </a>
-        <a href={SMS_HREF.rehoming} className="link-grape self-center inline-flex items-center gap-2 py-2">
+        <a href={SMS_HREF.rehoming} className="btn-text">
           <MessageSquare className="h-4 w-4" aria-hidden="true" />
-          Or text Harry
+          Text Harry
         </a>
       </div>
     )

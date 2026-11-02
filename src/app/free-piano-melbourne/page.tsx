@@ -6,18 +6,29 @@ const PATH = "/free-piano-melbourne/"
 
 export const metadata = guideMetadata({
   path: PATH,
-  title: "Free Pianos Melbourne | Harry's Piano Rehoming Waitlist",
+  title: "Free Pianos Melbourne | Affordable Entry Level Pianos",
   description:
-    "Harry The Piano Mover rehomes free pianos in Melbourne. The piano is free, you pay delivery at standard rates. See the free pianos and join the waitlist online.",
+    "Good, tuned pianos that need a new home in Melbourne. Join my wait list for a budget-friendly entry level piano and only pay delivery at standard zone rates.",
 })
 
 const qs: GuideSection[] = [
   {
+    id: "really-free",
+    q: "Are the pianos free?",
+    a: "Yes. You only pay for delivery, at my standard zone rates.",
+    body: ["All prices include GST, and my usual access charges apply as normal. The rates are below."],
+  },
+  {
+    id: "condition",
+    q: "What condition are they in?",
+    a: "Good condition. They have been tuned in the last 5 years, and they are perfectly capable instruments.",
+  },
+  {
     id: "how-to-join",
-    q: "How to join the waitlist",
-    a: "Fill in the waitlist form and I'll add you to the waitlist.",
+    q: "How do I join the wait list?",
+    a: "Fill in the wait list form with your name, delivery suburb, email, phone and access details.",
     body: [
-      "The [waitlist form](/free-pianos/waitlist/) asks for six things.",
+      "The [wait list form](/free-pianos/waitlist/) asks for five things.",
       {
         list: [
           "Name.",
@@ -25,7 +36,6 @@ const qs: GuideSection[] = [
           "Email.",
           "Phone.",
           "Access. Steps at the entry, stairs, narrow paths or tight turns, and which floor.",
-          "The types of piano you'd take.",
         ],
       },
       "If you'd rather, text me the same details and I'll add you myself.",
@@ -35,7 +45,7 @@ const qs: GuideSection[] = [
   {
     id: "delivery-cost",
     q: "What does delivery cost?",
-    a: "The piano is free. You pay delivery at my standard zone rates.",
+    a: "Only the delivery rate needs to be covered, and standard zone rates apply.",
     body: [
       "All prices include GST.",
       {
@@ -47,42 +57,23 @@ const qs: GuideSection[] = [
     ],
   },
   {
-    id: "really-free",
-    q: "Is the piano really free?",
-    a: "Yes. The piano is free, and you only pay for delivery.",
-  },
-  {
-    id: "faq-how-to-join",
-    q: "How do I join?",
-    a: "Fill in the waitlist form, or ask for a piano you see in the free piano gallery.",
-    body: [
-      "The [free piano gallery](/free-pianos/) shows the pianos I have right now, and each one has a Request this piano button. The [waitlist form](/free-pianos/waitlist/) puts you on the list for the next one.",
-      "What the form asks for is under [how to join the waitlist](#how-to-join).",
-    ],
-  },
-  {
     id: "hear-back",
-    q: "When will I hear back?",
-    a: "I'll get in touch when a piano is available for you.",
+    q: "When will I hear from you?",
+    a: "I'll reach out when one becomes available.",
   },
   {
     id: "your-details",
     q: "What happens to my details?",
-    a: "I only use them to contact you about the waitlist.",
+    a: "I only use them to contact you about the wait list.",
     body: ["[Privacy for free pianos](/free-pianos/privacy/) says what I keep, who sees it and when it's deleted."],
-  },
-  {
-    id: "give-a-piano",
-    q: "Have a piano to give away?",
-    a: "Send me photos and a few details. It costs you nothing.",
-    body: ["Use the [give a piano form](/free-pianos/give/). Only the suburb is ever shown, never your address or contact details, and anyone interested talks to me."],
   },
 ]
 
 const sections = grouped(qs, [
+  ["info", "really-free", "condition"],
   ["booking", "how-to-join"],
   ["prices", "delivery-cost"],
-  ["info", "really-free", "faq-how-to-join", "hear-back", "your-details", "give-a-piano"],
+  ["info", "hear-back", "your-details"],
 ])
 
 export default function FreePianoMelbournePage() {
@@ -90,15 +81,14 @@ export default function FreePianoMelbournePage() {
     <GuidePage
       path={PATH}
       crumb="Free pianos"
-      h1="Free pianos in Melbourne: Harry's Piano Rehoming waitlist"
+      h1="Free pianos in Melbourne: join my wait list"
       intro={[
-        "I have two pianos that need a new home right now. The piano is free, and you only pay delivery at my standard zone rates.",
-        "[See the free pianos](/free-pianos/), ask for one, or join the waitlist and I'll get in touch when a piano is available for you.",
+        "I regularly have pianos in good condition that can be rehomed. These pianos have been tuned in the last 5 years, and are perfectly capable instruments. If you are looking for an inspiring and budget-friendly entry level piano for yourself or your kids to learn on, join my wait list and I will reach out to you when one becomes available. Only the delivery rate needs to be covered (standard zone rates apply).",
       ]}
       sms="rehoming"
       closing={{
-        heading: "Join the waitlist",
-        text: "Fill in the waitlist form and I'll get in touch when a piano is available for you. Got a piano to give away? It costs you nothing.",
+        heading: "Join the wait list",
+        text: "Fill in the wait list form and I'll reach out when one becomes available.",
       }}
       sections={sections}
       service={{
@@ -106,7 +96,7 @@ export default function FreePianoMelbournePage() {
         name: "Free Piano Rehoming Melbourne",
         serviceType: "Piano Rehoming",
         description:
-          "Harry's Piano Rehoming waitlist for free pianos in Melbourne. The piano is free and the person taking it pays delivery at Harry's standard zone rates, which include GST.",
+          "Wait list for good, tuned pianos in Melbourne that need a new home. Only the delivery is paid, at Harry's standard zone rates, which include GST.",
       }}
     />
   )

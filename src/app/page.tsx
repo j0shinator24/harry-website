@@ -35,8 +35,6 @@ export const metadata: Metadata = {
   },
 }
 
-const buyRent = PARTNERS.filter((p) => p.category === "buy-rent")
-// Tuner and technician partners stay in constants but are not shown.
 
 // Rate lookups. FAQ answers and schema read prices from RATES so nothing on the
 // page can drift from the visible rate table when Harry changes his prices.
@@ -97,7 +95,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What areas do you cover?",
-    a: "I cover Greater Melbourne, Ballarat, Bendigo, Geelong, Lakes Entrance, the Mornington Peninsula and Phillip Island. With enough notice, I can arrange pick-up and delivery anywhere in Victoria. Interstate, I do Melbourne to Sydney and Melbourne to Adelaide myself, by appointment only.",
+    a: "I cover Greater Melbourne, Ballarat, Bendigo, Geelong, Lakes Entrance, the Mornington Peninsula and Phillip Island. With enough notice, I can arrange piano transport across Victoria, with pick-up and delivery wherever you need it. Interstate, I do Melbourne to Sydney and Melbourne to Adelaide myself, by appointment only.",
     more: { href: "/piano-movers-geelong/", label: "Geelong and regional Victoria" },
   },
   {
@@ -152,21 +150,21 @@ const CARD_SHADOW = { boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }
 const PANEL_SHADOW = { boxShadow: "0 8px 40px rgba(0,0,0,0.2)" }
 const PANEL_H2 = "panel-h2"
 
-// JSON-LD schema for the Friends of Mine section — just the buy/rent partners
-// for now. The full tuners + technicians directory will get its own page
-// with its own schema once that's built.
+// JSON-LD schema for the Friends of Mine section: the five partners Harry
+// listed on 1 Nov 2026, in his order.
 const partnersItemList = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Friends of Mine: Melbourne piano sales and rentals recommended by Harry The Piano Mover",
+  name: "Friends of Mine: piano tuners, storage and a piano player recommended by Harry The Piano Mover",
   description:
-    "Hand-picked Melbourne piano sales and rental businesses that Harry recommends to customers buying or hiring a piano.",
-  numberOfItems: buyRent.length,
+    "Piano tuners, a piano storage business and a piano player for events that Harry recommends.",
+  numberOfItems: PARTNERS.length,
   itemListOrder: "https://schema.org/ItemListOrderDescending",
-  itemListElement: buyRent.map((p, i) => {
+  itemListElement: PARTNERS.map((p, i) => {
     const item: Record<string, unknown> = {
       "@type": "LocalBusiness",
       name: p.name,
+      description: p.blurb,
       areaServed: "Melbourne, Victoria, Australia",
     }
     if (p.website) item.url = p.website
@@ -196,7 +194,7 @@ const SERVICE_SCHEMA_DESCRIPTIONS: Record<string, string> = {
   piano: `Upright, grand and digital piano moving across Greater Melbourne, priced by zone: uprights from $${innerRate.upright} (Inner Suburbs and CBD) to $${outerMelb.upright} (Outer Melbourne), grands from $${innerRate.grand} to $${outerMelb.grand}. Custom quotes beyond Outer Melbourne.`,
   disposal: `Removal of pianos beyond repair: what is worth saving is recycled and the rest disposed of responsibly. Upright $${disposalRate.upright}, grand $${disposalRate.grand}${pianolaDisposal ? `, upright pianola $${pianolaDisposal.price}` : ""}.`,
   marketplace: "Collection and delivery of pianos bought on Marketplace or online, without the buyer needing to attend the pick-up.",
-  rehoming: "Free pianos in need of a new home. The piano is free and the person taking it pays delivery at Harry's standard zone rates. See the free pianos and join the waitlist online.",
+  rehoming: "Good, tuned pianos that need a new home. Join the wait list and pay only delivery at Harry's standard zone rates.",
   band: "Band equipment deliveries (guitars, amps, drum kits, PA) to an event and back again afterwards.",
   busking: "Harry's own acoustic grand piano and upright, played on the streets of Melbourne.",
   inhome: "Moving a piano within the same home, for example out of the way while floors are restored or installed and back into place a couple of weeks later. A grand can sometimes stay on Harry's equipment in between, so it does not need fully setting up twice. Quoted on request.",
@@ -390,7 +388,7 @@ export default function HomePage() {
                 Trust in your piano being moved by an experienced piano mover &amp; player.
               </p>
               <p className="body-lg mb-3">
-                See my rates below for piano relocation around Melbourne.
+                See my rates below for affordable piano removals around Melbourne.
               </p>
               <p className="body-lg text-gray-600">
                 Please enquire via text, phone or email about the piano you need moved, or any
@@ -564,10 +562,10 @@ export default function HomePage() {
         <section id="partners" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
           <h2 className="font-heading font-black text-3xl sm:text-4xl text-center mb-3 text-white">Friends of Mine</h2>
           <p className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 text-white/90 body-lg">
-            For buying or hiring a piano in Melbourne, these are the folks I recommend.
+            For piano tuning, piano storage or a piano player for your event, these are the folks I recommend.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            {buyRent.map((p) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:w-full sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.625rem)] sm:[&>*:last-child:nth-child(odd)]:justify-self-center">
+            {PARTNERS.map((p) => (
               <PartnerCard key={p.name} p={p} />
             ))}
           </div>
