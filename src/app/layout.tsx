@@ -109,8 +109,8 @@ const siteGraph = {
       description: "Melbourne piano mover and piano player. Owner-operator of Harry The Piano Mover, with an assistant on most moves.",
       // The homepage photo of Harry at the piano (its alt text names him).
       image: `${BASE_URL}/harry-piano-1.jpg`,
-      knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving"],
-      sameAs: [BUSINESS.instagram],
+      knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving", "Composing"],
+      sameAs: [BUSINESS.instagram, BUSINESS.spotify, BUSINESS.appleMusic],
     },
   ],
 }

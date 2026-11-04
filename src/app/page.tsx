@@ -398,6 +398,46 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+          {/* Harry's music: his own words and concert program blurb, 4 Nov 2026. */}
+          <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-grape/15">
+            <h3 className="font-heading font-bold text-xl sm:text-2xl text-grape mb-2">My music</h3>
+            <p className="body-lg mb-3">
+              As well as a mover, also a performing piano player and composer.
+            </p>
+            <blockquote className="body-lg text-gray-600 border-l-4 border-gold pl-4 mb-4">
+              <p className="mb-3">
+                Harry Hodgman is a contemporary songwriter for solo piano based in Melbourne,
+                originally from New Zealand. His latest output has been primarily recording fully
+                improvised instrumental albums with a punk-rock approach to recording the raw
+                texture between creating and the instrument itself.
+              </p>
+              <p>
+                Harry is a unique contribution to Melbourne&apos;s music scene, and an artist not
+                commonly found in this hemisphere. Writing original soundtracks for films in your
+                head, this piano player has musical godfathers like Chilly Gonzales, Scott Joplin,
+                Brad Mehldau, Antony &amp; The Johnsons, and Max Richter.
+              </p>
+              <footer className="mt-2 text-sm text-gray-500">From a recent concert program</footer>
+            </blockquote>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={BUSINESS.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="action-link inline-flex items-center gap-1.5 bg-grape hover:bg-plum text-white font-heading font-bold px-4 py-2 rounded-full transition-colors duration-150"
+              >
+                Listen on Spotify
+              </a>
+              <a
+                href={BUSINESS.appleMusic}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="action-link inline-flex items-center gap-1.5 bg-grape hover:bg-plum text-white font-heading font-bold px-4 py-2 rounded-full transition-colors duration-150"
+              >
+                Listen on Apple Music
+              </a>
+            </div>
+          </div>
         </section>
 
         {/* REVIEWS: three first, the rest behind "Show more" (works without JS). */}
@@ -562,7 +602,7 @@ export default function HomePage() {
         <section id="partners" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
           <h2 className="font-heading font-black text-3xl sm:text-4xl text-center mb-3 text-white">Friends of Mine</h2>
           <p className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 text-white/90 body-lg">
-            For piano tuning, piano storage or a piano player for your event, these are the folks I recommend.
+            For piano sales and rentals, tuning, storage or a piano player for your event, these are the folks I recommend.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:w-full sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.625rem)] sm:[&>*:last-child:nth-child(odd)]:justify-self-center">
             {PARTNERS.map((p) => (

@@ -51,7 +51,7 @@ const qs: GuideSection[] = [
     q: "Is it worth restoring an old piano instead?",
     a: "Not always: in my experience, disposal is often cheaper than a piano restoration quote that would never break even.",
     body: [
-      "If yours is beyond repair, letting it go is usually the sensible call. If you're replacing it, the [Melbourne piano sales and rental folks I recommend](/#partners) are on my homepage.",
+      "If yours is beyond repair, letting it go is usually the sensible call. If you're replacing it, the [stores, rentals, tuners & storage I can recommend](/#partners) are on my homepage.",
       `When the new one is ready, I can move it in too. Moves start at $${INNER.upright} for an upright in the inner suburbs. [See every moving rate](/piano-moving-cost-melbourne/).`,
     ],
   },

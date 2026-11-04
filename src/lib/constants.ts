@@ -17,6 +17,9 @@ export const BUSINESS = {
   description:
     `Harry The Piano Mover: specialist piano movers in Melbourne. Uprights, grands and digitals. Removals, disposal and Marketplace pick-ups. ${REVIEW_COUNT} Google reviews as of ${REVIEW_COUNT_AS_OF}.`,
   instagram: "https://www.instagram.com/harrythepianomover/",
+  // Harry's own music, supplied by Harry 4 Nov 2026.
+  spotify: "https://open.spotify.com/artist/3MZ3s1IgR0KUdpkpKXnkrT",
+  appleMusic: "https://music.apple.com/us/artist/harry-hodgman/1478006204",
   // Supplied by Joshua, 17 Oct 2026 (page title "Harry The Piano Mover |
   // Melbourne VIC", same handle as the Instagram).
   facebook: "https://www.facebook.com/harrythepianomover/",
@@ -240,6 +243,17 @@ export const PARTNERS: readonly Partner[] = [
     name: "Melbourne Pianist Calvin",
     blurb: "Piano player for events",
     website: "https://www.melbournepianistcalvin.com/",
+  },
+  // Kept at Harry's request, 4 Nov 2026.
+  {
+    name: "Melbourne Piano Sales",
+    blurb: "Piano sales",
+    website: "https://www.melbournepianosales.com.au/",
+  },
+  {
+    name: "Melbourne Piano Rentals",
+    blurb: "Piano rentals",
+    website: "https://melbournepianorentals.com.au/",
   },
 ] as const
 
