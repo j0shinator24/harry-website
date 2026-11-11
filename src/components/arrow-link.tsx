@@ -8,7 +8,7 @@ export function ArrowLink({ href, label, className = "" }: { href: string; label
   const head = cut === -1 ? "" : label.slice(0, cut + 1)
   const tail = cut === -1 ? label : label.slice(cut + 1)
   return (
-    <a href={href} className={`group inline-block py-2 ${className}`}>
+    <a href={href} className={`group inline-block py-3 ${className}`}>
       {head}
       <span className="whitespace-nowrap">
         {tail}

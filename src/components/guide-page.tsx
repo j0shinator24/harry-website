@@ -304,7 +304,7 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
             <nav aria-label="Breadcrumb" className="mb-1 sm:mb-2">
               <ol className="flex flex-wrap items-center gap-2 text-base text-gray-600 list-none">
                 <li>
-                  <a href="/" className="link-grape inline-flex items-center min-h-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape rounded">
+                  <a href="/" className="link-grape inline-flex items-center justify-center min-h-12 min-w-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape rounded">
                     Home
                   </a>
                 </li>
@@ -345,7 +345,7 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
               </figure>
             </div>
             {/* Trust strip under the opening answer (Gate 7 r1 V9). */}
-            <p className="mt-5 flex flex-wrap items-center text-base text-gray-700">
+            <p className="mt-5 text-base text-gray-700">
               <RatingLine />
               <span>. Fully insured.</span>
             </p>

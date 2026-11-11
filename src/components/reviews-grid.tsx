@@ -59,7 +59,7 @@ export function ReviewsGrid() {
           href={BUSINESS.googleReviews}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-3 py-2 text-gold hover:text-white font-heading font-bold text-base sm:text-lg underline underline-offset-4 transition-colors duration-200"
+          className="inline-flex items-center gap-2 px-3 py-2 min-h-12 text-gold hover:text-white font-heading font-bold text-base sm:text-lg underline underline-offset-4 transition-colors duration-200"
         >
           <StarIcon />
           See all of {REVIEW_SOURCE_LABEL}

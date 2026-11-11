@@ -48,10 +48,10 @@
    did. Edit a list here and every use changes. */
 @layer components {
   /* Header, on every page */
-  .nav-link { @apply inline-flex items-center min-h-12 whitespace-nowrap font-heading text-base text-white/90 hover:text-gold transition-colors duration-200 py-2 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
+  .nav-link { @apply inline-flex items-center justify-center min-h-12 min-w-12 whitespace-nowrap font-heading text-base text-white/90 hover:text-gold transition-colors duration-200 py-2 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
   .nav-guides { @apply list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center gap-1; }
   .nav-guides-panel { @apply absolute right-0 top-full mt-3 w-72 rounded-2xl p-2 list-none; }
-  .nav-guide-link { @apply block rounded-xl px-3 py-2.5 text-base text-white/90 hover:bg-white/10 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .nav-guide-link { @apply flex items-center min-h-12 rounded-xl px-3 py-2.5 text-base text-white/90 hover:bg-white/10 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .nav-quote { @apply inline-flex items-center min-h-12 whitespace-nowrap font-heading text-base font-bold bg-grape text-white px-5 py-2.5 rounded-full hover:bg-plum hover:scale-105 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none; }
   .nav-free { @apply inline-flex items-center min-h-12 font-heading text-base font-bold text-gold py-2 px-1 whitespace-nowrap hover:text-tangerine active:text-white transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .mnav-free { @apply mt-3 flex items-center justify-center gap-2 font-heading font-bold text-lg text-gold border-2 border-tangerine rounded-full py-2.5 active:bg-tangerine active:text-[#1C1C1C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
@@ -118,7 +118,7 @@
   .move-h { @apply block font-heading font-bold text-lg sm:text-xl text-white group-hover:text-gold transition-colors duration-200; }
   .move-sub { @apply block mt-1 text-white/90 text-base leading-snug; }
   .faq-item { @apply rounded-2xl px-5 sm:px-6 py-4 sm:py-5; }
-  .faq-q { @apply cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 font-heading font-bold text-lg sm:text-xl text-white; }
+  .faq-q { @apply min-h-12 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 font-heading font-bold text-lg sm:text-xl text-white; }
   .faq-plus { @apply flex-shrink-0 text-gold transition-transform duration-200 group-open:rotate-45 text-2xl leading-none; }
   .faq-a { @apply mt-3 text-white/90 text-base sm:text-lg leading-relaxed; }
   .faq-more { @apply text-base sm:text-lg font-bold text-white underline decoration-gold decoration-2 underline-offset-4 hover:text-gold transition-colors duration-200; }
@@ -337,6 +337,9 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Map zoom buttons at the 48px tap size (outside the layers so it beats leaflet.css). */
+.leaflet-touch .leaflet-bar a, .leaflet-bar a { width: 48px; height: 48px; line-height: 48px; }
 
 /* Keyboard focus for <details> toggles whose visible pill is a child span. */
 summary:focus-visible > span {
