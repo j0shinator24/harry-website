@@ -7,6 +7,7 @@ import { RatingLine } from "@/components/rating-line"
 import { CallTextButtons, type SmsKind } from "@/components/call-text-buttons"
 import { RateCards } from "@/components/rate-cards"
 import { NextSteps } from "@/components/next-steps"
+import { NEXT_STEPS_DISPOSAL } from "@/lib/constants"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, type RateZone, type Review } from "@/lib/constants"
 import { INNER, RATES_CONFIRMED } from "@/lib/rates"
@@ -422,7 +423,9 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
               <span>. Fully insured.</span>
             </p>
             {closingPrice && <p className="body-lg font-bold text-gray-900 mb-6">{closingPrice}</p>}
-            {sms !== "rehoming" && <NextSteps className="mb-6 sm:mb-8 text-left" />}
+            {sms !== "rehoming" && (
+              <NextSteps className="mb-6 sm:mb-8 text-left" steps={sms === "disposal" ? NEXT_STEPS_DISPOSAL : undefined} />
+            )}
             <CallTextButtons email align="center" sms={sms} />
           </section>
         </div>

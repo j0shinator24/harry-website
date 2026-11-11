@@ -83,6 +83,13 @@ export const NEXT_STEPS = [
   "Pick a day and I'll move it, with an assistant on most moves.",
 ] as const
 
+// Disposal is a collection only, so its plan asks for the suburb, not a "to" (Gate 7 r3, ChatGPT).
+export const NEXT_STEPS_DISPOSAL = [
+  "Text me the piano, your suburb, the day that suits and any steps.",
+  "I'll text back a price, usually within a few hours.",
+  "Pick a day and I'll collect it.",
+] as const
+
 export type RateZone = {
   label: string
   upright: number
@@ -222,7 +229,8 @@ export const SMS_DISPOSAL_HREF = `sms:${BUSINESS.phoneInternational}?&body=${SMS
 // Harry's Piano Rehoming wait list (22 Oct 2026): the text and the email carry
 // the same details (name, delivery suburb, email, phone, access). The site
 // collects nothing; both open the visitor's own messaging app.
-const REHOMING_TEXT = "Free piano wait list. Name: , Suburb: , Email: , Phone: , Access (steps, stairs, tight spots): "
+// One field per line so it is easy to fill in on a phone (Gate 7 r3, Gemini).
+const REHOMING_TEXT = ["Free piano wait list.", "Name:", "Suburb:", "Email:", "Phone:", "Access (steps, stairs, tight spots):"].join(String.fromCharCode(10))
 export const SMS_REHOMING_BODY = encodeURIComponent(REHOMING_TEXT)
 export const SMS_REHOMING_HREF = `sms:${BUSINESS.phoneInternational}?&body=${SMS_REHOMING_BODY}`
 export const EMAIL_REHOMING_HREF = `mailto:${BUSINESS.email}?subject=${encodeURIComponent("Free piano wait list")}&body=${SMS_REHOMING_BODY}`
