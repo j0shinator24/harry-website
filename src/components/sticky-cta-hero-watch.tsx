@@ -11,7 +11,12 @@ export function StickyCtaHeroWatch() {
   useEffect(() => {
     const hero = document.getElementById("hero") ?? document.getElementById("guide-cta")
     const bar = document.querySelector<HTMLElement>(".sticky-cta")
-    if (!hero || !bar || typeof IntersectionObserver === "undefined") return
+    if (!hero || !bar) return
+    // No IntersectionObserver: show the bar rather than leave it hidden for good.
+    if (typeof IntersectionObserver === "undefined") {
+      bar.classList.add("cta-on")
+      return
+    }
     const io = new IntersectionObserver(
       ([e]) => {
         // On screen, or still below the fold: the page's own buttons are what

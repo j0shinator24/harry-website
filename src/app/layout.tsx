@@ -109,6 +109,7 @@ const siteGraph = {
       "@type": "Person",
       "@id": `${BASE_URL}/#harry`,
       name: "Harry",
+      alternateName: "Harry Hodgman",
       jobTitle: "Piano Mover",
       worksFor: { "@id": `${BASE_URL}/#business` },
       description: "Melbourne piano mover and piano player. Owner-operator of Harry The Piano Mover, with an assistant on most moves.",

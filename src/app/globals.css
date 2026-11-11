@@ -82,6 +82,8 @@
   body:has(#hero, #guide-cta) .cta-bar:not(.cta-on) { transform: translateY(100%); visibility: hidden; }
   body:has(#hero, #guide-cta) .cta-bar { transition: transform 300ms, visibility 0s linear 300ms; }
   body:has(#hero, #guide-cta) .cta-bar.cta-on { visibility: visible; transition: transform 300ms, visibility 0s; }
+  /* No scripts (some in-app browsers): the watcher never runs, so show the bar (Gate 7 r3). */
+  @media (scripting: none) { body:has(#hero, #guide-cta) .cta-bar:not(.cta-on) { transform: none; visibility: visible; } }
   /* Call is the secondary action everywhere outside the hero: transparent fill, gold border (the one Call colour). Text and Join stay the filled grape primary. */
   .bar-call { @apply inline-flex items-center justify-center gap-2 min-h-12 border-2 border-gold text-white font-heading font-bold text-base px-2 py-2.5 rounded-full hover:bg-gold hover:text-[#1C1C1C] active:scale-95 transition-[transform,background-color,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white; }
   .bar-text { @apply inline-flex items-center justify-center gap-2 min-h-12 px-2 bg-grape text-white font-heading font-bold text-base py-3 rounded-full active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }

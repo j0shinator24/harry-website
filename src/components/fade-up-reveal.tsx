@@ -21,6 +21,13 @@ export function FadeUpReveal() {
       const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
       if (typeof IntersectionObserver === "undefined" || reduceMotion || fadeUps.length === 0) return
 
+      // Cards already on screen stay put: mark them visible first, so turning on
+      // can-animate never hides and slides back something the visitor is reading (Gate 7 r3).
+      const vh = window.innerHeight
+      fadeUps.forEach((el) => {
+        const r = el.getBoundingClientRect()
+        if (r.top < vh && r.bottom > 0) el.classList.add("visible")
+      })
       document.documentElement.classList.add("can-animate")
 
       const observer = new IntersectionObserver(
