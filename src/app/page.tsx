@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- static export with unoptimised images; a plain img ships no client JS */
 import type { Metadata } from "next"
-import { Phone, MessageSquare, Mail, MapPin, StarIcon } from "@/components/icons"
+import { Phone, MessageSquare, Mail, MapPin, StarIcon, ArrowRight } from "@/components/icons"
+import type { GuideHref } from "@/lib/guides"
 import { ArrowLink } from "@/components/arrow-link"
 import { FeatureCard } from "@/components/feature-card"
 import { PartnerCard } from "@/components/partner-card"
@@ -46,6 +47,15 @@ const pianolaDisposal = disposalRate.extras?.[0]
 const movingZones = RATES.filter((r) => r.label !== disposalRate.label)
 
 // "How a piano move works", shown as numbered steps (copy via Ghostwriter).
+// Move-type chooser (giants bench pattern c). Existing guide pages only;
+// GuideHref makes a link to a page that does not exist a type error.
+const MOVE_TYPES: readonly { href: GuideHref; title: string; sub: string }[] = [
+  { href: "/piano-moving-cost-melbourne/", title: "Around Melbourne", sub: `Uprights from $${innerRate.upright}, priced by zone` },
+  { href: "/piano-movers-geelong/", title: "Geelong and regional Victoria", sub: "Ballarat, Bendigo, Phillip Island and more" },
+  { href: "/interstate-piano-removals/", title: "Interstate", sub: "Melbourne to Sydney or Adelaide, by appointment" },
+  { href: "/piano-disposal-melbourne/", title: "Piano disposal", sub: `Past saving? I'll take it away, from $${disposalRate.upright}` },
+]
+
 const HOW_STEPS = [
   {
     title: "Tell me about the move.",
@@ -71,7 +81,7 @@ const HOW_STEPS = [
 
 const FAQ_ITEMS = [
   {
-    q: "How much does it cost to move a piano in Melbourne?",
+    q: "How much do piano movers cost in Melbourne?",
     a: `Inner Suburbs and CBD starts at $${innerRate.upright} for an upright and $${innerRate.grand} for a grand. Outer Suburbs is $${outerSub.upright} / $${outerSub.grand}. Outer Melbourne is $${outerMelb.upright} / $${outerMelb.grand}. If a move crosses zones, the higher zone's rate applies. Anything past that is a custom quote. All prices include GST. Call or text and I'll work it out with you.`,
   },
   {
@@ -372,6 +382,27 @@ export default function HomePage() {
           coverage as one sequence (map, rates, suburbs), then how it works,
           services, protection, photos, friends, FAQ and the contact card. Dark cards replace the old dark pills behind headings. */}
       <div className="px-4 sm:px-5 pt-12 sm:pt-16 pb-10 sm:pb-12 space-y-8 sm:space-y-12">
+        {/* MOVE TYPES: one tap to the right guide (giants bench c). */}
+        <section id="move-types" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
+          <h2 className={PANEL_H2}>Where&apos;s your piano going?</h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none">
+            {MOVE_TYPES.map((m) => (
+              <li key={m.href}>
+                <a href={m.href} className="glass-dark move-tile group">
+                  <span className="min-w-0">
+                    <span className="move-h">{m.title}</span>
+                    <span className="move-sub">{m.sub}</span>
+                  </span>
+                  <ArrowRight
+                    className="h-5 w-5 flex-shrink-0 text-gold transition-transform duration-200 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         {/* ABOUT */}
         <section id="about" className="card-white sec-card fade-up" style={CARD_SHADOW}>
           <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8">
@@ -394,7 +425,7 @@ export default function HomePage() {
                 Hey, I&apos;m Harry
               </h2>
               <p className="body-lg mb-3">
-                Trust in your piano being moved by an experienced piano mover &amp; player.
+                Trust in your piano being moved by an experienced piano mover &amp; player, not a general removalist.
               </p>
               <p className="body-lg mb-3">
                 See my rates below for affordable piano removals around Melbourne.
@@ -480,7 +511,7 @@ export default function HomePage() {
         </section>
 
         <section id="rates" className="card-white sec-card fade-up" style={CARD_SHADOW}>
-          <h2 className="font-heading font-black text-3xl sm:text-4xl text-grape text-center mb-2 sm:mb-3">Rates</h2>
+          <h2 className="font-heading font-black text-3xl sm:text-4xl text-grape text-center mb-2 sm:mb-3">Piano removal rates</h2>
           <p className="text-center text-lg sm:text-xl text-gray-700 mb-6 sm:mb-8">All prices include GST.</p>
           {/* Three moving zones in one row, disposal full width beneath. Shared
               with the guide pages. */}
@@ -511,7 +542,7 @@ export default function HomePage() {
         <section id="suburbs" className="card-white sec-card fade-up" style={CARD_SHADOW}>
           <h2 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">Suburbs I cover</h2>
           <p className="body-lg mb-4">
-            I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones fall:
+            Looking for local piano movers? I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones fall:
           </p>
           <p className="body-lg mb-3">
             <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD, Carlton, Fitzroy,
@@ -561,7 +592,7 @@ export default function HomePage() {
 
         {/* SERVICES. Flex-wrap so a short last row sits centred. */}
         <section id="services" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
-          <h2 className={PANEL_H2}>Specialty Services</h2>
+          <h2 className={PANEL_H2}>Piano moving, disposal and more</h2>
           <ul className="flex flex-wrap justify-center gap-4 sm:gap-5 list-none">
             {SERVICES.map((sv) => (
               <li key={sv.title} className="service-cell">
@@ -579,7 +610,7 @@ export default function HomePage() {
 
         {/* PROTECTION */}
         <section id="protection" className="panel-dark rounded-3xl max-w-3xl mx-auto p-6 sm:p-8 md:p-10 fade-up" style={PANEL_SHADOW}>
-          <h2 className={PANEL_H2}>Protection</h2>
+          <h2 className={PANEL_H2}>Fully insured</h2>
           <ul className="space-y-4 sm:space-y-5">
             {[
               { t: "Public liability insurance", d: "Covers your home or property during the move." },
@@ -666,7 +697,7 @@ export default function HomePage() {
 
         {/* CONTACT: opaque card, the quote checklist beside the buttons. */}
         <section id="contact" className="card-white rounded-3xl max-w-2xl mx-auto p-5 sm:p-8 md:p-12 fade-up text-center" style={CARD_SHADOW}>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-4 sm:mb-5">Reach Out</h2>
+          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-4 sm:mb-5">Get a quote</h2>
           <p className="body-lg mb-6">
             For a quick quote, text me five things: the piano type and model if you know it, the suburb or town at
             each end, your preferred date, how many steps there are at both ends, and a photo of the piano and any
