@@ -52,7 +52,7 @@ export function PhotoGallery() {
           href={BUSINESS.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-heading font-bold text-lg sm:text-xl text-gold hover:text-white transition-colors duration-200 py-2 px-2"
+          className="inline-flex items-center gap-2 font-heading font-bold text-lg sm:text-xl text-gold hover:text-white active:text-white transition-colors duration-200 min-h-12 px-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
         >
           <InstagramGlyph className="h-5 w-5" />
           Follow @harrythepianomover

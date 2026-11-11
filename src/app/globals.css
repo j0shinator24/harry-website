@@ -339,7 +339,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Map zoom buttons at the 48px tap size (outside the layers so it beats leaflet.css). */
-.leaflet-touch .leaflet-bar a, .leaflet-bar a { width: 48px; height: 48px; line-height: 48px; }
+.leaflet-touch .leaflet-bar a, .leaflet-bar a { width: 48px !important; height: 48px !important; line-height: 48px !important; }
 
 /* Keyboard focus for <details> toggles whose visible pill is a child span. */
 summary:focus-visible > span {
