@@ -25,12 +25,11 @@ type Photo = { src: string; w: number; h: number; alt: string; pos: string }
 const P1: Photo = { src: "/harry-piano-1.jpg", w: 900, h: 1200, alt: "Harry at the piano on a Melbourne rooftop", pos: "center 72%" }
 const P2: Photo = { src: "/harry-piano-2.jpg", w: 900, h: 1200, alt: "A grand on a rooftop terrace at sunset", pos: "center 70%" }
 const P3: Photo = { src: "/harry-piano-3.jpg", w: 900, h: 1200, alt: "A grand overlooking Melbourne's parkland", pos: "center 62%" }
-const P4: Photo = { src: "/harry-busking.jpg", w: 900, h: 900, alt: "Harry busking on a Melbourne street", pos: "center" }
 export const GUIDE_PHOTOS: Record<GuideHref, Photo> = {
   "/piano-moving-cost-melbourne/": P1,
   "/piano-disposal-melbourne/": P2,
   "/piano-types/": P3,
-  "/piano-stairs-difficult-access/": P4,
+  "/piano-stairs-difficult-access/": P1,
   "/marketplace-piano-delivery/": P2,
   "/free-piano-melbourne/": P1,
   "/piano-movers-geelong/": P3,

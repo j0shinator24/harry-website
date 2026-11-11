@@ -2,11 +2,12 @@ import { Picture } from "@/components/picture"
 import { BUSINESS } from "@/lib/constants"
 
 // Static grid of Harry's own photos, each linking to his Instagram profile.
+// The About photo (harry-piano-1) is left out so no photo shows twice on the
+// home page (Gate 7 r3).
 // Replaces the Instagram iframe, which rendered as a blank white box when
 // Instagram blocked it (Safari, in-app browsers). No third-party script, no
 // iframe, works with JavaScript off.
 export const PHOTOS = [
-  { src: "/harry-piano-1.jpg", w: 900, h: 1200, alt: "Harry playing a grand piano on a Melbourne rooftop", pos: "center 72%" },
   { src: "/harry-piano-2.jpg", w: 900, h: 1200, alt: "A grand piano on a rooftop at sunset", pos: "center 70%" },
   { src: "/harry-piano-3.jpg", w: 900, h: 1200, alt: "A grand piano overlooking Melbourne", pos: "center 60%" },
   { src: "/harry-busking.jpg", w: 900, h: 900, alt: "Harry busking on a Melbourne street", pos: "center" },
@@ -23,7 +24,7 @@ function InstagramGlyph({ className }: { className?: string }) {
 export function PhotoGallery() {
   return (
     <div>
-      <ul className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 list-none">
+      <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 list-none max-md:[&>*:last-child:nth-child(odd)]:col-span-2 max-md:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.375rem)] max-md:[&>*:last-child:nth-child(odd)]:justify-self-center">
         {PHOTOS.map((p) => (
           <li key={p.src}>
             <a

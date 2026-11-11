@@ -65,15 +65,23 @@ export const LLMS_ALTERNATE = { "text/plain": "/llms.txt" } as const
 // date when a page's visible content changes, never on a rebuild.
 export const LAST_UPDATED: Record<string, string> = {
   "/": "2026-11-11",
-  "/piano-moving-cost-melbourne/": "2026-10-20",
-  "/piano-disposal-melbourne/": "2026-10-20",
-  "/piano-types/": "2026-10-20",
-  "/piano-stairs-difficult-access/": "2026-10-20",
-  "/marketplace-piano-delivery/": "2026-10-20",
-  "/piano-movers-geelong/": "2026-10-20",
-  "/interstate-piano-removals/": "2026-10-20",
+  "/piano-moving-cost-melbourne/": "2026-11-11",
+  "/piano-disposal-melbourne/": "2026-11-11",
+  "/piano-types/": "2026-11-11",
+  "/piano-stairs-difficult-access/": "2026-11-11",
+  "/marketplace-piano-delivery/": "2026-11-11",
+  "/piano-movers-geelong/": "2026-11-11",
+  "/interstate-piano-removals/": "2026-11-11",
   "/free-piano-melbourne/": "2026-10-22",
 }
+
+// "What happens next" under the quote buttons: the home contact card and the
+// closing card of every guide (Gate 7 r1 V1, r3 F2).
+export const NEXT_STEPS = [
+  "Text me the piano, where from, where to, the day and any steps.",
+  "I'll text back a price, usually within a few hours.",
+  "Pick a day and I'll move it, with an assistant on most moves.",
+] as const
 
 export type RateZone = {
   label: string

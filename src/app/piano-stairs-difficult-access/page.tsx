@@ -102,6 +102,7 @@ export default function PianoStairsPage() {
         `My base rates include up to 4 entry steps or easy ramp access. Past that, it's $${ACCESS_FEES.perStep} a step. More than 4 steps that can't take a simple ramp need a third person, from $${ACCESS_FEES.extraHandsFrom}.`,
       ]}
       sections={sections}
+      priceLine={`Uprights from $${INNER.upright}, plus $${ACCESS_FEES.perStep} a step past 4 entry steps and a third person from $${ACCESS_FEES.extraHandsFrom} for more than 4 steps without a simple ramp. GST included.`}
       service={{
         name: "Piano Moving on Stairs and Difficult Access",
         serviceType: "Piano Moving",

@@ -11,6 +11,7 @@ import { ReviewsGrid } from "@/components/reviews-grid"
 import { PhotoGallery } from "@/components/photo-gallery"
 import { RateCards } from "@/components/rate-cards"
 import { CallTextButtons } from "@/components/call-text-buttons"
+import { NextSteps } from "@/components/next-steps"
 import { Picture } from "@/components/picture"
 import { RatingLine } from "@/components/rating-line"
 import { ReviewQuote } from "@/components/review-quote"
@@ -59,13 +60,6 @@ const MOVE_TYPES: readonly { href: GuideHref; title: string; sub: string }[] = [
   { href: "/piano-disposal-melbourne/", title: "Piano disposal", sub: `Past saving? I'll take it away, from $${disposalRate.upright}` },
 ]
 
-// "What happens next" under the final quote card (Gate 7 r1 V1).
-const NEXT_STEPS = [
-  "Text me the piano, where from, where to, the day and any steps.",
-  "I'll text back a price, usually within a few hours.",
-  "Pick a day and I'll move it, with an assistant on most moves.",
-] as const
-
 const HOW_STEPS = [
   {
     title: "Tell me about the move.",
@@ -92,7 +86,7 @@ const HOW_STEPS = [
 const FAQ_ITEMS = [
   {
     q: "How much do piano movers cost in Melbourne?",
-    a: `Inner Suburbs and CBD starts at $${innerRate.upright} for an upright and $${innerRate.grand} for a grand. Outer Suburbs is $${outerSub.upright} / $${outerSub.grand}. Outer Melbourne is $${outerMelb.upright} / $${outerMelb.grand}. If a move crosses zones, the higher zone's rate applies. Anything past that is a custom quote. All prices include GST. Call or text and I'll work it out with you.`,
+    a: `Inner Suburbs and CBD starts at $${innerRate.upright} for an upright and $${innerRate.grand} for a grand. Outer Suburbs is $${outerSub.upright} / $${outerSub.grand}. Outer Melbourne is $${outerMelb.upright} / $${outerMelb.grand}. If a move crosses zones, the higher zone's rate applies. Anything past that is a custom quote. All prices include GST. Those prices include up to 4 entry steps or easy ramp access. Past that, tricky access adds $${ACCESS_FEES.perStep} per step, and more than 4 steps that can't take a simple ramp need a third person, from $${ACCESS_FEES.extraHandsFrom}. Call or text and I'll work it out with you.`,
   },
   {
     q: "Are you insured?",
@@ -100,7 +94,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What types of pianos do you move?",
-    a: "Upright pianos, grand pianos, digital pianos and pianolas (each pianola is quoted individually). Ranging from brand-new to new-to-you, specialised in Japanese, Chinese, and European pianos.",
+    a: "Upright pianos, grand pianos, digital pianos and pianolas (each pianola is quoted individually). They range from brand-new to new-to-you, and I specialise in Japanese, Chinese and European pianos.",
     more: { href: "/piano-types/", label: "How I move each type of piano" },
   },
   {
@@ -184,11 +178,10 @@ const PANEL_H2 = "panel-h2"
 const partnersItemList = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Friends of Mine: piano tuners, storage and a piano player recommended by Harry The Piano Mover",
+  name: "Friends of Mine: piano tuners, storage, sales, rentals and a piano player recommended by Harry The Piano Mover",
   description:
-    "Piano tuners, a piano storage business and a piano player for events that Harry recommends.",
+    "Piano tuners, piano storage, piano sales and rentals, and a piano player for events that Harry recommends.",
   numberOfItems: PARTNERS.length,
-  itemListOrder: "https://schema.org/ItemListOrderDescending",
   itemListElement: PARTNERS.map((p, i) => {
     const item: Record<string, unknown> = {
       "@type": "LocalBusiness",
@@ -405,6 +398,10 @@ export default function HomePage() {
         {/* MOVE TYPES: one tap to the right guide (giants bench c). */}
         <section id="move-types" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
           <h2 className={PANEL_H2}>Where&apos;s your piano going?</h2>
+          <p className="-mt-3 sm:-mt-4 mb-5 sm:mb-6 text-center text-white/90 text-base sm:text-lg">
+            <RatingLine tone="dark" />
+            <span>. Fully insured. Uprights from ${innerRate.upright}, GST included.</span>
+          </p>
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none">
             {MOVE_TYPES.map((m) => (
               <li key={m.href}>
@@ -441,7 +438,7 @@ export default function HomePage() {
               />
             </div>
             <div>
-              <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">
+              <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-ink mb-3 sm:mb-4">
                 Hey, I&apos;m Harry
               </h2>
               <p className="body-lg mb-3">
@@ -460,7 +457,7 @@ export default function HomePage() {
           </div>
           {/* Harry's music: his own words and concert program blurb, 4 Nov 2026. */}
           <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-grape/15">
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-grape mb-2">My music</h3>
+            <h3 className="font-heading font-bold text-xl sm:text-2xl text-ink mb-2">My music</h3>
             <p className="body-lg mb-3">
               As well as a mover, also a performing piano player and composer.
             </p>
@@ -534,7 +531,7 @@ export default function HomePage() {
         </section>
 
         <section id="rates" className="card-white sec-card fade-up" style={CARD_SHADOW}>
-          <h2 className="font-heading font-black text-3xl sm:text-4xl text-grape text-center mb-2 sm:mb-3">Piano removal rates</h2>
+          <h2 className="font-heading font-black text-3xl sm:text-4xl text-ink text-center mb-2 sm:mb-3">Piano removal rates</h2>
           <p className="text-center text-lg sm:text-xl text-gray-700 mb-6 sm:mb-8">All prices include GST.</p>
           {/* Three moving zones in one row, disposal full width beneath. Shared
               with the guide pages. */}
@@ -544,9 +541,9 @@ export default function HomePage() {
           </div>
           <ul className="text-base sm:text-lg text-gray-700 bg-gray-100 rounded-xl p-4 sm:p-5 leading-relaxed space-y-1.5 list-none text-center">
             <li>
-              Beyond Outer Melbourne, and for interstate moves, it&apos;s a custom quote, so please{" "}
+              Beyond Outer Melbourne, and for interstate moves, please{" "}
               <a href="#contact" className="link-grape">
-                get in touch for a chat
+                text me for a custom quote
               </a>
               .
             </li>
@@ -567,22 +564,22 @@ export default function HomePage() {
 
         {/* Suburbs I cover, straight after the rates so the named suburbs back them up. */}
         <section id="suburbs" className="card-white sec-card fade-up" style={CARD_SHADOW}>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl text-grape text-center mb-3 sm:mb-4">Suburbs I cover</h2>
+          <h2 className="font-heading font-black text-2xl sm:text-3xl text-ink text-center mb-3 sm:mb-4">Suburbs I cover</h2>
           <p className="body-lg mb-4">
             Looking for local piano movers? I move pianos right across Greater Melbourne. Here&apos;s roughly how the rate zones fall:
           </p>
           <p className="body-lg mb-3">
-            <strong className="text-grape">Inner suburbs &amp; CBD:</strong> Melbourne CBD, Carlton, Fitzroy,
+            <strong className="text-ink">Inner suburbs &amp; CBD:</strong> Melbourne CBD, Carlton, Fitzroy,
             Collingwood, Richmond, South Yarra, Prahran, St Kilda, Brunswick, Northcote, Footscray, Yarraville,
             Port Melbourne, Docklands.
           </p>
           <p className="body-lg mb-3">
-            <strong className="text-grape">Outer suburbs:</strong> Preston, Coburg, Essendon, Moonee Ponds, Box
+            <strong className="text-ink">Outer suburbs:</strong> Preston, Coburg, Essendon, Moonee Ponds, Box
             Hill, Camberwell, Hawthorn, Kew, Caulfield, Bentleigh, Brighton, Glen Waverley, Doncaster, Reservoir,
             Heidelberg, Sunshine.
           </p>
           <p className="body-lg mb-4">
-            <strong className="text-grape">Outer Melbourne:</strong> Frankston, Dandenong, Werribee, Cranbourne,
+            <strong className="text-ink">Outer Melbourne:</strong> Frankston, Dandenong, Werribee, Cranbourne,
             Pakenham, Sunbury, Melton, Berwick, Ringwood, Lilydale, Craigieburn, Point Cook, Mornington.
           </p>
           <p className="body-lg text-gray-600">
@@ -595,12 +592,14 @@ export default function HomePage() {
 
         {/* REVIEWS: three first, the rest behind "Show more" (works without JS). */}
         <section id="reviews" className="fade-up">
-          <ReviewsGrid />
+          <ReviewsGrid>
+            <CallTextButtons size="sm" tone="dark" align="center" />
+          </ReviewsGrid>
         </section>
 
         {/* HOW A PIANO MOVE WORKS: visible numbered steps. */}
         <section id="how-it-works" className="card-white sec-card fade-up" style={CARD_SHADOW}>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-3 sm:mb-4">How a piano move works</h2>
+          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-ink mb-3 sm:mb-4">How a piano move works</h2>
           <p className="body-lg mb-6">
             Pianos aren&apos;t furniture. They&apos;re heavy, awkward, and sentimental beyond any monetary value.
             Here&apos;s how I work.
@@ -615,7 +614,7 @@ export default function HomePage() {
                   {i + 1}
                 </span>
                 <p className="body-lg">
-                  <strong className="font-heading text-grape">{st.title}</strong> {st.text}
+                  <strong className="font-heading text-ink">{st.title}</strong> {st.text}
                 </p>
               </li>
             ))}
@@ -662,6 +661,9 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
+          <div className="mt-6 sm:mt-8">
+            <CallTextButtons size="sm" tone="dark" align="center" />
+          </div>
         </section>
 
         {/* FAQ */}
@@ -709,25 +711,13 @@ export default function HomePage() {
 
         {/* CONTACT: opaque card, the quote checklist beside the buttons. */}
         <section id="contact" className="card-white rounded-3xl max-w-2xl mx-auto p-5 sm:p-8 md:p-12 fade-up text-center" style={CARD_SHADOW}>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-grape mb-4 sm:mb-5">Get a quote</h2>
+          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-ink mb-4 sm:mb-5">Get a quote</h2>
           <p className="body-lg mb-6">
             For a quick quote, text me five things: the piano type and model if you know it, the suburb or town at
             each end, your preferred date, how many steps there are at both ends, and a photo of the piano and any
             tricky access. I&apos;ll get back to you within a few hours.
           </p>
-          <div className="mb-6 sm:mb-8 rounded-2xl bg-gray-100 p-4 sm:p-6">
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-grape mb-3">What happens next</h3>
-            <ol className="space-y-3 list-none">
-              {NEXT_STEPS.map((t, i) => (
-                <li key={t} className="next-step">
-                  <span aria-hidden="true" className="step-num">
-                    {i + 1}
-                  </span>
-                  <p className="body-lg">{t}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
+          <NextSteps className="mb-6 sm:mb-8" />
           <CallTextButtons email align="center" />
           <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3">
             <RatingLine />

@@ -92,6 +92,7 @@ export default function PianoMoversGeelongPage() {
         "Not every piano lives in Melbourne. Besides the metro area, Harry The Piano Mover takes pianos to and from Geelong, Ballarat, Bendigo, the Mornington Peninsula, Phillip Island and Lakes Entrance.",
       ]}
       sections={sections}
+      priceLine="Every trip is a custom quote."
       service={{
         name: "Piano Moving Geelong and Regional Victoria",
         serviceType: "Piano Moving",

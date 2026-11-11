@@ -81,10 +81,11 @@ export function Header() {
               </li>
             )}
             <li>
-              <a
-                href="/#contact"
-                className="nav-quote"
-              >
+              {/* Home: the contact card. A guide shows the second link instead (globals.css), which goes to that guide's own closing card. */}
+              <a href="/#contact" className="nav-quote nav-quote-home">
+                Get a Quote
+              </a>
+              <a href="#quote" className="nav-quote nav-quote-guide">
                 Get a Quote
               </a>
             </li>
@@ -94,17 +95,17 @@ export function Header() {
         <div className="lg:hidden flex flex-shrink-0 items-center gap-1">
           <a href={SMS_QUOTE_HREF} className="hdr-text sms-quote" aria-label="Text Harry for a quote">
             <MessageSquare className="h-4 w-4" aria-hidden="true" />
-            <span className="hdr-text-label">Text</span>
+            Quote
           </a>
           <a href={SMS_DISPOSAL_HREF} className="hdr-text sms-disposal" aria-label="Text Harry for a disposal quote">
             <MessageSquare className="h-4 w-4" aria-hidden="true" />
-            <span className="hdr-text-label">Text</span>
+            Quote
           </a>
           {/* Shown instead on the free-piano page (globals.css, data-sms). */}
           {FREE_PIANOS_LIVE && (
             <a href={SMS_REHOMING_HREF} className="hdr-text sms-rehoming" aria-label="Text Harry about a free piano">
               <MessageSquare className="h-4 w-4" aria-hidden="true" />
-              <span className="hdr-text-label">Text</span>
+              Text
             </a>
           )}
           <details data-menu className="group">
@@ -145,10 +146,10 @@ export function Header() {
                   </li>
                 ))}
               </ul>
-              <a
-                href="/#contact"
-                className="mnav-quote"
-              >
+              <a href="/#contact" className="mnav-quote mnav-quote-home">
+                Get a Quote
+              </a>
+              <a href="#quote" className="mnav-quote mnav-quote-guide">
                 Get a Quote
               </a>
             </nav>

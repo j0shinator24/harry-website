@@ -1,10 +1,11 @@
 import { GuidePage, grouped, guideMetadata, type GuideSection } from "@/components/guide-page"
-import { reviewBy } from "@/lib/guides"
-import { BUSINESS } from "@/lib/constants"
+import { INSURANCE_ANSWER, reviewBy } from "@/lib/guides"
+import { ACCESS_FEES } from "@/lib/constants"
 import {
   DISPOSAL,
   DISPOSAL_INCLUDES,
   disposalOffer,
+  INCLUDED_STEPS,
   INNER,
   PIANOLA_DISPOSAL,
 } from "@/lib/rates"
@@ -29,6 +30,7 @@ const qs: GuideSection[] = [
         ? { rates: [DISPOSAL], footnote: "*Mechanism removed? [See how I price pianolas](#pianola)." }
         : { rates: [DISPOSAL], hideNote: true },
       DISPOSAL_INCLUDES,
+      `Steps and access count for a disposal too. Past ${INCLUDED_STEPS} entry steps it's $${ACCESS_FEES.perStep} a step, and more than ${INCLUDED_STEPS} steps that can't take a simple ramp need a third person, from $${ACCESS_FEES.extraHandsFrom}. [How stairs and difficult access are priced](/piano-stairs-difficult-access/).`,
     ],
   },
   ...(PIANOLA_DISPOSAL
@@ -59,6 +61,11 @@ const qs: GuideSection[] = [
     ],
   },
   {
+    id: "insurance",
+    q: "Are you insured?",
+    a: INSURANCE_ANSWER,
+  },
+  {
     id: "book-disposal",
     q: "How do I book a piano disposal?",
     a: "Text me these five things and I'll get back to you within a few hours.",
@@ -82,7 +89,7 @@ const qs: GuideSection[] = [
 // white card with the restoration question; the intro no longer says it.
 const sections = grouped(qs, [
   ["prices", "disposal-cost", ...(PIANOLA_DISPOSAL ? ["pianola"] : [])],
-  ["info", "what-happens", "restore-or-dispose"],
+  ["info", "what-happens", "restore-or-dispose", "insurance"],
   ["booking", "book-disposal"],
 ])
 
@@ -99,9 +106,10 @@ export default function PianoDisposalPage() {
       sections={sections}
       sms="disposal"
       closing={{
-        heading: "Ready to book?",
-        text: `Disposal is $${DISPOSAL.upright} for an upright and $${DISPOSAL.grand} for a grand${pianolaPart}, GST included. Text me the details and I'll text back a price. Call or text ${BUSINESS.phone} and I'll get back to you within a few hours.`,
+        heading: "Get your disposal quote",
+        text: "Text me the details and I'll text back a price. Call or text and I'll get back to you within a few hours.",
       }}
+      priceLine={`Upright $${DISPOSAL.upright}, grand $${DISPOSAL.grand}${PIANOLA_DISPOSAL ? `, upright pianola $${PIANOLA_DISPOSAL.price}` : ""}. GST included.`}
       service={{
         name: "Piano Disposal Melbourne",
         serviceType: "Piano Disposal",

@@ -84,6 +84,7 @@ export default function InterstatePianoRemovalsPage() {
         "Looking for interstate piano movers? I do Melbourne to Sydney and Melbourne to Adelaide piano removals myself, by appointment only. Here's how an interstate quote works.",
       ]}
       sections={sections}
+      priceLine="Every trip is a custom quote."
       service={{
         name: "Interstate Piano Removals",
         serviceType: "Interstate Piano Moving",

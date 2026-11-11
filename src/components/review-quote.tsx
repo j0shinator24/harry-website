@@ -11,13 +11,13 @@ export function ReviewQuote({ review, source = REVIEW_SOURCE_LABEL, className = 
       <blockquote className="body-lg italic text-gray-800">
         &ldquo;{review.text}&rdquo;
       </blockquote>
-      <figcaption className="mt-2 text-base text-gray-600">
-        {review.name},{" "}
+      <figcaption className="mt-2 flex flex-wrap items-center gap-x-1 text-base text-gray-600">
+        <span>{review.name},</span>
         <a
           href={BUSINESS.googleReviews}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-grape underline underline-offset-2 hover:text-plum"
+          className="review-src-light"
         >
           {source}
         </a>

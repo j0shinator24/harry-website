@@ -18,7 +18,7 @@ export function StickyCta() {
           className="sms-quote bar-text"
         >
           <MessageSquare className="h-4 w-4" aria-hidden="true" />
-          Text Harry
+          Text for a quote
         </a>
         {/* Shown instead on the disposal guide (globals.css, data-sms). */}
         <a
@@ -26,13 +26,13 @@ export function StickyCta() {
           className="sms-disposal bar-text"
         >
           <MessageSquare className="h-4 w-4" aria-hidden="true" />
-          Text Harry
+          Text for a quote
         </a>
-        {/* Shown instead on the free-piano waitlist page. */}
-        <a
-          href={SMS_REHOMING_HREF}
-          className="sms-rehoming bar-text"
-        >
+        {/* Shown instead on the free-piano page: the wait list is the primary, Text the secondary (globals.css, data-sms). */}
+        <a href="/free-pianos/waitlist/" className="join-rehoming bar-text">
+          Join the wait list
+        </a>
+        <a href={SMS_REHOMING_HREF} className="sms-rehoming bar-call">
           <MessageSquare className="h-4 w-4" aria-hidden="true" />
           Text Harry
         </a>
@@ -41,7 +41,7 @@ export function StickyCta() {
           className="bar-call"
         >
           <Phone className="h-4 w-4" aria-hidden="true" />
-          Call Harry
+          Call
         </a>
       </div>
       <StickyCtaHeroWatch />

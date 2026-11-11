@@ -6,7 +6,7 @@ import { SunsetBackdrop } from "@/components/sunset-backdrop"
 import { SkylineBand } from "@/components/skyline-band"
 import { StickyCta } from "@/components/sticky-cta"
 import { IconSprite } from "@/components/icons"
-import { BASE_URL, BUSINESS, HOURS, OG_IMAGE, REVIEW_COUNT, REVIEW_COUNT_AS_OF } from "@/lib/constants"
+import { BASE_URL, BUSINESS, HOURS, OG_IMAGE } from "@/lib/constants"
 import { PRICE_RANGE } from "@/lib/rates"
 import "./globals.css"
 
@@ -66,7 +66,8 @@ const siteGraph = {
       // this business with a similarly named general removalist.
       disambiguatingDescription:
         "Specialist piano mover in Melbourne, owner-operated by Harry, a piano player, with an assistant on most moves. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
-      description: `${BUSINESS.description} Rated 5.0 stars from ${REVIEW_COUNT} Google reviews as of ${REVIEW_COUNT_AS_OF}.`,
+      // BUSINESS.description already carries the rating, so it appears once.
+      description: BUSINESS.description,
       url: `${BASE_URL}/`,
       logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png`, width: 512, height: 512 },
       image: [`${BASE_URL}${OG_IMAGE.url}`, `${BASE_URL}/harry-piano-1.jpg`],

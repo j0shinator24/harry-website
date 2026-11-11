@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors on purpose: static pages with no client router code (Gate 7 r2 O11) */
+import { Fragment } from "react"
 import type { Metadata } from "next"
 import { Picture } from "@/components/picture"
 import { ReviewQuote } from "@/components/review-quote"
 import { RatingLine } from "@/components/rating-line"
 import { CallTextButtons, type SmsKind } from "@/components/call-text-buttons"
 import { RateCards } from "@/components/rate-cards"
+import { NextSteps } from "@/components/next-steps"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
 import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, type RateZone, type Review } from "@/lib/constants"
-import { RATES_CONFIRMED } from "@/lib/rates"
+import { INNER, RATES_CONFIRMED } from "@/lib/rates"
 import { GUIDE_PHOTOS, type GuideHref } from "@/lib/guides"
 
 // Shared layout for the guide pages (cost, disposal, piano types, regional,
@@ -121,6 +123,10 @@ export type GuidePageProps = {
   // Overrides the closing card (default: "Ready to book?" and the quote line)
   // for a page where the next step is not a quote.
   closing?: { heading: string; text: string }
+  // The page-specific price line on the closing card (Gate 7 r3 F2). Left
+  // out, it reads the cheapest upright and the access note; null leaves it
+  // off (the free-piano page).
+  priceLine?: string | null
 }
 
 const DEFAULT_AREA = {
@@ -192,7 +198,14 @@ function answerText(s: GuideSection): string {
 
 const cardShadow = { boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }
 
-const GUIDE_BYLINE = "By Harry, piano player and piano mover at Harry The Piano Mover. Updated October 2026."
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+// The visible "Updated" month always matches LAST_UPDATED (and so the sitemap
+// lastmod and the WebPage dateModified).
+function bylineFor(path: string): string {
+  const [y, m] = LAST_UPDATED[path].split("-")
+  return `By Harry, piano player and piano mover at Harry The Piano Mover. Updated ${MONTHS[Number(m) - 1]} ${y}.`
+}
 
 function BlockView({ block, sms }: { block: Block; sms: SmsKind }) {
   if (typeof block === "string") {
@@ -204,7 +217,7 @@ function BlockView({ block, sms }: { block: Block; sms: SmsKind }) {
   }
   if ("list" in block) {
     return (
-      <ul className="space-y-2 body-lg list-disc pl-6 marker:text-grape">
+      <ul className="space-y-2 body-lg list-disc pl-6 marker:text-ink">
         {block.list.map((item) => (
           <li key={item}>
             <Rich text={item} />
@@ -231,10 +244,19 @@ function BlockView({ block, sms }: { block: Block; sms: SmsKind }) {
   return <CallTextButtons sms={sms} />
 }
 
-export function GuidePage({ path, crumb, h1, intro, introIds, sections, service, sms = "quote", closing }: GuidePageProps) {
+export function GuidePage({ path, crumb, h1, intro, introIds, sections, service, sms = "quote", closing, priceLine }: GuidePageProps) {
   const url = `${BASE_URL}${path}`
   const questions = sections.flatMap((g) => g.items)
   const photo = GUIDE_PHOTOS[path]
+  const longLead = intro[0].length > 300
+  const trust = (
+    <p className="text-base text-gray-700">
+      <RatingLine />
+      <span>. Fully insured.</span>
+    </p>
+  )
+  const closingPrice =
+    priceLine === undefined ? (sms === "rehoming" ? null : `Uprights from $${INNER.upright}, GST included. Steps and access extras apply.`) : priceLine
 
   const serviceSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -262,7 +284,7 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
     breadcrumb: { "@id": `${url}#breadcrumb` },
     primaryImageOfPage: `${BASE_URL}${guideOgImage(path, h1).url}`,
     mainEntity: { "@id": service.id ?? `${url}#service` },
-    // Matches the visible byline ("By Harry ... Updated October 2026"). No
+    // Matches the visible byline ("By Harry ... Updated November 2026"). No
     // datePublished: these guides are not live yet, so that date is unknown.
     author: { "@id": `${BASE_URL}/#harry` },
     dateModified: LAST_UPDATED[path],
@@ -314,19 +336,30 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
             </nav>
             <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
               <div className="flex-1">
-                <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-grape mb-2 sm:mb-3">
+                <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-ink mb-2 sm:mb-3">
                   {h1}
                 </h1>
                 {/* Who the guidance comes from (Gate 7 r2, copy via Ghostwriter). */}
-                <p className="text-base text-gray-600 mb-4 sm:mb-5">{GUIDE_BYLINE}</p>
-                <div className="space-y-3 mb-6">
+                <p className="text-base text-gray-600 mb-4 sm:mb-5">{bylineFor(path)}</p>
+                {/* Trust strip right under the short answer (the first paragraph), above
+                    the buttons, so it is in the first phone screen (Gate 7 r3 F1). A first
+                    paragraph too long to leave room for it (the free-piano page) puts it
+                    above the paragraph instead. */}
+                {longLead && <div className="mb-3">{trust}</div>}
+                <div className="space-y-3 mb-3">
                   {intro.map((p, i) => (
-                    <p key={p} id={introIds?.[i]} className="body-lg">
-                      <Rich text={p} />
-                    </p>
+                    <Fragment key={p}>
+                      <p id={introIds?.[i]} className="body-lg">
+                        <Rich text={p} />
+                      </p>
+                      {i === 0 && !longLead && trust}
+                    </Fragment>
                   ))}
                 </div>
-                <CallTextButtons sms={sms} />
+                {/* #guide-cta: the mobile bar stays hidden until these buttons scroll out of view. */}
+                <div id="guide-cta">
+                  <CallTextButtons sms={sms} />
+                </div>
               </div>
               {/* One of Harry's own photos on every guide (Gate 7 O23). */}
               <figure className="md:w-60 flex-shrink-0">
@@ -344,11 +377,6 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
                 </div>
               </figure>
             </div>
-            {/* Trust strip under the opening answer (Gate 7 r1 V9). */}
-            <p className="mt-5 text-base text-gray-700">
-              <RatingLine />
-              <span>. Fully insured.</span>
-            </p>
           </header>
 
           {sections.map((g) => (
@@ -381,13 +409,20 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
             </div>
           ))}
 
-          <section aria-labelledby="quote-h" className="card-final guide-card text-center fade-up" style={cardShadow}>
-            <h2 id="quote-h" className="font-heading font-black text-2xl sm:text-3xl text-grape mb-3 sm:mb-4">
-              {closing?.heading ?? "Ready to book?"}
+          {/* id="quote": the header's Get a Quote link on a guide lands here. */}
+          <section id="quote" aria-labelledby="quote-h" className="card-final guide-card text-center fade-up" style={cardShadow}>
+            <h2 id="quote-h" className="font-heading font-black text-2xl sm:text-3xl text-ink mb-3 sm:mb-4">
+              {closing?.heading ?? "Get your quote"}
             </h2>
-            <p className="body-lg mb-5">
+            <p className="body-lg mb-3">
               {closing?.text ?? `Text me the details and I'll text back a price. Call or text ${BUSINESS.phone} and I'll get back to you within a few hours.`}
             </p>
+            <p className="mb-3 text-base text-gray-700">
+              <RatingLine />
+              <span>. Fully insured.</span>
+            </p>
+            {closingPrice && <p className="body-lg font-bold text-gray-900 mb-6">{closingPrice}</p>}
+            {sms !== "rehoming" && <NextSteps className="mb-6 sm:mb-8 text-left" />}
             <CallTextButtons email align="center" sms={sms} />
           </section>
         </div>

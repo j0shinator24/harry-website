@@ -14,8 +14,8 @@ function ReviewCard({ r }: { r: Review }) {
         {starRow(r.stars)}
       </div>
       <blockquote className="review-quote">&ldquo;{r.text}&rdquo;</blockquote>
-      <figcaption className="review-cite">
-        <span className="font-heading font-bold">{r.name}</span>,{" "}
+      <figcaption className="review-cite flex flex-wrap items-center gap-x-1">
+        <span className="font-heading font-bold">{r.name},</span>
         <a href={BUSINESS.googleReviews} target="_blank" rel="noopener noreferrer" className="review-src">
           {REVIEW_SOURCE_LABEL}
         </a>
@@ -24,7 +24,7 @@ function ReviewCard({ r }: { r: Review }) {
   )
 }
 
-export function ReviewsGrid() {
+export function ReviewsGrid({ children }: { children?: React.ReactNode }) {
   const first = REVIEWS.slice(0, FIRST)
   const rest = REVIEWS.slice(FIRST)
   return (
@@ -65,6 +65,7 @@ export function ReviewsGrid() {
           See all of {REVIEW_SOURCE_LABEL}
         </a>
       </p>
+      {children && <div className="mt-4">{children}</div>}
     </div>
   )
 }

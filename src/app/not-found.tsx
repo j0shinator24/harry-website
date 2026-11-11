@@ -17,10 +17,10 @@ export default function NotFound() {
   return (
     <div className="px-4 sm:px-5 py-14 sm:py-20">
       <section className="card-white rounded-3xl max-w-2xl mx-auto p-6 sm:p-10 text-center" style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }}>
-        <p className="font-heading font-black text-5xl sm:text-6xl text-grape mb-2" aria-hidden="true">
+        <p className="font-heading font-black text-5xl sm:text-6xl text-ink mb-2" aria-hidden="true">
           404
         </p>
-        <h1 className="font-heading font-black text-2xl sm:text-3xl text-grape mb-3">Page not found</h1>
+        <h1 className="font-heading font-black text-2xl sm:text-3xl text-ink mb-3">Page not found</h1>
         <p className="body-lg mb-6">
           The page you are looking for does not exist or has been moved.
         </p>
