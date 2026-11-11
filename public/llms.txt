@@ -32,7 +32,7 @@ The zone prices are base rates, not the total for every move: steps past the inc
 - Outer Suburbs: upright $380, grand $630
 - Outer Melbourne: upright $470, grand $720
 - When a move crosses zones, the higher zone's rate applies.
-- Piano disposal: upright $350, grand $460, upright pianola $870. Disposal prices include property insurance, GST and the disposal fee. Pianolas with the mechanism removed may be assessed as a standard piano depending on dimensions and access; photos and dimensions required.
+- Piano disposal: upright $350, grand $460, upright pianola $870. Disposal prices include property insurance, GST and the disposal fee. Step and access charges apply to disposals too. Pianolas with the mechanism removed may be assessed as a standard piano depending on dimensions and access; photos and dimensions required.
 - Base rates include up to 4 entry steps, or easy ramp access. Tricky access past that adds $20 per step. More than 4 steps that can't take a simple ramp need a third person, from $200.
 - Beyond Outer Melbourne, and interstate, every move is a custom quote.
 

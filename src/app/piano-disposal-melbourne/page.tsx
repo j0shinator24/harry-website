@@ -30,6 +30,7 @@ const qs: GuideSection[] = [
         ? { rates: [DISPOSAL], footnote: "*Mechanism removed? [See how I price pianolas](#pianola)." }
         : { rates: [DISPOSAL], hideNote: true },
       DISPOSAL_INCLUDES,
+      `Steps and access count for a disposal too. Past ${INCLUDED_STEPS} entry steps it's $${ACCESS_FEES.perStep} a step, and more than ${INCLUDED_STEPS} steps that can't take a simple ramp need a third person, from $${ACCESS_FEES.extraHandsFrom}. [How stairs and difficult access are priced](/piano-stairs-difficult-access/).`,
     ],
   },
   ...(PIANOLA_DISPOSAL
@@ -108,7 +109,7 @@ export default function PianoDisposalPage() {
         heading: "Get your disposal quote",
         text: "Text me the details and I'll text back a price. Call or text and I'll get back to you within a few hours.",
       }}
-      priceLine={`Upright $${DISPOSAL.upright}, grand $${DISPOSAL.grand}${PIANOLA_DISPOSAL ? `, upright pianola $${PIANOLA_DISPOSAL.price}` : ""}. GST included.`}
+      priceLine={`Upright $${DISPOSAL.upright}, grand $${DISPOSAL.grand}${PIANOLA_DISPOSAL ? `, upright pianola $${PIANOLA_DISPOSAL.price}` : ""}. GST included. Steps and access extras apply.`}
       service={{
         name: "Piano Disposal Melbourne",
         serviceType: "Piano Disposal",

@@ -17,7 +17,7 @@ import { RatingLine } from "@/components/rating-line"
 import { ReviewQuote } from "@/components/review-quote"
 import { reviewBy } from "@/lib/guides"
 import { RATES_CONFIRMED, disposalOffer, pianoMovingService } from "@/lib/rates"
-import { ACCESS_FEES, BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS, SMS_QUOTE_HREF } from "@/lib/constants"
+import { ACCESS_FEES, BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, RATES, REVIEW_COUNT, SERVICES, PARTNERS, SMS_QUOTE_HREF } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Harry The Piano Mover | Piano Movers Melbourne & Piano Removals",
@@ -114,7 +114,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Do you dispose of unwanted pianos?",
-    a: `Yes, if your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $${disposalRate.upright} upright / $${disposalRate.grand} grand${pianolaDisposal ? ` / $${pianolaDisposal.price} upright pianola` : ""}, and that includes property insurance, GST and the disposal fee. In my experience, it's often cheaper than a piano restoration quote that would never break even.${pianolaDisposal ? " If a pianola's mechanism has been removed, I may assess it as a standard piano depending on dimensions and access, so send me photos and dimensions." : ""}`,
+    a: `Yes, if your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $${disposalRate.upright} upright / $${disposalRate.grand} grand${pianolaDisposal ? ` / $${pianolaDisposal.price} upright pianola` : ""}, and that includes property insurance, GST and the disposal fee. Step and access charges apply to disposals too. In my experience, it's often cheaper than a piano restoration quote that would never break even.${pianolaDisposal ? " If a pianola's mechanism has been removed, I may assess it as a standard piano depending on dimensions and access, so send me photos and dimensions." : ""}`,
   },
   {
     // Harry approved this wording, 11 Nov 2026.
@@ -136,6 +136,10 @@ const FAQ_ITEMS = [
   {
     q: "What happens after I text you?",
     a: "I'll text back a price, usually within a few hours. If the day suits, it's booked.",
+  },
+  {
+    q: "How far ahead should I book?",
+    a: "I'm usually booked a week or two ahead, so text me as early as you can with your preferred day. Interstate moves need decent warning.",
   },
   {
     q: "How do I book?",
@@ -160,7 +164,6 @@ const SERVICE_LINKS: Record<string, readonly FaqLink[]> = {
 
 // Elements reused as they are, so the page payload holds each one once:
 // the hero's five stars and every FAQ's "+" (it turns into a cross when open).
-const HERO_STAR = <StarIcon className="h-5 w-5 sm:h-6 sm:w-6 fill-current" />
 const FAQ_PLUS = (
   <span aria-hidden="true" className="faq-plus">
     +
@@ -352,40 +355,36 @@ export default function HomePage() {
             href={BUSINESS.googleReviews}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xl sm:text-2xl text-gold mb-6 sm:mb-8 py-2 px-1 hover:text-tangerine transition-colors duration-200"
-            style={{ textShadow: "0 2px 10px rgba(245,183,66,0.5)" }}
+            className="hero-rating mb-6 sm:mb-8"
           >
-            {HERO_STAR}
-            {HERO_STAR}
-            {HERO_STAR}
-            {HERO_STAR}
-            {HERO_STAR}
-            <span className="ml-1">Reviews!</span>
+            <StarIcon className="h-5 w-5 text-gold fill-current" aria-hidden="true" />
+            5.0 from {REVIEW_COUNT} Google reviews
           </a>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-3 justify-center items-center px-2 sm:px-0">
+          <div className="flex flex-col items-center gap-3 px-2 sm:px-0">
             <a
               href={SMS_QUOTE_HREF}
-              className="inline-flex items-center justify-center gap-2 bg-grape text-white font-heading font-bold text-base w-full sm:w-auto px-7 py-4 rounded-full hover:bg-plum hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              className="inline-flex items-center justify-center gap-2 bg-grape text-white font-heading font-bold text-lg w-full sm:w-auto sm:min-w-[20rem] px-9 py-4 rounded-full hover:bg-plum hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
               style={{ boxShadow: "0 4px 20px rgba(107,76,154,0.4)" }}
             >
-              <MessageSquare className="h-4 w-4" />
-              Text Harry
+              <MessageSquare className="h-5 w-5" />
+              Text for a quote
             </a>
-            <a
-              href={`tel:${BUSINESS.phoneInternational}`}
-              className="inline-flex items-center justify-center gap-2 bg-tangerine text-[#1C1C1C] font-heading font-bold text-base w-full sm:w-auto px-7 py-4 rounded-full hover:bg-coral hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-              style={{ boxShadow: "0 4px 20px rgba(245,140,90,0.4)" }}
-            >
-              <Phone className="h-4 w-4" />
-              Call {BUSINESS.phone}
-            </a>
-            <a
-              href={`mailto:${BUSINESS.email}`}
-              className="inline-flex items-center justify-center gap-2 font-heading font-bold text-base text-white border-2 border-white/50 w-full sm:w-auto px-7 py-4 rounded-full hover:border-white hover:bg-white/10 hover:-translate-y-0.5 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-            >
-              <Mail className="h-4 w-4" />
-              Email Harry
-            </a>
+            <div className="flex flex-row gap-3 justify-center items-center">
+              <a
+                href={`tel:${BUSINESS.phoneInternational}`}
+                className="inline-flex items-center justify-center gap-2 min-h-12 font-heading font-bold text-sm text-white border-2 border-white/50 px-4 py-2 rounded-full hover:border-white hover:bg-white/10 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              >
+                <Phone className="h-4 w-4" />
+                Call {BUSINESS.phone}
+              </a>
+              <a
+                href={`mailto:${BUSINESS.email}`}
+                className="inline-flex items-center justify-center gap-2 min-h-12 font-heading font-bold text-sm text-white border-2 border-white/50 px-4 py-2 rounded-full hover:border-white hover:bg-white/10 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              >
+                <Mail className="h-4 w-4" />
+                Email Harry
+              </a>
+            </div>
           </div>
         </div>
       </section>

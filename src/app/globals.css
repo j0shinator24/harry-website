@@ -107,6 +107,8 @@
   .btn-outline-sm { @apply inline-flex items-center justify-center gap-1.5 min-h-12 px-5 rounded-full border-2 border-gray-500 text-ink font-heading font-bold hover:bg-ink hover:text-white hover:-translate-y-0.5 active:scale-95 transition-[transform,background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:outline-none; }
   /* Rating line and trust strip (home and guides) */
   .rating-link-light { @apply inline-flex items-center gap-1.5 min-h-12 font-heading font-bold text-grape underline underline-offset-2 hover:text-plum active:text-plum rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape; }
+  /* Hero rating pill: single star, dark hero. */
+  .hero-rating { @apply inline-flex items-center gap-2 min-h-12 px-5 rounded-full bg-white/10 border border-white/25 text-white font-heading font-bold text-base sm:text-lg hover:bg-white/20 hover:border-white/50 active:scale-95 transition-[transform,background-color,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none; }
   .rating-link-dark { @apply inline-flex items-center gap-1.5 min-h-12 font-heading font-bold text-gold underline underline-offset-2 hover:text-white active:text-white rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   /* Concert bio disclosure in the About card (light version of the FAQ item) */
   .bio-item { @apply rounded-2xl bg-gray-100 px-5 sm:px-6; }
