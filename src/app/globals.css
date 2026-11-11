@@ -80,6 +80,8 @@
   body:has(#hero) .cta-bar:not(.cta-on) { transform: translateY(100%); visibility: hidden; }
   body:has(#hero) .cta-bar { transition: transform 300ms, visibility 0s linear 300ms; }
   body:has(#hero) .cta-bar.cta-on { visibility: visible; transition: transform 300ms, visibility 0s; }
+  /* No scripts (some in-app browsers): the watcher never runs, so show the bar (Gate 7 r3). */
+  @media (scripting: none) { body:has(#hero) .cta-bar:not(.cta-on) { transform: none; visibility: visible; } }
   .bar-call { @apply inline-flex items-center justify-center gap-2 bg-gold text-[#1C1C1C] font-heading font-bold text-base py-3 rounded-full active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white; }
   .bar-text { @apply inline-flex items-center justify-center gap-2 bg-grape text-white font-heading font-bold text-base py-3 rounded-full active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   /* Call, text and email buttons (homepage contact card and every guide) */

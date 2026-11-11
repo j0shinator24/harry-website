@@ -91,7 +91,8 @@ export function movingOffers() {
 }
 
 // Schema priceRange: cheapest upright move to the dearest published price.
-export const PRICE_RANGE = `$${MOVING_LOW} to $${Math.max(MOVING_HIGH, DISPOSAL_HIGH)}`
+// Not a ceiling: access extras and custom regional or interstate quotes can go higher (Gate 7 r3, ChatGPT).
+export const PRICE_RANGE = `From $${MOVING_LOW}. Access extras and custom quotes apply`
 
 // The one canonical #service-piano Service node. The home page graph and the
 // cost guide both read it, so the two can never drift apart.
