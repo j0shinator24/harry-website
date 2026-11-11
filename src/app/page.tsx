@@ -235,6 +235,8 @@ const servicesGraph = {
       areaServed: SERVICE_GEO,
     }
     // Zone prices are base rates; steps and a third person are separate offers.
+    if (s.title === "Piano Moving") node.alternateName = ["Piano removals Melbourne", "Piano removalist", "Upright piano movers", "Grand piano movers", "Interstate piano movers"]
+    if (s.title === "Piano Disposal") node.alternateName = ["Piano disposal Melbourne", "Piano removal and disposal"]
     if (s.title === "Piano Moving") node.offers = movingOffers()
     if (s.title === "Piano Disposal") node.offers = disposalOffer()
     return node
@@ -282,6 +284,8 @@ export default function HomePage() {
               in the head; fetchPriority marks it as the likely LCP image. */}
           <img
             src="/hero-bg.webp"
+            srcSet="/hero-bg-828.webp 828w, /hero-bg-1170.webp 1170w, /hero-bg.webp 1792w"
+            sizes="100vw"
             alt=""
             aria-hidden="true"
             width={1792}

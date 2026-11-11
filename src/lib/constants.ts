@@ -1,8 +1,8 @@
 export const BASE_URL = "https://harrythepianomover.com.au"
 
 // Google review count and the month it was checked. Shown beside the reviews.
-export const REVIEW_COUNT = 88
-export const REVIEW_COUNT_AS_OF = "October 2026"
+export const REVIEW_COUNT = 107
+export const REVIEW_COUNT_AS_OF = "November 2026"
 
 export const BUSINESS = {
   name: "Harry The Piano Mover",
@@ -60,7 +60,7 @@ export const LLMS_ALTERNATE = { "text/plain": "/llms.txt" } as const
 // Last real content change per page, for the sitemap's <lastmod>. Update the
 // date when a page's visible content changes, never on a rebuild.
 export const LAST_UPDATED: Record<string, string> = {
-  "/": "2026-10-20",
+  "/": "2026-11-11",
   "/piano-moving-cost-melbourne/": "2026-10-20",
   "/piano-disposal-melbourne/": "2026-10-20",
   "/piano-types/": "2026-10-20",

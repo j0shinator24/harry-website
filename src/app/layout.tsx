@@ -70,6 +70,7 @@ const siteGraph = {
       telephone: BUSINESS.phoneInternational,
       email: BUSINESS.email,
       priceRange: "$$",
+      knowsAbout: ["Piano moving", "Piano removals", "Piano disposal", "Upright piano moving", "Grand piano moving", "Interstate piano removals"],
       currenciesAccepted: "AUD",
       openingHoursSpecification: HOURS.spec.map((h) => ({
         "@type": "OpeningHoursSpecification",

@@ -324,6 +324,7 @@ summary:focus-visible > span {
    locked. Nothing changes for visitors who have not asked for less motion. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  #hero .float-anim { animation: none; }
   *:not(#hero, #hero *),
   *:not(#hero, #hero *)::before,
   *:not(#hero, #hero *)::after {
