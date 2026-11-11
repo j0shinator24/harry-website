@@ -11,7 +11,7 @@ import { PhotoGallery } from "@/components/photo-gallery"
 import { RateCards } from "@/components/rate-cards"
 import { CallTextButtons } from "@/components/call-text-buttons"
 import { Picture } from "@/components/picture"
-import { RATES_CONFIRMED, disposalOffer, movingOffers } from "@/lib/rates"
+import { RATES_CONFIRMED, disposalOffer, pianoMovingService } from "@/lib/rates"
 import { ACCESS_FEES, BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS, SMS_QUOTE_HREF } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -224,7 +224,14 @@ const homeWebPage = {
 
 const servicesGraph = {
   "@context": "https://schema.org",
-  "@graph": SERVICES.map((s) => {
+  // Busking and band deliveries are not business services Harry sells. Busking
+  // is listed under Harry's Person knowsAbout instead (layout.tsx); the visible
+  // services card is unchanged.
+  "@graph": SERVICES.filter((s) => s.icon !== "busking").map((s) => {
+    if (s.icon === "piano") {
+      const { id, ...rest } = pianoMovingService()
+      return { "@type": "Service", "@id": id, ...rest, provider: { "@id": `${BASE_URL}/#business` }, areaServed: SERVICE_GEO } as Record<string, unknown>
+    }
     const node: Record<string, unknown> = {
       "@type": "Service",
       "@id": `${BASE_URL}/#service-${s.icon}`,
@@ -235,9 +242,7 @@ const servicesGraph = {
       areaServed: SERVICE_GEO,
     }
     // Zone prices are base rates; steps and a third person are separate offers.
-    if (s.title === "Piano Moving") node.alternateName = ["Piano removals Melbourne", "Piano removalist", "Upright piano movers", "Grand piano movers", "Interstate piano movers"]
     if (s.title === "Piano Disposal") node.alternateName = ["Piano disposal Melbourne", "Piano removal and disposal"]
-    if (s.title === "Piano Moving") node.offers = movingOffers()
     if (s.title === "Piano Disposal") node.offers = disposalOffer()
     return node
   }),
@@ -318,7 +323,7 @@ export default function HomePage() {
             className="font-heading font-medium text-[2.5rem] sm:text-6xl lg:text-7xl leading-none mb-4 sm:mb-5 text-white"
             style={{ textShadow: "0 4px 30px rgba(0,0,0,0.4)" }}
           >
-            Melbourne&apos;s Specialist
+            Melbourne&apos;s Specialist{" "}
             <br />
             <span className="text-gold font-bold">Piano Mover</span>
           </h1>

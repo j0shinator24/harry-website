@@ -12,7 +12,7 @@ import {
   OUTER_SUB,
   PIANOLA_CLAUSE,
   PIANOLA_DISPOSAL,
-  movingOffers,
+  pianoMovingService,
 } from "@/lib/rates"
 
 const PATH = "/piano-moving-cost-melbourne/"
@@ -112,14 +112,7 @@ export default function PianoMovingCostPage() {
         "Steps, tricky access and distance can add to that. Text me a few details and I'll tell you the real number.",
       ]}
       sections={sections}
-      service={{
-        // Same canonical Service node as the home page (SERVICES icon "piano").
-        id: `${BASE_URL}/#service-piano`,
-        name: "Piano Moving Melbourne",
-        serviceType: "Piano Moving",
-        description: `Piano moving across Greater Melbourne priced by zone: uprights $${MOVING_LOW} to $${OUTER_MELB.upright}, grands $${INNER.grand} to $${MOVING_HIGH}. Prices include GST. Up to 4 entry steps included, steps past that $${ACCESS_FEES.perStep} each, a third person from $${ACCESS_FEES.extraHandsFrom} for more than 4 steps without a simple ramp. A move that crosses zones is charged at the higher zone's rate.`,
-        offers: movingOffers(),
-      }}
+      service={pianoMovingService()}
     />
   )
 }

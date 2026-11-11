@@ -99,6 +99,7 @@ export type GuideService = {
   id?: string
   name: string
   serviceType: string
+  alternateName?: readonly string[]
   description: string
   areaServed?: unknown
   offers?: unknown
@@ -265,6 +266,7 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
     provider: { "@id": `${BASE_URL}/#business` },
     areaServed: service.areaServed ?? DEFAULT_AREA,
   }
+  if (service.alternateName) serviceSchema.alternateName = service.alternateName
   if (service.offers) serviceSchema.offers = service.offers
 
   const webPageSchema = {

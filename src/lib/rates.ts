@@ -1,4 +1,4 @@
-import { ACCESS_FEES, RATES, type RateZone } from "@/lib/constants"
+import { ACCESS_FEES, BASE_URL, RATES, type RateZone } from "@/lib/constants"
 
 // Rate lookups shared by the homepage and the guide pages. Every price on the
 // site is read from RATES through these, so nothing can drift from the rate
@@ -88,6 +88,23 @@ export function movingOffers() {
     },
     ...accessOffers(),
   ]
+}
+
+// Schema priceRange: cheapest upright move to the dearest published price.
+export const PRICE_RANGE = `$${MOVING_LOW} to $${Math.max(MOVING_HIGH, DISPOSAL_HIGH)}`
+
+// The one canonical #service-piano Service node. The home page graph and the
+// cost guide both read it, so the two can never drift apart.
+export const PIANO_SERVICE_ID = `${BASE_URL}/#service-piano`
+export function pianoMovingService() {
+  return {
+    id: PIANO_SERVICE_ID,
+    name: "Piano Moving Melbourne",
+    serviceType: "Piano Moving",
+    alternateName: ["Piano removals Melbourne", "Piano removalist", "Upright piano movers", "Grand piano movers", "Interstate piano movers"],
+    description: `Piano moving across Greater Melbourne priced by zone: uprights $${MOVING_LOW} to $${OUTER_MELB.upright}, grands $${INNER.grand} to $${MOVING_HIGH}. Prices include GST. Up to ${INCLUDED_STEPS} entry steps included, steps past that $${ACCESS_FEES.perStep} each, a third person from $${ACCESS_FEES.extraHandsFrom} for more than ${INCLUDED_STEPS} steps without a simple ramp. A move that crosses zones is charged at the higher zone's rate.`,
+    offers: movingOffers(),
+  }
 }
 
 export function disposalOffer() {
