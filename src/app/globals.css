@@ -59,7 +59,7 @@
   .free-tag { @apply inline-block rounded-full bg-tangerine text-[#1C1C1C] text-[0.65rem] font-black uppercase tracking-wider leading-none px-1.5 py-1; }
   .header-bar { @apply relative mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-5; }
   .header-logo { @apply rounded-full flex-shrink-0 transition-transform duration-200 group-hover:scale-110; }
-  .header-name { @apply font-heading font-black text-base sm:text-lg text-gold tracking-wide whitespace-nowrap; }
+  .header-name { @apply font-heading font-black text-base sm:text-lg text-gold tracking-wide whitespace-nowrap max-[429px]:whitespace-normal max-[429px]:text-sm max-[429px]:leading-tight; }
   .hdr-text { @apply inline-flex items-center justify-center gap-1.5 h-12 px-3.5 rounded-full bg-grape text-white font-heading font-bold text-base hover:bg-plum active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .menu-toggle { @apply list-none [&::-webkit-details-marker]:hidden flex items-center justify-center w-12 h-12 -mr-2 rounded-lg cursor-pointer active:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .mnav-panel { @apply absolute left-0 right-0 top-16 px-4 pb-4 max-h-[calc(100vh-4rem)] overflow-y-auto; }
