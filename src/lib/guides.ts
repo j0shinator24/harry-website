@@ -1,8 +1,8 @@
-import { REVIEWS, type Review } from "@/lib/constants"
+import { FREE_PIANOS_LIVE, REVIEWS, type Review } from "@/lib/constants"
 
 // The guide pages, in one list so the Guides menu, the sitemap and the 404
 // page can never fall out of step.
-export const GUIDES = [
+const ALL_GUIDES = [
   { href: "/piano-moving-cost-melbourne/", label: "Piano moving costs in Melbourne" },
   { href: "/piano-disposal-melbourne/", label: "Piano disposal in Melbourne" },
   { href: "/piano-types/", label: "Grand, upright and digital pianos" },
@@ -13,7 +13,10 @@ export const GUIDES = [
   { href: "/interstate-piano-removals/", label: "Interstate piano removals" },
 ] as const
 
-export type GuideHref = (typeof GUIDES)[number]["href"]
+export type GuideHref = (typeof ALL_GUIDES)[number]["href"]
+
+// Free pianos is left out of the menu, sitemap and 404 page until it goes live.
+export const GUIDES = ALL_GUIDES.filter((g) => FREE_PIANOS_LIVE || g.href !== "/free-piano-melbourne/")
 
 // Harry's own photos, one per guide page. Alt text is factual (via
 // Ghostwriter): none of these shows a move in progress. No visible captions

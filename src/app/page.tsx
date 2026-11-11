@@ -103,6 +103,11 @@ const FAQ_ITEMS = [
     a: `Yes, if your piano is beyond repair I'll handle the removal, recycle what's worth saving, and dispose of the rest responsibly. Disposal is $${disposalRate.upright} upright / $${disposalRate.grand} grand${pianolaDisposal ? ` / $${pianolaDisposal.price} upright pianola` : ""}, and that includes property insurance, GST and the disposal fee. In my experience, it's often cheaper than a piano restoration quote that would never break even.${pianolaDisposal ? " If a pianola's mechanism has been removed, I may assess it as a standard piano depending on dimensions and access, so send me photos and dimensions." : ""}`,
   },
   {
+    // Harry approved this wording, 11 Nov 2026.
+    q: "Are you a piano removalist?",
+    a: "Yes, a specialist one. I move pianos, not general furniture.",
+  },
+  {
     q: "Do you do anything other than pianos?",
     a: `Piano moving is my specialty. I can take additional items alongside your piano, deliver pianos bought on Marketplace or online, and do gig load-in and load-out for bands (guitars, amps, drums, PA). Call or text and we'll work it out.`,
   },

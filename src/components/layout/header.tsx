@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors on purpose: static pages with no client router code (Gate 7 r2 O11) */
 import { ChevronDown, Menu, X } from "@/components/icons"
 import { GUIDES } from "@/lib/guides"
+import { FREE_PIANOS_LIVE } from "@/lib/constants"
 import { MenuEnhance } from "@/components/layout/menu-enhance"
 
 const navItems = [
@@ -72,12 +73,14 @@ export function Header() {
                 {navItems[3].label}
               </a>
             </li>
-            <li>
-              <a href="/free-piano-melbourne/" className="nav-free">
-                Free pianos
-                <span className="free-tag hidden xl:inline-block">New</span>
-              </a>
-            </li>
+            {FREE_PIANOS_LIVE && (
+              <li>
+                <a href="/free-piano-melbourne/" className="nav-free">
+                  Free pianos
+                  <span className="free-tag hidden xl:inline-block">New</span>
+                </a>
+              </li>
+            )}
             <li>
               <a
                 href="/#contact"
@@ -102,10 +105,12 @@ export function Header() {
             className="mnav-panel"
             style={{ background: "rgba(28,28,28,0.98)" }}
           >
-            <a href="/free-piano-melbourne/" className="mnav-free">
-              Free pianos
-              <span className="free-tag">New</span>
-            </a>
+            {FREE_PIANOS_LIVE && (
+              <a href="/free-piano-melbourne/" className="mnav-free">
+                Free pianos
+                <span className="free-tag">New</span>
+              </a>
+            )}
             <ul className="list-none">
               {navItems.map((item) => (
                 <li key={item.href}>

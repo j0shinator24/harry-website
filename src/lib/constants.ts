@@ -15,7 +15,7 @@ export const BUSINESS = {
   location: "Melbourne, VIC",
   tagline: "Melbourne's specialist piano mover. Uprights, grands, and digitals.",
   description:
-    `Harry The Piano Mover: specialist piano movers in Melbourne. Uprights, grands and digitals. Removals, disposal and Marketplace pick-ups. ${REVIEW_COUNT} Google reviews as of ${REVIEW_COUNT_AS_OF}.`,
+    `Harry The Piano Mover: specialist piano movers and piano removalists in Melbourne. Uprights, grands and digitals. Removals, disposal and Marketplace pick-ups. ${REVIEW_COUNT} Google reviews as of ${REVIEW_COUNT_AS_OF}.`,
   instagram: "https://www.instagram.com/harrythepianomover/",
   // Harry's own music, supplied by Harry 4 Nov 2026.
   spotify: "https://open.spotify.com/artist/3MZ3s1IgR0KUdpkpKXnkrT",
@@ -122,7 +122,12 @@ export type Service = {
 
 // Card copy via Ghostwriter (Gate 7 round 1, Oct 2026). Icons are one
 // matching line set (lucide), drawn in components/service-icon.tsx.
-export const SERVICES: readonly Service[] = [
+// Free pianos stay on the preview until the wait list Worker is live on the real
+// domain (11 Nov 2026). publish-preview.sh sets NEXT_PUBLIC_FREE_PIANOS=1; the live
+// build does not, so the page, header link, home card and guide entry are left out.
+export const FREE_PIANOS_LIVE = process.env.NEXT_PUBLIC_FREE_PIANOS === "1"
+
+const ALL_SERVICES: readonly Service[] = [
   {
     // Joshua, 22 Oct 2026: the free piano scheme must be easy to find, so this
     // card goes first. Harry, 1 Nov 2026: softer copy, and the card links to the
@@ -165,6 +170,8 @@ export const SERVICES: readonly Service[] = [
     icon: "busking",
   },
 ] as const
+
+export const SERVICES: readonly Service[] = ALL_SERVICES.filter((s) => FREE_PIANOS_LIVE || s.icon !== "rehoming")
 
 // Pre-filled text for every "Text Harry" link: the one quote checklist used
 // everywhere (piano type and model, both locations, preferred date, steps at

@@ -1,5 +1,6 @@
 import { GuidePage, grouped, guideMetadata, type GuideSection } from "@/components/guide-page"
-import { ACCESS_FEES, BASE_URL } from "@/lib/constants"
+import { notFound } from "next/navigation"
+import { ACCESS_FEES, BASE_URL, FREE_PIANOS_LIVE } from "@/lib/constants"
 import { INNER, MOVING_ZONES, OUTER_MELB, OUTER_SUB } from "@/lib/rates"
 
 const PATH = "/free-piano-melbourne/"
@@ -77,6 +78,8 @@ const sections = grouped(qs, [
 ])
 
 export default function FreePianoMelbournePage() {
+  // Off on the live site until the wait list is live (see FREE_PIANOS_LIVE).
+  if (!FREE_PIANOS_LIVE) notFound()
   return (
     <GuidePage
       path={PATH}
