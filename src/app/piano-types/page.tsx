@@ -1,6 +1,6 @@
 import { GuidePage, grouped, guideMetadata, type GuideSection } from "@/components/guide-page"
 import { ACCESS_FEES } from "@/lib/constants"
-import { reviewBy } from "@/lib/guides"
+import { INSURANCE_ANSWER, reviewBy } from "@/lib/guides"
 import {
   INNER,
   MOVING_ZONES,
@@ -71,6 +71,11 @@ const qs: GuideSection[] = [
     a: "I specialise in Japanese, Chinese and European pianos, from brand-new to new-to-you.",
   },
   {
+    id: "insurance",
+    q: "Are you insured?",
+    a: INSURANCE_ANSWER,
+  },
+  {
     id: "tuning",
     q: "When should I tune my piano after a move?",
     a: "Wait 3-4 weeks before having your piano tuned in the new space.",
@@ -84,7 +89,7 @@ const sections = grouped(qs, [
   ["info", "upright", "grand"],
   ["prices", "type-prices"],
   ["info", "digital", "pianola", "brands"],
-  ["info", "tuning"],
+  ["info", "tuning", "insurance"],
 ])
 
 export default function PianoTypesPage() {

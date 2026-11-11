@@ -170,6 +170,13 @@ export const Guitar = lineIcon([
   ["path", { d: "m6 16 2 2" }],
   ["path", { d: "M8.23 9.85A3 3 0 0 1 11 8a5 5 0 0 1 5 5 3 3 0 0 1-1.85 2.77l-.92.38A2 2 0 0 0 12 18a4 4 0 0 1-4 4 6 6 0 0 1-6-6 4 4 0 0 1 4-4 2 2 0 0 0 1.85-1.23z" }],
 ])
+export const DoorOpen = lineIcon([
+  ["path", { d: "M11 20H2" }],
+  ["path", { d: "M11 4.562v16.157a1 1 0 0 0 1.242.97L19 20V5.562a2 2 0 0 0-1.515-1.94l-4-1A2 2 0 0 0 11 4.562z" }],
+  ["path", { d: "M11 4H8a2 2 0 0 0-2 2v14" }],
+  ["path", { d: "M14 12h.01" }],
+  ["path", { d: "M22 20h-3" }],
+])
 export const Music = lineIcon([
   ["path", { d: "M9 18V5l12-2v13" }],
   ["circle", { cx: "6", cy: "18", r: "3" }],

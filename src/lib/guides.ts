@@ -37,6 +37,11 @@ export const GUIDE_PHOTOS: Record<GuideHref, Photo> = {
   "/interstate-piano-removals/": P1,
 }
 
+// Insurance wording, the same as the home FAQ "Are you insured?" answer and
+// the Geelong page line, so every page says the same thing.
+export const INSURANCE_ANSWER =
+  "Yes. My public liability insurance covers your home or property during the move. My goods in transit (carriers) insurance covers your piano while it's in my care and while it travels in the van. Both are active and current."
+
 // Reviews are quoted exactly as they appear in REVIEWS, never edited.
 export function reviewBy(name: string): Review {
   const r = REVIEWS.find((x) => x.name === name)

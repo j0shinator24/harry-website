@@ -48,18 +48,18 @@
    did. Edit a list here and every use changes. */
 @layer components {
   /* Header, on every page */
-  .nav-link { @apply whitespace-nowrap font-heading text-base text-white/90 hover:text-gold transition-colors duration-200 py-2 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
+  .nav-link { @apply inline-flex items-center min-h-12 whitespace-nowrap font-heading text-base text-white/90 hover:text-gold transition-colors duration-200 py-2 px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded; }
   .nav-guides { @apply list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center gap-1; }
   .nav-guides-panel { @apply absolute right-0 top-full mt-3 w-72 rounded-2xl p-2 list-none; }
   .nav-guide-link { @apply block rounded-xl px-3 py-2.5 text-base text-white/90 hover:bg-white/10 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
-  .nav-quote { @apply whitespace-nowrap font-heading text-base font-bold bg-gold text-[#1C1C1C] px-5 py-2.5 rounded-full hover:bg-tangerine hover:scale-105 active:scale-95 transition-transform duration-200 inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none; }
-  .nav-free { @apply inline-flex items-center gap-1.5 font-heading text-base font-bold text-gold border-2 border-tangerine rounded-full px-3 xl:px-3.5 py-1.5 whitespace-nowrap hover:bg-tangerine hover:text-[#1C1C1C] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .nav-quote { @apply inline-flex items-center min-h-12 whitespace-nowrap font-heading text-base font-bold bg-grape text-white px-5 py-2.5 rounded-full hover:bg-plum hover:scale-105 active:scale-95 transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none; }
+  .nav-free { @apply inline-flex items-center min-h-12 font-heading text-base font-bold text-gold py-2 px-1 whitespace-nowrap hover:text-tangerine active:text-white transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .mnav-free { @apply mt-3 flex items-center justify-center gap-2 font-heading font-bold text-lg text-gold border-2 border-tangerine rounded-full py-2.5 active:bg-tangerine active:text-[#1C1C1C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .free-tag { @apply inline-block rounded-full bg-tangerine text-[#1C1C1C] text-[0.65rem] font-black uppercase tracking-wider leading-none px-1.5 py-1; }
   .header-bar { @apply relative mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-5; }
   .header-logo { @apply rounded-full flex-shrink-0 transition-transform duration-200 group-hover:scale-110; }
   .header-name { @apply font-heading font-black text-base sm:text-lg text-gold tracking-wide whitespace-nowrap; }
-  .hdr-text { @apply inline-flex items-center justify-center gap-1.5 h-11 px-3 rounded-full bg-grape text-white font-heading font-bold text-base hover:bg-plum active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold max-[389px]:w-11 max-[389px]:px-0; }
+  .hdr-text { @apply inline-flex items-center justify-center gap-1.5 h-12 px-3 rounded-full bg-grape text-white font-heading font-bold text-base hover:bg-plum active:scale-95 transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold max-[389px]:w-12 max-[389px]:px-0; }
   .hdr-text-label { @apply max-[389px]:sr-only; }
   .menu-toggle { @apply list-none [&::-webkit-details-marker]:hidden flex items-center justify-center w-12 h-12 -mr-2 rounded-lg cursor-pointer active:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   .mnav-panel { @apply absolute left-0 right-0 top-16 px-4 pb-4 max-h-[calc(100vh-4rem)] overflow-y-auto; }
@@ -70,10 +70,10 @@
   .skip-link { @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-gold focus:px-4 focus:py-2 focus:text-[#1C1C1C] focus:text-sm; }
   /* Footer, on every page */
   .site-footer { @apply text-center pt-8 pb-28 md:pb-8 px-4 sm:px-5 text-white/80 text-sm relative z-10; }
-  .foot-reviews { @apply text-gold hover:text-tangerine hover:underline transition-colors duration-200 py-2 px-2 inline-flex items-center gap-1.5; }
-  .foot-social { @apply text-white/85 hover:text-gold transition-colors duration-200 py-2 px-2 inline-block; }
-  .foot-contact { @apply text-gold hover:underline py-1 px-1 inline-block; }
-  .foot-credit { @apply inline-flex items-center gap-2 py-2 px-1 text-xs text-white/70 hover:text-white transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .foot-reviews { @apply text-gold hover:text-tangerine active:text-white hover:underline transition-colors duration-200 min-h-12 px-2 inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .foot-social { @apply text-white/85 hover:text-gold active:text-white transition-colors duration-200 min-h-12 px-2 inline-flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .foot-contact { @apply text-gold hover:underline active:text-white min-h-12 px-1 inline-flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  .foot-credit { @apply inline-flex items-center gap-2 min-h-12 px-1 text-xs text-white/70 hover:text-white transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
   /* Mobile call / text bar, on every page */
   .cta-bar { @apply md:hidden fixed inset-x-0 bottom-0 z-40 px-3 pt-2 transition-transform duration-300; }
   /* Home page only (it has #hero): the bar starts off-screen so it never paints
@@ -93,6 +93,16 @@
   .nf-link { @apply flex items-center gap-2 py-2.5 text-lg text-grape font-bold underline underline-offset-2 hover:text-plum; }
   /* Grape text links (guides and the homepage rates card) */
   .link-grape { @apply text-grape font-bold underline underline-offset-2 hover:text-plum; }
+  /* Small outline button for secondary actions (Spotify, Apple Music) */
+  .btn-outline-sm { @apply inline-flex items-center justify-center gap-1.5 min-h-12 px-5 rounded-full border-2 border-grape text-grape font-heading font-bold hover:bg-grape hover:text-white hover:-translate-y-0.5 active:scale-95 transition-[transform,background-color,color] duration-200 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:outline-none; }
+  /* Rating line and trust strip (home and guides) */
+  .rating-link-light { @apply inline-flex items-center gap-1.5 min-h-12 font-heading font-bold text-grape underline underline-offset-2 hover:text-plum active:text-plum rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape; }
+  .rating-link-dark { @apply inline-flex items-center gap-1.5 min-h-12 font-heading font-bold text-gold underline underline-offset-2 hover:text-white active:text-white rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold; }
+  /* Concert bio disclosure in the About card (light version of the FAQ item) */
+  .bio-item { @apply rounded-2xl bg-gray-100 px-5 sm:px-6; }
+  .bio-q { @apply cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 min-h-12 py-2 font-heading font-bold text-lg sm:text-xl text-grape rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape; }
+  .bio-plus { @apply flex-shrink-0 text-grape transition-transform duration-200 group-open:rotate-45 text-2xl leading-none; }
+  .next-step { @apply flex gap-3 text-left; }
   /* Guide pages */
   .answer-lead { @apply text-lg sm:text-xl leading-relaxed font-bold text-gray-900; }
   .guide-card { @apply rounded-3xl p-5 sm:p-8 md:p-10; }
@@ -252,13 +262,16 @@
 }
 body:has([data-sms="disposal"]) .sticky-cta .sms-quote,
 body:has([data-sms="rehoming"]) .sticky-cta .sms-quote,
-body:has([data-sms="disposal"]) .header-bar .sms-quote,
+body:has([data-sms="disposal"]) .header-bar .sms-quote {
+  display: none;
+}
 body:has([data-sms="rehoming"]) .header-bar .sms-quote {
   display: none;
 }
 body:has([data-sms="disposal"]) .sticky-cta .sms-disposal,
 body:has([data-sms="rehoming"]) .sticky-cta .sms-rehoming,
-body:has([data-sms="disposal"]) .header-bar .sms-disposal {
+body:has([data-sms="disposal"]) .header-bar .sms-disposal,
+body:has([data-sms="rehoming"]) .header-bar .sms-rehoming {
   display: inline-flex;
 }
 

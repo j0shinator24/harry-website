@@ -1,11 +1,11 @@
-import { Guitar, House, Music, Piano, Recycle, ShoppingBag, type LineIcon } from "@/components/icons"
+import { DoorOpen, Guitar, House, Music, Piano, Recycle, ShoppingBag, type LineIcon } from "@/components/icons"
 import type { Service } from "@/lib/constants"
 
 // One matching icon set for the Specialty Services cards: the same line icon
 // family, size, stroke and sunset tile for every service (Gate 7 O7).
 const ICONS: Record<Service["icon"], LineIcon> = {
   piano: Piano,
-  inhome: House,
+  inhome: DoorOpen,
   disposal: Recycle,
   marketplace: ShoppingBag,
   rehoming: House,

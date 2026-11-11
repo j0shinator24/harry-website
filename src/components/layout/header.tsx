@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors on purpose: static pages with no client router code (Gate 7 r2 O11) */
 import { ChevronDown, Menu, MessageSquare, X } from "@/components/icons"
 import { GUIDES } from "@/lib/guides"
-import { FREE_PIANOS_LIVE, SMS_QUOTE_HREF, SMS_DISPOSAL_HREF } from "@/lib/constants"
+import { FREE_PIANOS_LIVE, SMS_QUOTE_HREF, SMS_DISPOSAL_HREF, SMS_REHOMING_HREF } from "@/lib/constants"
 import { MenuEnhance } from "@/components/layout/menu-enhance"
 
 const navItems = [
@@ -77,7 +77,6 @@ export function Header() {
               <li>
                 <a href="/free-piano-melbourne/" className="nav-free">
                   Free pianos
-                  <span className="free-tag hidden xl:inline-block">New</span>
                 </a>
               </li>
             )}
@@ -101,6 +100,13 @@ export function Header() {
             <MessageSquare className="h-4 w-4" aria-hidden="true" />
             <span className="hdr-text-label">Text</span>
           </a>
+          {/* Shown instead on the free-piano page (globals.css, data-sms). */}
+          {FREE_PIANOS_LIVE && (
+            <a href={SMS_REHOMING_HREF} className="hdr-text sms-rehoming" aria-label="Text Harry about a free piano">
+              <MessageSquare className="h-4 w-4" aria-hidden="true" />
+              <span className="hdr-text-label">Text</span>
+            </a>
+          )}
           <details data-menu className="group">
             <summary
               className="menu-toggle"

@@ -47,7 +47,7 @@ export function PartnerCard({ p }: { p: Partner }) {
           {p.phoneIntl && (
             <a
               href={`tel:${p.phoneIntl}`}
-              className="action-link relative z-[3] inline-flex items-center gap-1.5 bg-gold hover:bg-tangerine text-[#1C1C1C] font-heading font-bold px-3.5 py-2 rounded-full transition-colors duration-150"
+              className="action-link relative z-[3] inline-flex items-center gap-1.5 bg-gold hover:bg-tangerine text-[#1C1C1C] font-heading font-bold px-3.5 py-2 min-h-12 rounded-full transition-colors duration-150"
             >
               <Phone className="h-3.5 w-3.5" aria-hidden="true" />
               {p.phone}
@@ -56,7 +56,7 @@ export function PartnerCard({ p }: { p: Partner }) {
           {mobile && p.phoneIntl && (
             <a
               href={`sms:${p.phoneIntl}`}
-              className="action-link relative z-[3] inline-flex items-center gap-1.5 bg-grape hover:bg-plum text-white font-heading font-bold px-3.5 py-2 rounded-full transition-colors duration-150"
+              className="action-link relative z-[3] inline-flex items-center gap-1.5 bg-grape hover:bg-plum text-white font-heading font-bold px-3.5 py-2 min-h-12 rounded-full transition-colors duration-150"
               aria-label={`Text ${p.name}`}
             >
               <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" />
@@ -68,7 +68,7 @@ export function PartnerCard({ p }: { p: Partner }) {
               href={p.website}
               target="_blank"
               rel="noopener nofollow noreferrer"
-              className="action-link relative z-[3] inline-flex items-center gap-1 text-gold hover:text-white font-heading font-bold px-2 py-2"
+              className="action-link relative z-[3] inline-flex items-center gap-1 text-gold hover:text-white font-heading font-bold px-2 py-2 min-h-12"
             >
               Website <ExternalLink className="h-3 w-3" aria-hidden="true" />
             </a>

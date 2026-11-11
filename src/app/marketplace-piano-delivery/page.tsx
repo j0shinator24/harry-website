@@ -1,5 +1,5 @@
 import { GuidePage, grouped, guideMetadata, type GuideSection } from "@/components/guide-page"
-import { reviewBy } from "@/lib/guides"
+import { INSURANCE_ANSWER, reviewBy } from "@/lib/guides"
 import { INNER } from "@/lib/rates"
 import { ACCESS_FEES } from "@/lib/constants"
 
@@ -53,6 +53,11 @@ const qs: GuideSection[] = [
     body: ["Just mention them when you ask for a quote.", { cta: true }],
   },
   {
+    id: "insurance",
+    q: "Are you insured?",
+    a: INSURANCE_ANSWER,
+  },
+  {
     id: "stairs-at-home",
     q: "What if there are stairs at my place?",
     a: `Tell me how many when you text, because tricky access past the 4 entry steps included in the base rate adds $${ACCESS_FEES.perStep} per step.`,
@@ -68,7 +73,7 @@ const sections = grouped(qs, [
   ["info", "without-you"],
   ["prices", "marketplace-cost"],
   ["booking", "what-to-send", "extra-items"],
-  ["info", "stairs-at-home"],
+  ["info", "stairs-at-home", "insurance"],
 ])
 
 export default function MarketplacePianoDeliveryPage() {

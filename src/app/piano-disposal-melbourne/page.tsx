@@ -1,4 +1,6 @@
 import { GuidePage, grouped, guideMetadata, type GuideSection } from "@/components/guide-page"
+import { reviewBy } from "@/lib/guides"
+import { BUSINESS } from "@/lib/constants"
 import {
   DISPOSAL,
   DISPOSAL_INCLUDES,
@@ -45,6 +47,7 @@ const qs: GuideSection[] = [
     id: "what-happens",
     q: "What happens to the piano after you take it away?",
     a: "I recycle what's worth saving and dispose of the rest responsibly.",
+    body: [{ review: reviewBy("Tony W.") }],
   },
   {
     id: "restore-or-dispose",
@@ -95,6 +98,10 @@ export default function PianoDisposalPage() {
       ]}
       sections={sections}
       sms="disposal"
+      closing={{
+        heading: "Ready to book?",
+        text: `Disposal is $${DISPOSAL.upright} for an upright and $${DISPOSAL.grand} for a grand${pianolaPart}, GST included. Text me the details and I'll text back a price. Call or text ${BUSINESS.phone} and I'll get back to you within a few hours.`,
+      }}
       service={{
         name: "Piano Disposal Melbourne",
         serviceType: "Piano Disposal",

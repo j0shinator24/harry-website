@@ -1,6 +1,6 @@
 import { GuidePage, grouped, guideMetadata, type GuideSection } from "@/components/guide-page"
 import { ACCESS_FEES, BASE_URL, BUSINESS } from "@/lib/constants"
-import { reviewBy } from "@/lib/guides"
+import { INSURANCE_ANSWER, reviewBy } from "@/lib/guides"
 import {
   DISPOSAL,
   DISPOSAL_INCLUDES,
@@ -63,6 +63,11 @@ const qs: GuideSection[] = [
     ],
   },
   {
+    id: "insurance",
+    q: "Are you insured?",
+    a: INSURANCE_ANSWER,
+  },
+  {
     id: "disposal-cost",
     q: "How much does piano disposal cost?",
     a: `Disposal is $${DISPOSAL.upright} for an upright and $${DISPOSAL.grand} for a grand${PIANOLA_DISPOSAL ? `, and $${PIANOLA_DISPOSAL.price} for an upright pianola` : ""}.`,
@@ -96,7 +101,7 @@ const qs: GuideSection[] = [
 // disposal prices and the quick-quote checklist (Gate 7 r3 card groups).
 const sections = grouped(qs, [
   ["prices", "zone-rates"],
-  ["info", "base-rate", "what-changes-the-price"],
+  ["info", "base-rate", "what-changes-the-price", "insurance"],
   ["prices", "disposal-cost"],
   ["booking", "quick-quote"],
 ])

@@ -1,10 +1,11 @@
 import { GuidePage, grouped, guideMetadata, type GuideSection } from "@/components/guide-page"
+import { INSURANCE_ANSWER, reviewBy } from "@/lib/guides"
 
 const PATH = "/interstate-piano-removals/"
 
 export const metadata = guideMetadata({
   path: PATH,
-  title: "Interstate Piano Removals | Harry The Piano Mover",
+  title: "Interstate Piano Movers & Removals | Harry The Piano Mover",
   description:
     "Interstate piano removals from Melbourne to Sydney and Melbourne to Adelaide, done by Harry himself, by appointment only. Every trip is a custom quote.",
 })
@@ -16,7 +17,13 @@ const qs: GuideSection[] = [
     a: "Yes, I do Melbourne to Sydney and Melbourne to Adelaide myself, by appointment only.",
     body: [
       "Tell me where the piano is now, where it's going and when, and I'll put a quote together for you.",
+      { review: reviewBy("Angela V.") },
     ],
+  },
+  {
+    id: "insurance",
+    q: "Are you insured?",
+    a: INSURANCE_ANSWER,
   },
   {
     id: "interstate-plan",
@@ -61,7 +68,7 @@ const qs: GuideSection[] = [
 ]
 
 const sections = grouped(qs, [
-  ["info", "interstate", "interstate-plan"],
+  ["info", "interstate", "interstate-plan", "insurance"],
   ["prices", "interstate-cost"],
   ["booking", "interstate-quote"],
   ["info", "interstate-arrival"],
@@ -72,9 +79,9 @@ export default function InterstatePianoRemovalsPage() {
     <GuidePage
       path={PATH}
       crumb="Interstate piano removals"
-      h1="Interstate piano removals"
+      h1="Interstate piano movers from Melbourne"
       intro={[
-        "Harry The Piano Mover does Melbourne to Sydney and Melbourne to Adelaide piano moves himself, by appointment only. Here's how an interstate quote works.",
+        "Looking for interstate piano movers? I do Melbourne to Sydney and Melbourne to Adelaide piano removals myself, by appointment only. Here's how an interstate quote works.",
       ]}
       sections={sections}
       service={{

@@ -12,6 +12,9 @@ import { PhotoGallery } from "@/components/photo-gallery"
 import { RateCards } from "@/components/rate-cards"
 import { CallTextButtons } from "@/components/call-text-buttons"
 import { Picture } from "@/components/picture"
+import { RatingLine } from "@/components/rating-line"
+import { ReviewQuote } from "@/components/review-quote"
+import { reviewBy } from "@/lib/guides"
 import { RATES_CONFIRMED, disposalOffer, pianoMovingService } from "@/lib/rates"
 import { ACCESS_FEES, BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, RATES, SERVICES, PARTNERS, SMS_QUOTE_HREF } from "@/lib/constants"
 
@@ -56,6 +59,13 @@ const MOVE_TYPES: readonly { href: GuideHref; title: string; sub: string }[] = [
   { href: "/piano-disposal-melbourne/", title: "Piano disposal", sub: `Past saving? I'll take it away, from $${disposalRate.upright}` },
 ]
 
+// "What happens next" under the final quote card (Gate 7 r1 V1).
+const NEXT_STEPS = [
+  "Text me the piano, where from, where to, the day and any steps.",
+  "I'll text back a price, usually within a few hours.",
+  "Pick a day and I'll move it, with an assistant on most moves.",
+] as const
+
 const HOW_STEPS = [
   {
     title: "Tell me about the move.",
@@ -90,7 +100,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What types of pianos do you move?",
-    a: "Upright pianos, grand pianos and digital pianos. Ranging from brand-new to new-to-you, specialised in Japanese, Chinese, and European pianos.",
+    a: "Upright pianos, grand pianos, digital pianos and pianolas (each pianola is quoted individually). Ranging from brand-new to new-to-you, specialised in Japanese, Chinese, and European pianos.",
     more: { href: "/piano-types/", label: "How I move each type of piano" },
   },
   {
@@ -128,6 +138,10 @@ const FAQ_ITEMS = [
   {
     q: "Do you tune the pianos?",
     a: "I can play and move pianos, but tuning them is not one of my skills. Wait 3-4 weeks before having your piano tuned in the new space. I can help find a good tuner near you.",
+  },
+  {
+    q: "What happens after I text you?",
+    a: "I'll text back a price, usually within a few hours. If the day suits, it's booked.",
   },
   {
     q: "How do I book?",
@@ -449,27 +463,35 @@ export default function HomePage() {
             <p className="body-lg mb-3">
               As well as a mover, also a performing piano player and composer.
             </p>
-            <blockquote className="body-lg text-gray-600 border-l-4 border-gold pl-4 mb-4">
-              <p className="mb-3">
-                Harry Hodgman is a contemporary songwriter for solo piano based in Melbourne,
-                originally from New Zealand. His latest output has been primarily recording fully
-                improvised instrumental albums with a punk-rock approach to recording the raw
-                texture between creating and the instrument itself.
-              </p>
-              <p>
-                Harry is a unique contribution to Melbourne&apos;s music scene, and an artist not
-                commonly found in this hemisphere. Writing original soundtracks for films in your
-                head, this piano player has musical godfathers like Chilly Gonzales, Scott Joplin,
-                Brad Mehldau, Antony &amp; The Johnsons, and Max Richter.
-              </p>
-              <footer className="mt-2 text-sm text-gray-500">From a recent concert program</footer>
-            </blockquote>
+            <details className="group bio-item mb-4">
+              <summary className="bio-q">
+                Read my concert bio
+                <span aria-hidden="true" className="bio-plus">
+                  +
+                </span>
+              </summary>
+              <blockquote className="body-lg text-gray-600 border-l-4 border-gold pl-4 pb-4">
+                <p className="mb-3">
+                  Harry Hodgman is a contemporary songwriter for solo piano based in Melbourne,
+                  originally from New Zealand. His latest output has been primarily recording fully
+                  improvised instrumental albums with a punk-rock approach to recording the raw
+                  texture between creating and the instrument itself.
+                </p>
+                <p>
+                  Harry is a unique contribution to Melbourne&apos;s music scene, and an artist not
+                  commonly found in this hemisphere. Writing original soundtracks for films in your
+                  head, this piano player has musical godfathers like Chilly Gonzales, Scott Joplin,
+                  Brad Mehldau, Antony &amp; The Johnsons, and Max Richter.
+                </p>
+                <footer className="mt-2 text-sm text-gray-500">From a recent concert program</footer>
+              </blockquote>
+            </details>
             <div className="flex flex-wrap gap-3">
               <a
                 href={BUSINESS.spotify}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="action-link inline-flex items-center gap-1.5 bg-grape hover:bg-plum text-white font-heading font-bold px-4 py-2 rounded-full transition-colors duration-150"
+                className="btn-outline-sm"
               >
                 Listen on Spotify
               </a>
@@ -477,17 +499,12 @@ export default function HomePage() {
                 href={BUSINESS.appleMusic}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="action-link inline-flex items-center gap-1.5 bg-grape hover:bg-plum text-white font-heading font-bold px-4 py-2 rounded-full transition-colors duration-150"
+                className="btn-outline-sm"
               >
                 Listen on Apple Music
               </a>
             </div>
           </div>
-        </section>
-
-        {/* REVIEWS: three first, the rest behind "Show more" (works without JS). */}
-        <section id="reviews" className="fade-up">
-          <ReviewsGrid />
         </section>
 
         {/* PRICING AND COVERAGE: where I move, the rates, and the suburbs. */}
@@ -541,6 +558,10 @@ export default function HomePage() {
             </li>
           </ul>
           <p className="mt-4 text-center text-base text-gray-600">Rates confirmed {RATES_CONFIRMED}.</p>
+          <div className="mt-6 flex flex-col items-center gap-2">
+            <CallTextButtons align="center" />
+            <RatingLine />
+          </div>
         </section>
 
         {/* Suburbs I cover, straight after the rates so the named suburbs back them up. */}
@@ -569,6 +590,11 @@ export default function HomePage() {
             Melbourne to Sydney and Melbourne to Adelaide myself, by appointment only. Not sure which zone
             you&apos;re in? Call or text and I&apos;ll tell you straight away.
           </p>
+        </section>
+
+        {/* REVIEWS: three first, the rest behind "Show more" (works without JS). */}
+        <section id="reviews" className="fade-up">
+          <ReviewsGrid />
         </section>
 
         {/* HOW A PIANO MOVE WORKS: visible numbered steps. */}
@@ -637,26 +663,6 @@ export default function HomePage() {
           </ul>
         </section>
 
-        {/* PHOTOS: Harry's own photos, each opening his Instagram profile. */}
-        <section id="photos" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
-          <h2 className={PANEL_H2}>On Instagram</h2>
-          <PhotoGallery />
-        </section>
-
-        {/* PARTNERS */}
-        <section id="partners" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
-          <h2 className="font-heading font-black text-3xl sm:text-4xl text-center mb-3 text-white">Friends of Mine</h2>
-          <p className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 text-white/90 body-lg">
-            For piano sales and rentals, tuning, storage or a piano player for your event, these are the folks I recommend.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:w-full sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.625rem)] sm:[&>*:last-child:nth-child(odd)]:justify-self-center">
-            {PARTNERS.map((p) => (
-              <PartnerCard key={p.name} p={p} />
-            ))}
-          </div>
-          <p className="mt-5 text-center text-white/90 text-base">No paid placements.</p>
-        </section>
-
         {/* FAQ */}
         <section id="faq" className="panel-dark rounded-3xl max-w-3xl mx-auto p-5 sm:p-8 md:p-10 fade-up" style={PANEL_SHADOW}>
           <h2 className={PANEL_H2}>Frequently Asked</h2>
@@ -708,7 +714,47 @@ export default function HomePage() {
             each end, your preferred date, how many steps there are at both ends, and a photo of the piano and any
             tricky access. I&apos;ll get back to you within a few hours.
           </p>
+          <div className="mb-6 sm:mb-8 rounded-2xl bg-gray-100 p-4 sm:p-6">
+            <h3 className="font-heading font-bold text-xl sm:text-2xl text-grape mb-3">What happens next</h3>
+            <ol className="space-y-3 list-none">
+              {NEXT_STEPS.map((t, i) => (
+                <li key={t} className="next-step">
+                  <span aria-hidden="true" className="step-num">
+                    {i + 1}
+                  </span>
+                  <p className="body-lg">{t}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
           <CallTextButtons email align="center" />
+          <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3">
+            <RatingLine />
+            <ReviewQuote review={reviewBy("Jen J.")} source="Google review" className="text-left w-full" />
+            <p className="body-lg font-bold text-gray-900">
+              Fully insured. Uprights from ${innerRate.upright}, GST included.
+            </p>
+          </div>
+        </section>
+
+        {/* PHOTOS: Harry's own photos, each opening his Instagram profile. */}
+        <section id="photos" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
+          <h2 className={PANEL_H2}>On Instagram</h2>
+          <PhotoGallery />
+        </section>
+
+        {/* PARTNERS */}
+        <section id="partners" className="panel-dark sec-wide fade-up" style={PANEL_SHADOW}>
+          <h2 className="font-heading font-black text-3xl sm:text-4xl text-center mb-3 text-white">Friends of Mine</h2>
+          <p className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 text-white/90 body-lg">
+            For piano sales and rentals, tuning, storage or a piano player for your event, these are the folks I recommend.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:w-full sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.625rem)] sm:[&>*:last-child:nth-child(odd)]:justify-self-center">
+            {PARTNERS.map((p) => (
+              <PartnerCard key={p.name} p={p} />
+            ))}
+          </div>
+          <p className="mt-5 text-center text-white/90 text-base">No paid placements.</p>
         </section>
       </div>
 

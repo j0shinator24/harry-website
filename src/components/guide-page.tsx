@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- plain anchors on purpose: static pages with no client router code (Gate 7 r2 O11) */
 import type { Metadata } from "next"
 import { Picture } from "@/components/picture"
-import { starRow } from "@/components/icons"
+import { ReviewQuote } from "@/components/review-quote"
+import { RatingLine } from "@/components/rating-line"
 import { CallTextButtons, type SmsKind } from "@/components/call-text-buttons"
 import { RateCards } from "@/components/rate-cards"
 import { FadeUpReveal } from "@/components/fade-up-reveal"
-import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, REVIEW_SOURCE_LABEL, type RateZone, type Review } from "@/lib/constants"
+import { BASE_URL, BUSINESS, LAST_UPDATED, LLMS_ALTERNATE, OG_IMAGE, type RateZone, type Review } from "@/lib/constants"
 import { RATES_CONFIRMED } from "@/lib/rates"
 import { GUIDE_PHOTOS, type GuideHref } from "@/lib/guides"
 
@@ -225,27 +226,7 @@ function BlockView({ block, sms }: { block: Block; sms: SmsKind }) {
     )
   }
   if ("review" in block) {
-    return (
-      <figure className="rounded-2xl bg-gray-100 p-4 sm:p-5 border-l-4 border-gold">
-        <div className="flex gap-0.5 text-[#B7791F] mb-2" aria-label="5 out of 5 stars" role="img">
-          {starRow(5)}
-        </div>
-        <blockquote className="body-lg italic text-gray-800">
-          &ldquo;{block.review.text}&rdquo;
-        </blockquote>
-        <figcaption className="mt-2 text-base text-gray-600">
-          {block.review.name},{" "}
-          <a
-            href={BUSINESS.googleReviews}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-grape underline underline-offset-2 hover:text-plum"
-          >
-            {REVIEW_SOURCE_LABEL}
-          </a>
-        </figcaption>
-      </figure>
-    )
+    return <ReviewQuote review={block.review} />
   }
   return <CallTextButtons sms={sms} />
 }
@@ -320,10 +301,10 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
       <div className="px-4 sm:px-5 pt-8 sm:pt-12 pb-8 sm:pb-10" data-sms={sms}>
         <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
           <header className="card-white rounded-3xl p-5 sm:p-8 md:p-12" style={cardShadow}>
-            <nav aria-label="Breadcrumb" className="mb-3 sm:mb-4">
+            <nav aria-label="Breadcrumb" className="mb-1 sm:mb-2">
               <ol className="flex flex-wrap items-center gap-2 text-base text-gray-600 list-none">
                 <li>
-                  <a href="/" className="link-grape">
+                  <a href="/" className="link-grape inline-flex items-center min-h-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape rounded">
                     Home
                   </a>
                 </li>
@@ -363,6 +344,11 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
                 </div>
               </figure>
             </div>
+            {/* Trust strip under the opening answer (Gate 7 r1 V9). */}
+            <p className="mt-5 flex flex-wrap items-center text-base text-gray-700">
+              <RatingLine />
+              <span>. Fully insured.</span>
+            </p>
           </header>
 
           {sections.map((g) => (
@@ -400,7 +386,7 @@ export function GuidePage({ path, crumb, h1, intro, introIds, sections, service,
               {closing?.heading ?? "Ready to book?"}
             </h2>
             <p className="body-lg mb-5">
-              {closing?.text ?? `Text me the details and I'll price it properly. Call or text ${BUSINESS.phone} and I'll get back to you within a few hours.`}
+              {closing?.text ?? `Text me the details and I'll text back a price. Call or text ${BUSINESS.phone} and I'll get back to you within a few hours.`}
             </p>
             <CallTextButtons email align="center" sms={sms} />
           </section>
