@@ -14,8 +14,12 @@ export const BUSINESS = {
   founder: "Harry",
   location: "Melbourne, VIC",
   tagline: "Melbourne's specialist piano mover. Uprights, grands, and digitals.",
-  description:
-    `Harry The Piano Mover: specialist piano movers and piano removalists in Melbourne. Uprights, grands and digitals. Removals, disposal and Marketplace pick-ups. ${REVIEW_COUNT} Google reviews as of ${REVIEW_COUNT_AS_OF}.`,
+  // Metadata and schema only (never rendered as page text). A getter so it can
+  // read the cheapest upright rate from RATES, which is declared further down.
+  get description() {
+    const from = Math.min(...RATES.filter((r) => r.label !== "Piano Disposal").map((r) => r.upright))
+    return `Harry The Piano Mover: specialist piano movers and piano removalists in Melbourne. 5.0 from ${REVIEW_COUNT} Google reviews. Uprights from $${from}, GST included.`
+  },
   instagram: "https://www.instagram.com/harrythepianomover/",
   // Harry's own music, supplied by Harry 4 Nov 2026.
   spotify: "https://open.spotify.com/artist/3MZ3s1IgR0KUdpkpKXnkrT",

@@ -52,6 +52,9 @@ export default function ZonesMapInner() {
         center={MELBOURNE}
         zoom={9}
         scrollWheelZoom={false}
+        // On touch devices a one-finger swipe scrolls the page instead of
+        // panning the map (pinch zoom still works).
+        dragging={!L.Browser.mobile}
         className="h-full w-full"
         style={{ background: "#dbeafe" }}
       >

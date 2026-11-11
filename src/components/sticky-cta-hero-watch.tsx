@@ -4,7 +4,8 @@ import { useEffect } from "react"
 
 // Hides the mobile call / text bar while the homepage hero is on screen (the
 // hero has its own buttons and its design is locked). Works on the DOM after
-// hydration, so the static HTML keeps the bar visible with JavaScript off.
+// hydration. On the homepage the CSS starts the bar off-screen (no flash over
+// the hero buttons) and adds .cta-on to slide it in; other pages show it always.
 export function StickyCtaHeroWatch() {
   useEffect(() => {
     const hero = document.getElementById("hero")
@@ -14,6 +15,7 @@ export function StickyCtaHeroWatch() {
       ([e]) => {
         const over = e.isIntersecting
         bar.classList.toggle("translate-y-full", over)
+        bar.classList.toggle("cta-on", !over)
         if (over) {
           bar.setAttribute("aria-hidden", "true")
           bar.setAttribute("inert", "")

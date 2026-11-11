@@ -6,7 +6,8 @@ import { SunsetBackdrop } from "@/components/sunset-backdrop"
 import { SkylineBand } from "@/components/skyline-band"
 import { StickyCta } from "@/components/sticky-cta"
 import { IconSprite } from "@/components/icons"
-import { BASE_URL, BUSINESS, HOURS, OG_IMAGE } from "@/lib/constants"
+import { BASE_URL, BUSINESS, HOURS, OG_IMAGE, REVIEW_COUNT, REVIEW_COUNT_AS_OF } from "@/lib/constants"
+import { PRICE_RANGE } from "@/lib/rates"
 import "./globals.css"
 
 const alegreya = Alegreya({
@@ -30,10 +31,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_AU",
     siteName: BUSINESS.name,
+    description: BUSINESS.description,
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
+    description: BUSINESS.description,
     images: [OG_IMAGE.url],
   },
   // Bing WMT: verified via GSC import, no msvalidate.01 token needed
@@ -63,13 +66,13 @@ const siteGraph = {
       // this business with a similarly named general removalist.
       disambiguatingDescription:
         "Specialist piano mover in Melbourne, owner-operated by Harry, a piano player, with an assistant on most moves. Not a general furniture removalist, and not affiliated with any similarly named removalist.",
-      description: BUSINESS.description,
+      description: `${BUSINESS.description} Rated 5.0 stars from ${REVIEW_COUNT} Google reviews as of ${REVIEW_COUNT_AS_OF}.`,
       url: `${BASE_URL}/`,
       logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png`, width: 512, height: 512 },
       image: [`${BASE_URL}${OG_IMAGE.url}`, `${BASE_URL}/harry-piano-1.jpg`],
       telephone: BUSINESS.phoneInternational,
       email: BUSINESS.email,
-      priceRange: "$$",
+      priceRange: PRICE_RANGE,
       knowsAbout: ["Piano moving", "Piano removals", "Piano disposal", "Upright piano moving", "Grand piano moving", "Interstate piano removals"],
       currenciesAccepted: "AUD",
       openingHoursSpecification: HOURS.spec.map((h) => ({
@@ -110,7 +113,7 @@ const siteGraph = {
       description: "Melbourne piano mover and piano player. Owner-operator of Harry The Piano Mover, with an assistant on most moves.",
       // The homepage photo of Harry at the piano (its alt text names him).
       image: `${BASE_URL}/harry-piano-1.jpg`,
-      knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving", "Composing"],
+      knowsAbout: ["Piano moving", "Piano disposal", "Piano playing", "Pianola moving", "Composing", "Busking", "Live piano performance"],
       sameAs: [BUSINESS.instagram, BUSINESS.spotify, BUSINESS.appleMusic],
     },
   ],
