@@ -309,7 +309,8 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="relative z-10 max-w-3xl px-4 sm:px-5 pt-16 pb-16 fade-up">
+        {/* No fade-up on the hero: it is painted first, and the reveal script hid it and slid it back in after hydration (Gate 7, 11 Nov 2026). */}
+        <div className="relative z-10 max-w-3xl px-4 sm:px-5 pt-16 pb-16">
           <img
             src="/logo-on-dark.png"
             alt="Harry The Piano Mover"
