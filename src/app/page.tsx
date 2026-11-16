@@ -138,10 +138,6 @@ const FAQ_ITEMS = [
     a: "I'll text back a price, usually within a few hours. If the day suits, it's booked.",
   },
   {
-    q: "How far ahead should I book?",
-    a: "I'm usually booked a week or two ahead, so text me as early as you can with your preferred day. Interstate moves need decent warning.",
-  },
-  {
     q: "How do I book?",
     a: "BOOKING_LINKS",
   },

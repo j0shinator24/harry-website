@@ -83,18 +83,13 @@ const qs: GuideSection[] = [
       "Tuning isn't one of my skills, but I can help you find a good tuner near you.",
     ],
   },
-  {
-    id: "book-ahead",
-    q: "How far ahead should I book?",
-    a: "I'm usually booked a week or two ahead, so text me as early as you can with your preferred day. Interstate moves need decent warning.",
-  },
 ]
 
 const sections = grouped(qs, [
   ["info", "upright", "grand"],
   ["prices", "type-prices"],
   ["info", "digital", "pianola", "brands"],
-  ["info", "tuning", "insurance", "book-ahead"],
+  ["info", "tuning", "insurance"],
 ])
 
 export default function PianoTypesPage() {

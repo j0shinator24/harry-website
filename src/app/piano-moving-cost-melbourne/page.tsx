@@ -95,11 +95,6 @@ const qs: GuideSection[] = [
       { review: reviewBy("Emma C.") },
     ],
   },
-  {
-    id: "book-ahead",
-    q: "How far ahead should I book?",
-    a: "I'm usually booked a week or two ahead, so text me as early as you can with your preferred day. Interstate moves need decent warning.",
-  },
 ]
 
 // Prices first, then what the base rate covers and what changes it, then
@@ -108,7 +103,7 @@ const sections = grouped(qs, [
   ["prices", "zone-rates"],
   ["info", "base-rate", "what-changes-the-price", "insurance"],
   ["prices", "disposal-cost"],
-  ["booking", "quick-quote", "book-ahead"],
+  ["booking", "quick-quote"],
 ])
 
 export default function PianoMovingCostPage() {
